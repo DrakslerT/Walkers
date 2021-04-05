@@ -2,7 +2,7 @@
 
 |                             |                                                         |
 | :-------------------------- | :------------------------------------------------------ |
-| **Naziv projekta**          | Dolg Walkers                             |
+| **Naziv projekta**          | Dog Walkers                             |
 | **Člani projektne skupine** | Martin Štrekelj, Mimi Klinec, Luka Bratina, Ilija Tavchioski, Tim Draksler |
 | **Kraj in datum**           | 5. 4. 2021                                   |
 
