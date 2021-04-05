@@ -83,15 +83,30 @@ Neregistriran uporabnik ima možnost registracije in s tem pridobi več funkcion
 1. Neregistriran uporabnik izbere funkcionalnost registracija.
 2. Sistem mu prikaže registracijski obrazec.
 3. Neregistriran uporabnik v registracijski obrazec vpiše svoje ime, priimek, e-poštni naslov in geslo, ki ga je potrebno vpisati dvakrat. Izbere tudi katere vrste uporabnik bo - lastnik psov ali sprehajalec psov. 
-4. Neregistriran uporabnik odda registracijski obrazec.
-5. Sistem preveri če je geslo dolgo vsaj osem znakov, ter če vsebuje vsaj eno veliko črko.
-6. Sistem registriranemu uporabniku na e-poštni naslov pošlje sporočilo za potrditev registracije.
-7. Neregistriran uporabnik preko svoje e-pošte potrdi registracijo.
-8. Sistem prikaže sporočilo o uspešni registraciji.
+4. Neregistriran uporabnik izbere da bo sprehajalec psov.
+5. Neregistriran uporabnik odda registracijski obrazec.
+6. Sistem preveri če je geslo dolgo vsaj osem znakov, ter če vsebuje vsaj eno veliko črko.
+7. Sistem registriranemu uporabniku na e-poštni naslov pošlje sporočilo za potrditev registracije.
+8. Neregistriran uporabnik preko svoje e-pošte potrdi registracijo.
+9. Sistem prikaže sporočilo o uspešni registraciji.
 
 #### Alternativni tok
 
 **Alternativni tok 1**
+1. Neregistriran uporabnik izbere funkcionalnost registracija.
+2. Sistem mu prikaže registracijski obrazec.
+3. Neregistriran uporabnik v registracijski obrazec vpiše svoje ime, priimek, e-poštni naslov in geslo, ki ga je potrebno vpisati dvakrat. Izbere tudi katere vrste uporabnik bo - lastnik psov ali sprehajalec psov. 
+4. Neregistriran uporabnik izbere da bo lastnik psov.
+5. Sistem prikaže tri nova tekstovna polja: pasma, starost in opis.
+6. Neregistriran uporabnik izpolne vsa tri polja s podatki o svojem psu.
+7. Neregistriran uporabnik odda registracijski obrazec.
+8. Sistem preveri če je geslo dolgo vsaj osem znakov, ter če vsebuje vsaj eno veliko črko.
+9. Sistem registriranemu uporabniku na e-poštni naslov pošlje sporočilo za potrditev registracije.
+10. Neregistriran uporabnik preko svoje e-pošte potrdi registracijo.
+11. Sistem prikaže sporočilo o uspešni registraciji.
+
+
+**Alternativni tok 2**
 1. Neregistriran uporabnik želi uporabiti funkcionalnost, ki je na voljo zgolj registriranim uporabnikom
 2. Sistem prikaže sporočilo, ki neregistriranemu uporabniku pove, da funkcionalnost na voljo samo registriranim uporabnikom, ponudi mu tudi možnost preusmeritve na registracijo.
 3. Neregistriran uporabnik izbere funkcionalnost registracija.
@@ -127,8 +142,9 @@ Podatki o registraciji se pošiljajo po varni povezavi
 MUST HAVE
 
 #### Sprejemni testi
-* **[Osnovni tok]** Neregistriran uporabnik se uspešno registrira, sedaj se lahko prijavi v sistem.
-* **[Alternativni tok 1]** Neregistriran uporabnik izbere funkcionalnost, ki je na voljo zgolj registriranim uporabnikom. Sistem ga o tem obvesti in ga pozove k registraciji.
+* **[Osnovni tok]** Neregistriran uporabnik se uspešno registrira kot sprehajalec, sedaj se lahko prijavi v sistem.
+* **[Alternativni tok 1]** Neregistriran uporabnik se uspešno registrira kot lastnik, sedaj se lahko prijavi v sistem.
+* **[Alternativni tok 2]** Neregistriran uporabnik izbere funkcionalnost, ki je na voljo zgolj registriranim uporabnikom. Sistem ga o tem obvesti in ga pozove k registraciji.
 * **[Izjemi tok 1]** Neregistriran uporabnik pri registraciji vpiše neustrezno geslo.
 * **[Izjemi tok 2]** Neregistriran uporabnik pri registraciji vpiše e-poštni naslov, ki je že v uporabi
 * **[Izjemi tok 2]** Neregistriran uporabnik pri registraciji ne izbere ali je lastnik ali je sprehajalec psov.
