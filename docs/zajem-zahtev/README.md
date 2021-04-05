@@ -907,6 +907,50 @@ SHOULD HAVE
 
 ## 7. Prototipi vmesnikov
 
-**TO-DO**
+### Osnutki zaslonskih mask
 
-- Navesti je potrebno: zaslonske maske, sistemske vmesnike in vmesnike do naprav, vključno z referencami do primerov uporabe.
+#### Registracija
+![Registracija](../img/Registracija.PNG)
+
+#### Prijava
+![Prijava](../img/Prijava.PNG)
+
+#### Dodajanje psa
+![Dodajanje psa](../img/Dodajanje_psa.PNG)
+
+#### Objava oglasa
+![Dodajanje oglasa](../img/Dodajanje_oglasa.PNG)
+
+#### Pregled zgodovine sprehodov
+Vključuje tudi dodajanje priljubljenih sprehajalcev in prijavljanje kršitev kodeksa
+![Zgodovina](../img/Zgodovina.PNG)
+
+#### Odziv na ponudbo
+![Ponudbe](../img/Ponudbe.PNG)
+
+#### Urejanje profila
+![Nastavitve](../img/Nastavitve.PNG)
+
+#### Ogled oglasov
+Vključuje tudi filtriranje oglasov
+![Izberi oglas](../img/Izberi_oglas.PNG)
+
+#### Pošiljanje ponudbe
+![Pregled](../img/Pregled.PNG)
+
+#### Podelitev ocene in komentarja
+![Ocena](../img/Ocena.PNG)
+
+### Vmesniki do zunanjih sistemov
+
+#### TheDogAPI
+Ob vsaki prijavi uporabnika se pošlje klic na api, ki vrne seznam pasm psov. Za vsako pasmo shranimo:
+* id pasme
+* ime pasme
+Podatke o pasmah uporabimo kasneje v filtrih, dodajanju psov in dodajanjem oglasov.
+
+#### Google Calendar
+Aplikacija omogoča dodajanje dogodkov v koledar prek Google Calendar API.
+Uporabi funkcijo events.insert(), kateri se poda:
+* ID koledarja: V našem primeru 'primary', ki doda dogodek na primaren koledar uporabnika.
+* dogodek: Podatki o imenu, začetku in koncu dogodka
