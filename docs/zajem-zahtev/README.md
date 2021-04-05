@@ -66,7 +66,7 @@ Pri aplikaciji Dolg Walkers se pričakuje izpolnitev še nekaj nefunkcionalnih z
 
 ## 4. Diagram primerov uporabe
 
-![useCaseDiagram](./useCaseDiagram (1).png)
+![useCaseDiagram](./UML-UCD.png)
 
 ## 5. Funkcionalne zahteve
 
