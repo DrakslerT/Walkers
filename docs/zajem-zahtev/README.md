@@ -2,9 +2,9 @@
 
 |                             |                                                         |
 | :-------------------------- | :------------------------------------------------------ |
-| **Naziv projekta**          | **TO-DO** naziv projekta                                |
-| **Člani projektne skupine** | **TO-DO** 1. član, 2. član, 3. član, 4. član in 5. član |
-| **Kraj in datum**           | **TO-DO** kraj, datum                                   |
+| **Naziv projekta**          | Dolg Walkers                             |
+| **Člani projektne skupine** | Martin Štrekelj, Mimi Klinec, Luka Bratina, Ilija Tavchioski, Tim Draksler |
+| **Kraj in datum**           | 5. 4. 2021                                   |
 
 ## Povzetek projekta
 
@@ -15,16 +15,23 @@ V spodnjem dokumentu je navedena specifikacija zahtev za Dog Walkers, interaktiv
 **Kateri problem bo naša aplikacija reševala?**
 
 Aplikacija Dog Walkers je namenjena lastnikom psov in vsem ljubiteljem živali, ki se želijo občasno ukvarjati z njimi. Skrb za hišnega ljubljenčka namreč zahteva veliko časa in lastnik se bo slej ko prej znašel v situaciji, ko bo potreboval pomoč. Z uporabo te aplikacija jo bo enostavno našel, saj se bo lahko povezal z ljudmi, ki imajo veselje do živali in so zainteresirani za krajšo oskrbo oziroma sprehajanje psov.
+
 Z aplikacijo torej želimo razbremeniti lastnike psov in jim pomagati kar se da enostavno najti primerno pomoč pri oskrbi njihovih ljubljenčkov. Po drugi strani želimo tudi omogočiti preživljanje časa s pasjimi ljubljenčki nelastnikom, ki jih to veseli.
 
 **Kaj vse bo aplikacija počela?**
 
 Za uporabo ostalih funkcionalnosti aplikacije se mora neregistriran uporabnik najprej registrirati v sistem. Pri tem lahko izbira med registracijo kot lastnik ali kot sprehajalec. Glede na izbiro ima po registraciji pri uporabi aplikacije na voljo različne funkcionalnosti. Uporabnik se lahko po registraciji prijavlja v sistem, kjer ima omogočeno urejanje svojega profila.
+
 Sprehajalec ima poleg tega na voljo tudi možnost objavljanja oglasov, istočasno največ pet. V oglasih napiše kdaj je časovno na voljo za sprehajanje psa, poda lokacijo in po želji še preference glede pasme psa, za katere bi bil pripravljen skrbeti.
+
 Oglasi sprehajalcev so namenjeni lastnikom. Ti imajo na voljo možnost prikaza oglasov, ki se jim razvrstijo glede na priporočilni sistem. Sem je vključen povprečni odzivni čas sprehajalca (hitreje kot se odzove na ponudbe, višje je uvrščen), morebitne prijave kršitev (če ima prijavljene kršitve se uvrsti nižje) in višina ocene sprehajalca (višje kot je ocenjen, višje se uvrsti). Lastnik ima omogočeno tudi filtriranje med oglasi. Parametre filtra sestavljajo lokacija, čas termina in pasma psa, ki je lahko specificirana v oglasu. Poleg tega si lahko tudi označi najljubše sprehajalce.
+
 Lastnik lahko po ogledovanju oglasov izbranim pošlje ponudbo za sprehod. Sprehajalca, ki mu je bila poslana ponudba, aplikacija o tem obvesti. Sprehajalec lahko ponudbo sprejme ali zavrne. Če jo zavrne, sistem to sporoči lastniku. Če ponudbo sprejme, se s pritrdilnim odgovorom lastniku posreduje tudi kontakt sprehajalca in obema se termin preko zunanjega vmesnika Google Calendar zapiše v osebni koledar. Tako lahko lastnik in sprehajalec, ki sta izbrala skupni termin, navežeta stik in se dogovorita za vse ostale podrobnosti.
+
 Lastniki imajo tudi možnost ocenjevanja sprehajalcev. Ko se sprehod, za katerega sta se lastnik in sprehajalec dogovorila, izteče, je lastnik pozvan k obvezni podaji ocene. Dokler je ne poda, ne more nadaljevati z uporabo aplikacije. Opcijsko lahko doda tudi komentar.
+
 Ob povprečni oceni vsaj štiri in dovolj hitrem odzivnem času, se sprehajalec lahko nadgradi v izkušenega sprehajalca. Ta ima poleg vseh funkcionalnosti, ki so na voljo sprehajalcu, možnost objavljanja neomejenega števila oglasov.
+
 Ker želimo zagotoviti kar se da pozitivno in varno uporabo aplikacije, ima uporabnik ob morebitnih incidentih tudi možnost prijave kršitev. S tem namenom obstaja še uporabniška vloga administratorja. Ta si pridržuje pravico, da lahko briše oglase sprehajalcev in uporabniku, glede na resnost in količino prijav, začasno zaklene račun.
 
 **Kaj pa nefunkcionalne zahteve aplikacije?**
