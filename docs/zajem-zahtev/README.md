@@ -533,9 +533,24 @@ SHOULD HAVE
 
 ## 6. Nefunkcionalne zahteve
 
-**TO-DO**
+### Zahteve izdelka:
+1. Aplikacija naj bo podprta na modernih brskalnikih IE, Firefox, Chrome in Safari od 2016 dalje.
+2. Aplikacija naj ne zahteva nikakršnega nalaganja s strani odjemalca
+3. Aplikacija naj ob čakanju in nalaganju o tem jasno obvesti uporabnika
+4. Sistem uporabniku ne sme omogočiti dostopa do kontaktnih podatkov, za katere ni izrecno pooblaščen.
+5. Uporabniški vmesnik naj bo prilagodljiv za mobilne naprave
+6. Aplikacija naj bo vedno na voljo z največjo dopustnim časom ne delovanja 5 sekund.
 
-- Navedite splošne omejitve, ki jih moramo upoštevati v več funkcionalnostih ali celo skozi celoten razvoj aplikacije.
+### Organizacijske zahteve:
+1. Aplikacija naj zagotovi pristnost uporabnikov s uporabo OTP potrdila pri registraciji uporabniškega računa
+2. Zaledni sistem naj bo sprogramiran v okolju Node.JS
+3. Uporabniški vmesnik naj bo zgrajen iz ponovno uporabnih komponent
+
+### Zunanje zahteve:
+1. Aplikacija naj pri zbiranju uporabniških podatkov upošteva GDPR
+2. Aplikacija naj bo skladna s WCAQ 2.1 standardom. 
+3. Kodeks aplikacije naj bo na podlagi Zakona o zaščiti živali (ZZZiv)
+
 
 ## 7. Prototipi vmesnikov
 
