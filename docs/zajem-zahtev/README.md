@@ -66,11 +66,7 @@ Pri aplikaciji Dolg Walkers se pričakuje izpolnitev še nekaj nefunkcionalnih z
 
 ## 4. Diagram primerov uporabe
 
-**TO-DO**
-
-- Narišite diagram primerov uporabe v jeziku UML.
-- Diagram predstavlja interakcijo med akterji in funkcionalnostmi (kdo lahko kaj počne).
-- Akterji so tipično uporabniške vloge, lahko pa gre tudi za zunanje komponente (sistemi), ki komunicirajo z našo aplikacijo.
+![useCaseDiagram](./useCaseDiagram (1).png)
 
 ## 5. Funkcionalne zahteve
 
