@@ -13,10 +13,12 @@ V spodnjem dokumentu je navedena specifikacija zahtev za Dog Walkers, interaktiv
 ## 1. Uvod
 
 **Kateri problem bo naša aplikacija reševala?**
+
 Aplikacija Dog Walkers je namenjena lastnikom psov in vsem ljubiteljem živali, ki se želijo občasno ukvarjati z njimi. Skrb za hišnega ljubljenčka namreč zahteva veliko časa in lastnik se bo slej ko prej znašel v situaciji, ko bo potreboval pomoč. Z uporabo te aplikacija jo bo enostavno našel, saj se bo lahko povezal z ljudmi, ki imajo veselje do živali in so zainteresirani za krajšo oskrbo oziroma sprehajanje psov.
 Z aplikacijo torej želimo razbremeniti lastnike psov in jim pomagati kar se da enostavno najti primerno pomoč pri oskrbi njihovih ljubljenčkov. Po drugi strani želimo tudi omogočiti preživljanje časa s pasjimi ljubljenčki nelastnikom, ki jih to veseli.
 
 **Kaj vse bo aplikacija počela?**
+
 Za uporabo ostalih funkcionalnosti aplikacije se mora neregistriran uporabnik najprej registrirati v sistem. Pri tem lahko izbira med registracijo kot lastnik ali kot sprehajalec. Glede na izbiro ima po registraciji pri uporabi aplikacije na voljo različne funkcionalnosti. Uporabnik se lahko po registraciji prijavlja v sistem, kjer ima omogočeno urejanje svojega profila.
 Sprehajalec ima poleg tega na voljo tudi možnost objavljanja oglasov, istočasno največ pet. V oglasih napiše kdaj je časovno na voljo za sprehajanje psa, poda lokacijo in po želji še preference glede pasme psa, za katere bi bil pripravljen skrbeti.
 Oglasi sprehajalcev so namenjeni lastnikom. Ti imajo na voljo možnost prikaza oglasov, ki se jim razvrstijo glede na priporočilni sistem. Sem je vključen povprečni odzivni čas sprehajalca (hitreje kot se odzove na ponudbe, višje je uvrščen), morebitne prijave kršitev (če ima prijavljene kršitve se uvrsti nižje) in višina ocene sprehajalca (višje kot je ocenjen, višje se uvrsti). Lastnik ima omogočeno tudi filtriranje med oglasi. Parametre filtra sestavljajo lokacija, čas termina in pasma psa, ki je lahko specificirana v oglasu. Poleg tega si lahko tudi označi najljubše sprehajalce.
@@ -26,6 +28,7 @@ Ob povprečni oceni vsaj štiri in dovolj hitrem odzivnem času, se sprehajalec 
 Ker želimo zagotoviti kar se da pozitivno in varno uporabo aplikacije, ima uporabnik ob morebitnih incidentih tudi možnost prijave kršitev. S tem namenom obstaja še uporabniška vloga administratorja. Ta si pridržuje pravico, da lahko briše oglase sprehajalcev in uporabniku, glede na resnost in količino prijav, začasno zaklene račun.
 
 **Kaj pa nefunkcionalne zahteve aplikacije?**
+
 Pri aplikaciji Dolg Walkers se pričakuje izpolnitev še nekaj nefunkcionalnih zahtev. Aplikacija mora biti podprta na modernih brskalnikih in ne sme zahtevati nikakršnega nalaganja s strani odjemalca. Ob čakanju in nalaganju mora o tem jasno obvestiti uporabnika. Sistem uporabniku ne sme omogočiti dostopa do kontaktnih podatkov, za katere ni izrecno pooblaščen in pričakuje se uporabniški vmesnik prilagodljiv mobilnim napravam. Aplikacija mora biti vedno na voljo, z največjim dopustnim časom nedelovanja 5 sekund. Zahteva se zagotavljanje pristnosti uporabnikov z uporabo OTP potrdila pri registraciji uporabniškega računa. Razvoj zalednega sistema bo potekal v okolju Node.js, uporabniški vmesnik pa bo zgrajen iz ponovno uporabnih komponent. Aplikacija mora biti skladna s standardom WCAQ 2.1 in pri zbiranju uporabniških podatkov upoštevati zakon o varstvu osebnih podatkov. Kodeks aplikacije se ravna po Zakonu o zaščiti živali (ZZZiv).
 
 ## 2. Uporabniške vloge
