@@ -530,6 +530,340 @@ SHOULD HAVE
 
 -------------------
 
+### Ocenjevanje sprehajalca
+
+#### Povzetek funkcionalnosti
+Lastnik mora podati oceno sprehajalcu ob končanem sprehodu.
+
+#### Osnovni tok
+1. Sistem prikaže okence v katerem mora lastnik podati oceno sprehajalcu.
+2. Lastnik izbere oceno od ena do pet.
+3. Lastnik klikne na gumb "Potrdi".
+4. Sistem zabeleži oceno.
+5. Sistem izračuna in shrani novo povprečno oceno sprehajalca.
+
+#### Izjemni tok
+**Izjemni tok 1**
+* Lastnik pozabi potrditi vnos ocene. Sistem si ne zabeleži nove ocene.
+
+**Izjemni tok 2**
+* Lastnik ne izbere nobene ocene in želi potrditi vnos. Sistem ga obvesti, da ni izbral nobene ocene.
+
+#### Pogoji
+* V sistem je prijavljen lastnik.
+* Končan je vsaj en sprehod.
+
+#### Posledice
+* Sistem v bazo shrani novo oceno o sprehajalcu in ponovno izračuna povprečje vseh ocen sprehajalca.
+
+#### Posebnosti
+
+#### Prioritete identificiranih funkcionalnosti
+SHOULD HAVE
+
+#### Sprejemni testi
+* **[Osnovni tok]** Prijavi se kot lastnik, izberi funkcionalnost ocenjevanje sprehajalca, vnesi oceno, klikni na gumb "Potrdi".
+* **[Izjemni tok 1]** Prijavi se kot lastnik, izberi funkcionalnost ocenjevanje sprehajalca, vnesi oceno, ne potrdi vnosa.
+* **[Izjemni tok 2]** Prijavi se kot lastnik, izberi funkcionalnost ocenjevanje sprehajalca, klikni na gumb "Potrdi".
+
+-------------------
+
+### Ogled preteklih sprehodov
+
+#### Povzetek funkcionalnosti
+Lastnik, sprehajalec ali izkušen sprehajalec lahko pregledujejo svoje pretekle sprehode. Lastnik ima omogočeno še dodajanje sprehajalca k priljubljenim in prijavo sprehajalca za kršenje kodeksa aplikacije.
+
+#### Osnovni tok [Lastnik]
+1. Lastnik izbere funkcionalnost za ogled preteklih sprehodov.
+2. Sistem lastnika preusmeri na stran s seznamom vseh preteklih sprehodov.
+3. Lastnik klikne na nek pretekli sprehod.
+4. Sistem lastniku prikaže podrobnosti o izbranem sprehodu(lokacijo, čas in sprehajalca).
+5. Lastnik lahko iz tu začne funkcionalnosti "Prijava kršitve kodeksa aplikacije" ali "Označitev najljubših sprehajalcev"
+
+#### Osnovni tok [Sprehajalec]
+1. Sprehajalec izbere funkcionalnost za ogled preteklih sprehodov.
+2. Sistem sprehajalca preusmeri na stran s seznamom vseh preteklih sprehodov.
+3. Sprehajalec klikne na nek pretekli sprehod.
+4. Sistem sprehajalcu prikaže podrobnosti o izbranem sprehodu(lokacijo, čas in lastnika).
+
+#### Osnovni tok [Izkušen sprehajalec]
+1. Izkušen sprehajalec izbere funkcionalnost za ogled preteklih sprehodov.
+2. Sistem izkušenega sprehajalca preusmeri na stran s seznamom vseh preteklih sprehodov.
+3. Izkušen sprehajalec klikne na nek pretekli sprehod.
+4. Sistem izkušenemu sprehajalcu prikaže podrobnosti o izbranem sprehodu(lokacijo, čas in lastnika).
+
+#### Izjemni tok
+**Izjemni tok 1**
+* Lastnik nima preteklih sprehodov, seznam je prazen.
+
+**Izjemni tok 2**
+* Sprehajalec nima preteklih sprehodov, seznam je prazen.
+
+**Izjemni tok 3**
+* Izkušen sprehajalec nima preteklih sprehodov, seznam je prazen.
+
+#### Pogoji
+* V sistem je vpisan lastnik, sprehajalec ali izkušen sprehajalec.
+
+#### Posledice
+* Lastnik lahko iz seznama označi najljubše sprehajalce in izkušene sprehajalce, lahko pa tudi prijavi sprehajalce ali izkušene sprehajalce za kršenje kodeksa aplikacije.
+
+#### Posebnosti
+
+#### Prioritete identificiranih funkcionalnosti
+SHOULD HAVE
+
+#### Sprejemni testi
+* **[Osnovni tok[Lastnik]]** Prijavi se kot lastnik, izberi funkcionalnost ogled preteklih sprehodov, izberi pretekli sprehod.
+* **[Osnovni tok[Sprehajalec]]** Prijavi se kot sprehajalec, izberi funkcionalnost ogled preteklih sprehodov, izberi pretekli sprehod.
+* **[Osnovni tok[Izkušen sprehajalec]]** Prijavi se kot izkušen sprehajalec, izberi funkcionalnost ogled preteklih sprehodov, izberi pretekli sprehod.
+* **[Izjemni tok 1]** Prijavi se kot lastnik, izberi funkcionalnost ogled preteklih sprehodov, izberi pretekli sprehod.
+* **[Izjemni tok 2]**  Prijavi se kot sprehajalec, izberi funkcionalnost ogled preteklih sprehodov, izberi pretekli sprehod.
+* **[Izjemni tok 3]**  Prijavi se kot izkušen sprehajalec, izberi funkcionalnost ogled preteklih sprehodov, izberi pretekli sprehod.
+
+-------------------
+
+### Prijava kršitve kodeksa aplikacije
+
+Lastnik lahko prijavi sprehajalca ali izkušenega sprehajalca zaradi kršitve kodeksa(pravil) aplikacije.
+
+#### Povzetek funkcionalnosti
+
+Če lastnik meni, da sprehajalec ali izkušen sprehajalec ni deloval v skladu s kodeksom aplikacije lahko prijavi sprehajalca.
+
+#### Osnovni tok
+
+1. Lastnik se vpiše v aplikacijo.
+2. Lastnik v menujski vrstici izbere povezavo na pretekle sprehode.
+3. V seznamu preteklih sprehodov izbere sprehajalca ali izkušenega sprehajalca za katerega je prepričan, da ne deluje v skladu s kodeksom aplikacije.
+4. Ob kliku na gumb 'Prijavi kršitev kodeksa' se uporabniku odpre pogovorna vrstica, kjer mora izbrati kršitve, ki jih pripisuje sprehajalcu ali izkušenemu sprehajalcu.
+5. Lastnik nato potrdi izbiro.
+6. Sistem ga preusmeri nazaj na pretekle sprehode in ga obvesti o uspešni oddaji prijave.
+7. Poleg imena prijavljenega kršitelja se prikaže zastavica ter onemogoči se gumb za ponovno prijavo kršitve.
+
+#### Alternativni tok
+
+1. Lastnik se vpiše v aplikacijo.
+2. Lastnik v menujski vrstici izbere povezavo na pretekle sprehode.
+3. V seznamu preteklih sprehodov izbere sprehajalca ali izkušenega sprehajalca za katerega je prepričan, da ne deluje v skladu s kodeksom aplikacije.
+4. Ob kliku na gumb 'Prijavi kršitev kodeksa' se uporabniku odpre pogovorna vrstica, kjer mora izbrati kršitve, ki jih pripisuje sprehajalcu ali izkušenemu sprehajalcu.
+5. Lastnik nato ovrže izbiro in zavrne prijavo kršitve.
+6. Sistem ga preusmeri nazaj na pretekle sprehode in ga obvesti o opuščeni oddaji prijave.
+
+#### Pogoji
+
+Lastnik in sprehajalec ali izkušen sprehajalec morata imeti opravljen vsaj en skupen termin/sprehod.
+
+#### Posledice
+
+Če več različnih lastnikov prijavi istega sprehajalca ali izkušenega sprehajalca, se ob oglasih sprehajalca ali izkušenega sprehajalca pojavi rdeča zastavica.
+
+#### Posebnosti
+
+/
+
+#### Prioritete identificiranih funkcionalnosti
+
+WOULD HAVE
+
+#### Sprejemni testi
+
+* **[Osnovni tok]** Uporabniku sistem pokaže zastavico poleg imena kršitelja in ima omogočeno ponovno prijavo kršitve za istega sprehajalca ali izkušenega sprehajalca.
+* **[Alternativni tok 1]** Uporabnik lahko ponovno odpre pogovorno okno za prijavo kršitve za istega sprehajalca ali izkušenega sprehajalca.
+
+-------------------
+
+### Označitev najljubših sprehajalcev
+
+Lastnik lahko označi najljubše sprehajalce ali izkušene sprehajalce.
+
+#### Povzetek funkcionalnosti
+
+Lastnik lahko preko preteklih sprehodov označi svoje priljubljene sprehajalce ali izkušene sprehajalce. Po oznaki moji priljubljeni sprehajalci lahko lastnik filtrira po oglasih.
+
+#### Osnovni tok
+
+1. Lastnik se vpiše v aplikacijo.
+2. Lastnik v menujski vrstici izbere povezavo na pretekle sprehode.
+3. V seznamu preteklih sprehodov izbere sprehajalca ali izkušenega sprehajalca s katerim je bil zadovoljen.
+4. Ob kliku na gumb 'Dodaj med priljubljene' se uporabniku odpre pogovorna vrstica, kjer lastnik lahko potrdi ali zavrne izbiro.
+5. Lastnik nato potrdi izbiro.
+6. Sistem ga preusmeri nazaj na pretekle sprehode in ga obvesti o uspešnem dodajanju sprehajalca med priljubljene.
+7. Poleg imena priljubljenega sprehajalca se prikaže zvezdica, ki pomeni, da je sprehajalec med priljubljenimi.
+8. Lastnik v menujski vrstici izbere povezavo na iskalnik oglasov.
+9. Pri iskanju lahko označi 'Išči samo med priljubljenimi sprehajalci'.
+10. Oglasi predhodno označenega priljubljenega sprehajalca so v zadetkih iskalnika.
+
+#### Alternativni tok
+
+1. Lastnik se vpiše v aplikacijo.
+2. Lastnik v menujski vrstici izbere povezavo na pretekle sprehode.
+3. V seznamu preteklih sprehodov izbere sprehajalca s katerim je bil zadovoljen.
+4. Ob kliku na gumb 'Dodaj med priljubljene' se uporabniku odpre pogovorna vrstica, kjer lastnik lahko potrdi ali zavrne izbiro.
+5. Lastnik nato zavrne izbiro.
+6. Sistem ga preusmeri nazaj na pretekle sprehode in ga obvesti o opuščenem dodajanju sprehajalca med priljubljene.
+7. Lastnik v menujski vrstici izbere povezavo na iskalnik oglasov.
+8. Pri iskanju lastnik ne more označiti 'Išči samo med priljubljenimi sprehajalci'.
+
+#### Pogoji
+
+Lastnik in sprehajalec morata imeti opravljen vsaj en skupen termin/sprehod.
+Če lastnika nima nobenega priljubljenega sprehajalca, je filter za iskanje po priljubljenih sprehajalcih onemogočen.
+
+#### Posledice
+
+Oglasi priljubljenega sprehajalca se prikazujejo med filtriranjem po priljubljenih sprehajalcih.
+
+#### Posebnosti
+
+/
+
+#### Prioritete identificiranih funkcionalnosti
+
+COULD HAVE.
+
+#### Sprejemni testi
+
+* **[Osnovni tok]** Uporabniku lahko filtrira v iskalniku po oglasih priljubljenih sprehajalcev.
+* **[Alternativni tok 1]** Uporabniku ne more filtrirati v iskalniku po oglasih priljubljenih sprehajalcev.
+
+-------------------
+
+### Izbris neprimernih oglasov
+
+#### Povzetek funkcionalnosti
+Administrator lahko izbriše oglase sprehajalcev ali izkušenih sprehajalcev, ki kršijo pravila aplikacije.
+
+#### Osnovni tok
+1. Administrator izbere oglas, ki krši pravila aplikacije.
+2. Sistem mu prikaže izbran oglas.
+3. Administrator klikne na gumb "Izbris oglasa".
+4. Sistem prikaže pojavno okno, ki sprašuje po potrditvi izbrisa.
+5. Administrator klikne na gumb "Potrdi"
+6. Sistem izbriše izbrani oglas iz baze podatkov.
+7. Sistem administratorja obvesti o uspešnem brisanju oglasa.
+8. Sistem zapre pojavno okno.
+
+#### Izjemni tok
+**Izjemni tok 1**
+* Administrator ne potrdi izbrisa oglasa. Oglas se ne izbriše iz baze podatkov in se še vedno prikazuje drugim uporabnikom.
+
+#### Pogoji
+* V sistem je prijavljen administrator.
+* Objavljen je vsaj en oglas.
+
+#### Posledice
+* Izbran oglas se izbriše iz baze podatkov in se neha prikazovati drugim uporabnikom.
+
+#### Posebnosti
+
+#### Prioritete identificiranih funkcionalnosti
+COULD HAVE
+
+#### Sprejemni testi
+* **[Osnovni tok]** Prijavi se kot administrator, izberi si ogled oglasov, klikni na izbran oglas, klikni na gumb "Izbris oglasa", klikni na gumb "Potrdi".
+* **[Izjemni tok 1]** Prijavi se kot administrator, izberi si ogled oglasov, klikni na izbran oglas, klikni na gumb "Izbris oglasa", ne potrdi izbrisa oglasa.
+
+-------------------
+
+### Zaklep računa kršiteljev
+
+#### Povzetek funkcionalnosti
+Administrator lahko zaklene račune sprehajalcev ali izkušenih sprehajalcev, ki so dobili zadostno število prijav za kršenje kodeksa aplikacije.
+
+#### Osnovni tok
+1. Administrator izbere profil sprehajalca z velikim številom prijav.
+2. Sistem prikaže profil sprehajalca.
+3. Administrator klikne na gumb "Zakleni uporabnika".
+4. Sistem prikaže pojavno okno, ki sprašuje za potrditev.
+5. Administrator klikne na gumb "Potrdi".
+6. Sistem označi profil sprehajalca kot zaklenjenega.
+
+#### Izjemni tok
+**Izjemni tok 1**
+* Administrator ne potrdi zaklepa uporabnika. Sprehajalec lahko še vedno uporablja svoj račun.
+
+#### Pogoji
+* V sistem je prijavljen administrator.
+* Nek sprehajalec je zbral dovolj prijav za kršenje kodeksa aplikacije.
+
+#### Posledice
+* Sistem zaklene določenega sprehajalca, s tem se mu onemogoči vpis v aplikacijo.
+
+#### Posebnosti
+
+#### Prioritete identificiranih funkcionalnosti
+WOULD HAVE
+#### Sprejemni testi
+* **[Osnovni tok]** Prijavi se kot administrator, izberi profil kršitelja, klikni na gumb "Zakleni uporabnika", klikni na gumb "Potrdi".
+* **[Izjemni tok 1]** Prijavi se kot administrator, izberi profil kršitelja, klikni na gumb "Zakleni uporabnika", ne potrdi zaklepa.
+
+-------------------
+
+### Ogled vseh oglasov
+
+#### Povzetek funkcionalnosti
+Lastnik si lahko ogleda vse trenutno objavljene oglase.
+
+#### Osnovni tok
+1. Lastnik izbere funkcionalnost za ogled vseh oglasov.
+2. Sistem prikaže seznam vseh trenutno objavljenih oglasov.
+
+#### Izjemni tok
+**Izjemni tok 1**
+* Lastnik si želi ogledati vse oglase, vendar trenutno ni objavljen noben oglas. Sistem lastnika o tem obvesti.
+
+#### Pogoji
+* V sistem je prijavljen lastnik.
+* Objavljen je vsaj en oglas.
+
+#### Posledice
+* Lastnik lahko odpira oglase in si ogleda njihove podrobnosti. Od tu lahko pošilja ponudbe za sprehod.
+
+#### Posebnosti
+
+#### Prioritete identificiranih funkcionalnosti
+MUST HAVE
+
+#### Sprejemni testi
+* **[Osnovni tok]** Prijavi se kot lastnik, izberi ogled vseh oglasov.
+* **[Alternativni tok 1]** Prijavi se kot lastnik, izberi ogled vseh oglasov.
+
+-------------------
+
+### Filtriranje oglasov
+
+#### Povzetek funkcionalnosti
+Lastnik lahko uporabi določene filtre po kateri se mu prikazujejo oglasi. Filtrira lahko po lokaciji, terminu, priljubljenih sprehajalcih in pasmi.
+
+#### Osnovni tok
+1. Lastnik izbere funkcionlanost za ogled vseh oglasov.
+2. Sistem prikaže seznam vseh oglasov.
+3. Lastnik si nastavi filtre po katerih si želi ogledati oglase.
+4. Lastnik klikne na gumb "Uporabi filtre".
+5. Sistem uporabi pridobljene filtre in uporabniku prikaže nov seznam oglasov.
+
+#### Izjemni tok
+**Izjemni tok 1**
+* Lastnik vnese željene filtre, sistem ugotovi da noben oglas ne ustreza podanim filtrom, sistem obvesti uporabnika da trenutno ni na voljo noben oglas, ki bi ustrezal podanim filtrom.
+
+#### Pogoji
+* V sistem je prijavljen lastnik.
+
+#### Posledice
+* Lastniku se prikaže seznam oglasov, ki ustreza njegovim filtrom.
+
+#### Posebnosti
+
+#### Prioritete identificiranih funkcionalnosti
+SHOULD HAVE
+
+#### Sprejemni testi
+* **[Osnovni tok]** Prijavi se kot lastnik, izberi ogled vseh oglasov, vnesi željene filtre, klikni na gumb "Uporabi filtre".
+* **[Izjemni tok 1]** Prijavi se kot lastnik, izberi ogled vseh oglasov, vnesi željene filtre, klikni na gumb "Uporabi filtre".
+
+-------------------
+
 
 ## 6. Nefunkcionalne zahteve
 
