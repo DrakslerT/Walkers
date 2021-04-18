@@ -597,6 +597,16 @@ Sprehajalec zavrne ponudbo.
 
 ![odziv na ponudbo - alternativni](../img/odzivNaPonudboAlternativni.png)
 
+## 1.8. Prijava
+
+Diagram za prijavo v sistem(akter: sprehajalec/izkušen sprehajalec/lastnik/administrator, funkcionalnost: Prijava).
+
+**Osnovni tok**
+
+Uporabnik se prijavi v sistem. Izjemni tok prikazuje dogodek, ko uporabik vnese napačen email ali geslo.
+
+![prijava - osnovni](../img/prijava.png)
+
 ## 1.9. Dodajanje admina
 
 Povišanje uporabnika v admina. Akcija bo izvedeljiva le preko CLI skripte.
