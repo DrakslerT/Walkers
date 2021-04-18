@@ -766,7 +766,7 @@ Diagram za dodajanje psa.
 
 Lastnik doda novega psa na svoj profil.
 
-![pes - osnovni](../img/DodajanjePsaOsnovniTok.png)
+![pes - osnovni](../img/DodajanjePsaOsnovniTok.PNG)
 Pri pridobivanju seznama pasm, ki so na izbiro se najprej pogleda, če se v predpomnilniku nahaja veljaven podatek, če ne se naredi klic na Api. Pasme iz Api-ja se zapišejo v predpomnilnik.
 
 V tabelo Pes se zapišejo vsi atributi.
