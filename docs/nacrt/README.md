@@ -1,59 +1,63 @@
 # 1. Načrt sistema
 
-
 |                             |                                                         |
 | :-------------------------- | :------------------------------------------------------ |
 | **Naziv projekta**          | Dog Walkers                             |
 | **Člani projektne skupine** | Martin Štrekelj, Mimi Klinec, Luka Bratina, Ilija Tavchioski, Tim Draksler |
 | **Kraj in datum**           | 18. 4. 2021                                   |
 
-
 ## 1.1. Povzetek
 
 V dokumentu je predstavljen celoten načrt bodočega sistema. Načrt je sestavljen iz načrta arhitekture sistema, načrta strukture oziroma razrednega diagrama, opisa razredov (ter njihovih atributov in metod) in načrtov obnašanja. Arhitekturo smo načrtovali po vzorcu MVC in jo predstavili z logičnim pogledom. Za predstavitev podsistemov smo uporabili komponentne diagrame. Vključen je tudi razvojni pogled, kjer je delo okvirno razdeljeno med člani skupine. Za prikaz strukture sistema smo uporabili razredni diagram in ga podprli s tekstovnimi opisi posameznih razredov. Pri načrtovanju razredov smo bili pozorni, da smo uporabljali dobre načrtovalske vzorce kot so Singleton, Fasada in Template. Ključen del načrta pa je načrt obnašanja, kjer je s pomočjo diagramov zaporedja in psevdokode prikazana dinamika sistema.
 
-
 ## 1.2. Načrt arhitekture
 
-### Logični Pogled
+### 1.2.1. Logični Pogled
+
 ![logicni](../img/logicni.png)
-### Komponentni diagrami
-#### Podsistem Avtentikacija
+
+### 1.2.2. Komponentni diagrami
+
+#### 1.2.2.1. Podsistem Avtentikacija
+
 ![Avtentikacija](../img/Avtentikacija.png)
-#### Podsistem Profil
+
+#### 1.2.2.2. Podsistem Profil
+
 ![Profil](../img/Profil.png)
-#### Podsistem Oglas
+
+#### 1.2.2.3. Podsistem Oglas
+
 ![Oglas](../img/Oglas.png)
-#### Podsistem Sprehod
+
+#### 1.2.2.4. Podsistem Sprehod
+
 ![Sprehod](../img/Sprehod.png)
-### Razvojni Pogled
+
+### 1.2.3. Razvojni Pogled
+
 ![Razvojni](../img/Razvojni.png)
-
-
-- Za prikaz uporabite enostavne prikaze, kot so blokovni ali paketni diagrami. Uporabite arhitekturne vzorce.
 
 ## 1.3. Načrt strukture
 
-### 1.3.1. 2.1 Razredni diagram
+### 1.3.1. 1.3.1 Razredni diagram
 
-**TO-DO**
+![razredni_diagram](../img/class_diagram.jpg)
 
-- Izdelajte razredni diagram.
-
-### 1.3.2. 2.2 Opis razredov
+## 1.4. Opis razredov
 
 Za vsak objekt je podan kratek opis v **naravnem jeziku**, **atributi** v formatu `atribut : podatkovni tip`
 (V kolikor je atribut poljuben(ni obvezen) je za imenom atributa oziroma pred dvopičjem (':') postavljen `?` npr `attr?: integer`. Če je za atribut dodana še kakšna posebnost ali značilnost je to pripisano v `()` npr `attr: boolean (default:false)`) ter opis vseh **nesamoumevnih metod**,
 ki so v tabelarični obliki v formatu: **ime metode, vhodni podatki, izhodni rezultat, opis** (Vhodni parametri so definirani po istem formatu kot atributi).
 Kot samoumevno metodo štejemo vse t.i. getterje in setterje. (npr. `pridobiId()`, `nastaviID()`).
 
-### 1.3.3. Mejni razredi `<<Boundary>>`
+### 1.4.1. Mejni razredi `<<Boundary>>`
 
-#### 1.3.3.1. GUI_Iskalnik
+#### 1.4.1.1. GUI_Iskalnik
 
 Razred GUI_Iskalnik se uporablja za prikaz seznama oglasov uporabniku. Omogoča tudi filtriranje oglasov.
 
-##### 1.3.3.1.1. Atributi
+##### 1.4.1.1.1. Atributi
 
 - `Oglasi: Oglas[]`
 
@@ -67,7 +71,7 @@ Filter:
 - `samoPriljubljeni?: boolean`
 - `samoIzkušeni?: boolean`
 
-##### 1.3.3.1.2. Metode
+##### 1.4.1.1.2. Metode
 
 |Opis metode   | Vhodni podatki   |Rezultat   |Opis   |
 |:---:|:---:|:---:|:---|
@@ -75,30 +79,30 @@ Filter:
 |`izberiOglas(Oglas)`   | Oglas: integer | void | Metoda prejme id Oglasa pošlje zahtevek za prikaz strani oglasa na strežnik. |
 |`izbrišiOglas(Oglas)`   | Oglas: integer | void | Metoda prejme id Oglasa pošlje zahtevek za izbris oglasa strežnik. |
 
-#### 1.3.3.2. GUI_Oglas
+#### 1.4.1.2. GUI_Oglas
 
 Razred GUI_Oglas se uporablja pri prikazu in interakciji uporabnika s posameznim oglasom.
 
-##### 1.3.3.2.1. Atributi
+##### 1.4.1.2.1. Atributi
 
 - `Oglas: Oglas`
 - `Pes: Pes`
 
-##### 1.3.3.2.2. Metode
+##### 1.4.1.2.2. Metode
 
 |Opis metode   | Vhodni podatki   |Rezultat   |Opis   |
 |:---:|:---:|:---:|:---|
 |`pošljiPonudbo(Oglas, Pes)`   | Oglas: integer, Pes: integer  | void | Metoda prejme id Oglasa in id Psa in pošlje zahtevek za pošiljanje ponudbe na strežnik.|
 
-#### 1.3.3.3. GUI_Sprehod
+#### 1.4.1.3. GUI_Sprehod
 
 Razred GUI_Sprehod se uporablja za prikaz posameznega sprehoda uporabniku. Glede na uporabniške pravice se uporablja tudi pri potrjevanju ponudbe za sprehod, pošiljanju ocen, prijavljanje kršitev in dodajanju med priljubljene.
 
-##### 1.3.3.3.1. Atributi
+##### 1.4.1.3.1. Atributi
 
 - `Sprehodi: Sprehod[];`
 
-##### 1.3.3.3.2. Metode
+##### 1.4.1.3.2. Metode
 
 |Opis metode   | Vhodni podatki   |Rezultat   |Opis   |
 |:---:|:---:|:---:|:---|
@@ -107,11 +111,11 @@ Razred GUI_Sprehod se uporablja za prikaz posameznega sprehoda uporabniku. Glede
 |`pošljiOceno(Sprehod, ocena)`   | Sprehod: integer, Ocena: Float  | void | Metoda prejme id Sprehoda in oceno, ki je vrednost na intervalu med [0-5] in pošlje zahtevek za dodajanje ocene na strežnik.|
 |`pošljiOdzivNaSprehod(Sprehod, odziv)`   | Sprehod: integer, Odziv: boolean  | void | Metoda prejme id Sprehoda in odziv, ki je vrednost boolean in pošlje zahtevek za pošiljanje odziva na sprehod na strežnik.|
 
-#### 1.3.3.4. GUI_UstvarjanjeOglasa
+#### 1.4.1.4. GUI_UstvarjanjeOglasa
 
 Razred GUI_UstvarjanjeOglasa se uporablja za prikaz pogleda ob ustvarjanju oglasa uporabniku (sprehajalcu, izkušenemu sprehajalcu).
 
-##### 1.3.3.4.1. Atributi
+##### 1.4.1.4.1. Atributi
 
 - `Kraj: String;`
 - `Opis: String`
@@ -120,7 +124,7 @@ Razred GUI_UstvarjanjeOglasa se uporablja za prikaz pogleda ob ustvarjanju oglas
 - `Sprehajalec: Sprehajalec`
 - `PriljublenePasme?: Pasma[]`
 
-##### 1.3.3.4.2. Metode
+##### 1.4.1.4.2. Metode
 
 |Opis metode   | Vhodni podatki   |Rezultat   |Opis   |
 |:---:|:---:|:---:|:---|
@@ -128,26 +132,26 @@ Razred GUI_UstvarjanjeOglasa se uporablja za prikaz pogleda ob ustvarjanju oglas
 |`pošljiObrazec(Oglas)`   | / | void | Metoda prejme vsebino obrazca, jo validira ter pošlje zahtevek za ustvarjanje oglasa na strežnik. V kolikor vsebina ni primerna se zahtevek ne pošlje, vendar se uporabnika obvesti o pomanjkljivostih.|
 |`ponastaviObrazec()`   | / | void | Metoda nastavi vrednosti obrazca na prvotne vrednosti. |
 
-#### 1.3.3.5. GUI_Prijava
+#### 1.4.1.5. GUI_Prijava
 
 Razred GUI_Prijava se uporablja pri prikazu in interakciji s prijavnim obrazcem.
 
-##### 1.3.3.5.1. Atributi
+##### 1.4.1.5.1. Atributi
 
 - `Email: String`
 - `Geslo: String`
 
-##### 1.3.3.5.2. Metode
+##### 1.4.1.5.2. Metode
 
 |Opis metode   | Vhodni podatki   |Rezultat   |Opis   |
 |:---:|:---:|:---:|:---|
 |`pošljiObrazec(Email, Geslo)`   | Email: string, Geslo: string | Uporabnik | Metoda prejme Email in Geslo, ju validira ter pošlje zahtevek za prijavo na strežnik. V kolikor vsebina ni primerna se zahtevek ne pošlje, vendar se uporabnika obvesti o pomanjkljivostih.|
 
-#### 1.3.3.6. GUI_Registracija
+#### 1.4.1.6. GUI_Registracija
 
 Razred GUI_Registracija se uporablja pri prikazu in interakciji z registracijskim obrazcem.
 
-##### 1.3.3.6.1. Atributi
+##### 1.4.1.6.1. Atributi
 
 - `Ime: String`
 - `Geslo: String`
@@ -157,18 +161,18 @@ Razred GUI_Registracija se uporablja pri prikazu in interakciji z registracijski
 
 Atribut `Vloga` je tipa TipUporabnikaEnum (glej `Uporabnik`). Razpoložljivi opciji/izbiri sta zgolj 'Lastnik' in 'Sprehajalec'.
 
-##### 1.3.3.6.2. Metode
+##### 1.4.1.6.2. Metode
 
 |Opis metode   | Vhodni podatki   |Rezultat   |Opis   |
 |:---:|:---:|:---:|:---|
 |`pošljiObrazec(Uporabnik)`   | Uporabnik: Object | Uporabnik | Metoda prejme vsebino obrazca v obliki objekta, vsebino validira ter pošlje zahtevek za registracijo na strežnik. V kolikor vsebina ni primerna se zahtevek ne pošlje, vendar se uporabnika obvesti o pomanjkljivostih.|
 |`ponastaviObrazec()`   | / | void | Metoda nastavi vrednosti obrazca na prvotne vrednosti. |
 
-#### 1.3.3.7. GUI_Profil
+#### 1.4.1.7. GUI_Profil
 
 Razred GUI_Profil se uporablja pri prikazu in urejanju uporabniškega profila. Pogled se razlikuje glede na vrsto uporabnika.
 
-##### 1.3.3.7.1. Atributi
+##### 1.4.1.7.1. Atributi
 
 Uporabnik:
 
@@ -183,7 +187,7 @@ Pes: (Na voljo le če je uporabnik tipa 'Lastnik')
 - `Spol: boolean`
 - `Pasma: integer (Id Pasme)`
 
-##### 1.3.3.7.2. Metode
+##### 1.4.1.7.2. Metode
 
 |Opis metode   | Vhodni podatki   |Rezultat   |Opis   |
 |:---:|:---:|:---:|:---|
@@ -195,44 +199,43 @@ Pes: (Na voljo le če je uporabnik tipa 'Lastnik')
 |`pridobiPasme()`   | / | Pasme: [{id: idPasme, ime: imePasme}] | Metoda pošlje zahtevek za pridobitev vseh pasem. Metoda vrne seznam objektov Pasme s podatki o id pasme in imenu pasme |
 |`odjava()`   | / | void | Metoda odjavi uporabnika iz aplikacije. |
 
-#### 1.3.3.8. GUI_Aktivacija
+#### 1.4.1.8. GUI_Aktivacija
 
 Razred GUI_Aktivacija se uporablja pri prikazu in interakciji z aktivacijskim obrazcem.
 
-##### 1.3.3.8.1. Atributi
+##### 1.4.1.8.1. Atributi
 
 - `Koda: String`
 - `Uporabnik: Uporabnik`
 
-##### 1.3.3.8.2. Metode
+##### 1.4.1.8.2. Metode
 
 |Opis metode   | Vhodni podatki   |Rezultat   |Opis   |
 |:---:|:---:|:---:|:---|
 |`pošljiAktivacijskoKodo(Uporabnik, Koda)`   | Uporabnik: Uporabnik, Koda: string | void | Metoda prejme Kodo zahtevek za aktivacijo na strežnik.|
 
-#### 1.3.3.9. API_GoogleCalendar
+#### 1.4.1.9. API_GoogleCalendar
 
 Gre za aplikacijski vmesnik **GoogleCalendar** do zunanjega sistema, ki omogoča ustvarjanje dogodkov. Dokumentacijo o aplikacijskem vmesniku najdete na: [CalendarAPI](https://developers.google.com/calendar/)
 
-#### 1.3.3.10. API_Pasme
+#### 1.4.1.10. API_Pasme
 
 Gre za aplikacijski vmesnik **theDogsApi** do zunanjega sistema, ki vsebuje podatke o pasmah psov. Dokumentacijo o aplikacijskem vmesniku najdete na: [TheDogApi](https://docs.thedogapi.com/)
 
+### 1.4.2. Entiteni razredi `<<Entity>>`
 
-### 1.3.4. Entiteni razredi `<<Entity>>`
-
-#### 1.3.4.1. Uporabnik
+#### 1.4.2.1. Uporabnik
 
 Z razredom Uporabnik predstavimo vse vrste uporabnikov, ki uporabljajo sistem. Uporablja načrtovalski vzorec [Template](https://refactoring.guru/design-patterns/template-method), kjer predstavlja abstrakten razred.
 
-##### 1.3.4.1.1. Atributi
+##### 1.4.2.1.1. Atributi
 
 Objekt razreda **Uporabnik** ima sledeče atribute:
 
 - `Id: Integer`
 - `Ime: String`
 - `Geslo: String`
-- `Email: String`
+- `Email: String (unique)`
 - `GSM?: Integer`
 - `Aktiviran: boolean | null (default: False)`
 - `DatumUstvaritve: Datetime`
@@ -255,29 +258,29 @@ Atribut `Aktiviran` ima tri vrednosti, in sicer:
 | True | Uporabnik je aktiviran. |
 | null | Uporabnik je deaktiviran s strani Administratorja |
 
-##### 1.3.4.1.2. Metode
+##### 1.4.2.1.2. Metode
 
 Razred `Uporabnik` nima dodatnih posebnih metod.
 
-#### 1.3.4.2. Administrator
+#### 1.4.2.2. Administrator
 
 Objekt razreda Administrator predstavlja uporabnika, ki sistem uporablja kot administrator. Razred uporablja načrtovalski vzorec [Template](https://refactoring.guru/design-patterns/template-method) in je generaliziran v razred Uporabnik.
 
-##### 1.3.4.2.1. Atributi
+##### 1.4.2.2.1. Atributi
 
 Objekt razreda **Administrator** podeduje vse atribute **Uporabnika**, kjer je
 
 - `Tip: 'Administrator'`
 
-##### 1.3.4.2.2. Metode
+##### 1.4.2.2.2. Metode
 
 Razred `Administrator` nima dodatnih posebnih metod.
 
-#### 1.3.4.3. Sprehajalec
+#### 1.4.2.3. Sprehajalec
 
 Objekt razreda Sprehajalec predstavlja sprehajalca. Razred uporablja načrtovalski vzorec [Template](https://refactoring.guru/design-patterns/template-method) in je generaliziran v razred Uporabnik.
 
-##### 1.3.4.3.1. Atributi
+##### 1.4.2.3.1. Atributi
 
 Objekt razreda **Sprehajalec** podeduje vse atribute **Uporabnika**, kjer je
 
@@ -308,7 +311,7 @@ in vsebuje naslednje vrednosti.
 - Atribut `PovprečnaOcena` je izračunano povprečje vseh `Ocen`, ki jih je sprehajalec prejel.
 - Atribut `Indeks` je produkt `OdzivniČas` * `PovprečnaOcena` izračunan v metodi `izračunIndeksa()`, kjer se vrednost `OdzivniČas` določi po naslednji tabeli:
 
-##### 1.3.4.3.2. Metode
+##### 1.4.2.3.2. Metode
 
 |Opis metode   | Vhodni podatki   |Rezultat   |Opis   |
 |:---:|:---:|:---:|:---|
@@ -318,41 +321,41 @@ in vsebuje naslednje vrednosti.
 |`povečajŠtSprehodov()`   | / | void  | Metoda inkrementira attribut `ŠtSprehodov`. V kolikor je vrednost `ŠtSprehodov` višja ali enaka 10 in `Tip` enak 'Sprehajalec' kliči metodo `povišajSprehajalca()` |
 |`povišajSprehajalca()`  | / | void  | Metoda klonira vse vrednosti attributov (pred tem jih ponovno izračuna s uporabo metod) trenutne istance `Sprehajalec` in v nov Objekt `IzkušeniSprehajalec` (prav tako vse povezane `Oglase`, `Ocene` in `Kršitve` poveže na novo istanco) in izbriše trenutno istanco. |
 
-#### 1.3.4.4. Izkušeni sprehajalec
+#### 1.4.2.4. Izkušeni sprehajalec
 
 Objekt razreda Izkušeni sprehajalec predstavlja sprehajalca, ki ima visoko povprečno oceno in nizek povprečni odzivni čas. Razred uporablja načrtovalski vzorec [Template](https://refactoring.guru/design-patterns/template-method) in je generaliziran v razred Uporabnik.
 
-##### 1.3.4.4.1. Atributi
+##### 1.4.2.4.1. Atributi
 
 Objekt razreda **Sprehajalec** podeduje vse atribute **Uporabnika**, kjer je
 
 - `Tip: 'Sprehajalec'`
 - `Oglasi: Oglas[] (limit: 99)`
 
-##### 1.3.4.4.2. Metode
+##### 1.4.2.4.2. Metode
 
 Razred `Izkušeni sprehajalec` nima dodatnih posebnih metod.
 
-#### 1.3.4.5. Lastnik
+#### 1.4.2.5. Lastnik
 
 Objekt razreda Lastnik predstavlja lastnika (vsaj enega) psa. Razred uporablja načrtovalski vzorec [Template](https://refactoring.guru/design-patterns/template-method) in je generaliziran v razred Uporabnik.
 
-##### 1.3.4.5.1. Atributi
+##### 1.4.2.5.1. Atributi
 
 Objekt razreda **Lastnik** podeduje vse atribute **Uporabnika**, kjer je
 
 - `Tip: 'Lastnik'`
 - `Psi: Pes[]`
 
-##### 1.3.4.5.2. Metode
+##### 1.4.2.5.2. Metode
 
 Razred `Lastnik` nima dodatnih posebnih metod.
 
-#### 1.3.4.6. Pes
+#### 1.4.2.6. Pes
 
 Objekt razreda Pes predstavlja lastnikovega psa. Razred je namenjen hranjenju informacij o psih.
 
-##### 1.3.4.6.1. Atributi
+##### 1.4.2.6.1. Atributi
 
 - `Id: Integer`
 - `Ime: String`
@@ -373,15 +376,15 @@ Atribut Spol ima dve vrednosti (boolean), in sicer:
 | False | Psička |
 | True | Pes |
 
-##### 1.3.4.6.2. Metode
+##### 1.4.2.6.2. Metode
 
 Razred `Pes` nima dodatnih posebnih metod.
 
-#### 1.3.4.7. Sprehod
+#### 1.4.2.7. Sprehod
 
 V razredu Sprehod se hranijo potrjeni termini sprehodov. Posamezen objekt je sprehod, dogovorjen s strani posameznega lastnika in posameznega sprehajalca.
 
-##### 1.3.4.7.1. Atributi
+##### 1.4.2.7.1. Atributi
 
 - `Id: integer`
 - `Status: boolean | null (default: null)`
@@ -399,43 +402,43 @@ Atribut `Status` ima tri različne opcije:
 | False | Sprehod je bil zavrnjen |
 | True | Sprehod je bil sprejet |
 
-##### 1.3.4.7.2. Metode
+##### 1.4.2.7.2. Metode
 
 Razred `Sprehod` nima dodatnih posebnih metod.
 
-#### 1.3.4.8. Ocena
+#### 1.4.2.8. Ocena
 
 Razred Ocena je namenjen hranjenju številskih ocen, ki jih po koncu sprehodov lastniki podajo sprehajalcem.
 
-##### 1.3.4.8.1. Atributi
+##### 1.4.2.8.1. Atributi
 
 - `Id: Integer`
 - `Vrednost: Float (interval: [0-5])`
 - `Sprehajalec: Sprehajalec`
 
-##### 1.3.4.8.2. Metode
+##### 1.4.2.8.2. Metode
 
 Razred `Ocena` nima dodatnih posebnih metod.
 
-#### 1.3.4.9. Kršitev
+#### 1.4.2.9. Kršitev
 
 Razred Kršitev je namenjen hranjenju preko sistema prijavljenih kršitev. Podajo jih lahko lastniki glede sprehajalcev.
 
-##### 1.3.4.9.1. Atributi
+##### 1.4.2.9.1. Atributi
 
 - `Id: Integer`
 - `Vsebina: String`
 - `Sprehajalec: Sprehajalec`
 
-##### 1.3.4.9.2. Metode
+##### 1.4.2.9.2. Metode
 
 Razred `Kršitev` nima dodatnih posebnih metod.
 
-#### 1.3.4.10. Oglas
+#### 1.4.2.10. Oglas
 
 Objekt razreda Oglas hrani vse ključne podatke o sprehodu, ki ga oglašuje posamezen sprehajalec.
 
-##### 1.3.4.10.1. Atributi
+##### 1.4.2.10.1. Atributi
 
 - `Id: Integer`
 - `Sprehajalec: Sprehajalec`
@@ -443,18 +446,17 @@ Objekt razreda Oglas hrani vse ključne podatke o sprehodu, ki ga oglašuje posa
 - `ČasZačetka: Datetime`
 - `ČasKonca: Datetime`
 
-##### 1.3.4.10.2. Metode
+##### 1.4.2.10.2. Metode
 
 Razred `Oglas` nima dodatnih posebnih metod.
 
+### 1.4.3. Kontrolni razredi `<<Control>>`
 
-### 1.3.5. Kontrolni razredi `<<Control>>`
-
-#### 1.3.5.1. AuthController
+#### 1.4.3.1. AuthController
 
 Razred AuthController se uporablja pri uporabniških vstopih v sistem in splošni avtentikaciji. Uporabnikom glede na njihove pravice določi dostop do funkcionalnosti sistema.
 
-##### 1.3.5.1.1. Metode
+##### 1.4.3.1.1. Metode
 
 |Opis metode   | Vhodni podatki   |Rezultat   |Opis   |
 |:---:|:---:|:---:|:---|
@@ -466,11 +468,11 @@ Razred AuthController se uporablja pri uporabniških vstopih v sistem in splošn
 |`ustvariAktivacijskoKodo(Ime, DatumUstvaritve)`   | Ime: String, DatumUstvaritve: DateTime  | AktivacijskaKoda: String  | Metoda iz vhodnih podatkov `Ime` in  `DatumUstvaritve` ustvari **Aktivacijsko kodo** po formuli: **`Ime` + `DatumUstvaritve` zgostimo s zgoščevalna funkcijo `MD5` in vzamemo zadnjih 6 znakov**. Metoda vrne ustvarjeno Aktivacijsko kodo. |
 |`povišajVAdmina(Uporabnik)`   | Uporabnik: Uporabnik  | void  | Metoda klonira vse vrednosti attributov podanega `Uporabnika` v nov Objekt `Administrator` prav tako posodobi.  |
 
-#### 1.3.5.2. ProfileController
+#### 1.4.3.2. ProfileController
 
 Razred ProfileController se uporablja pri upravljanju z uporabniškim profilom. Uporabnik si lahko ogleduje in ureja svoje podatke, določene glede na njegove pravice.
 
-##### 1.3.5.2.1. Metode
+##### 1.4.3.2.1. Metode
 
 |Opis metode   | Vhodni podatki   |Rezultat   |Opis   |
 |:---:|:---:|:---:|:---|
@@ -481,11 +483,11 @@ Razred ProfileController se uporablja pri upravljanju z uporabniškim profilom. 
 |`urediPsa(Pes)`   | Pes: Pes  | Odgovor: Response  | Metoda prejme Psa (glej `GUI_Profil`), vhodne podatke očisti in validira, ter posodobi Psa. Metoda vrne odgovor odjemalcu o uspešni/neuspešni izvedbi. |
 |`zbrišiPsa(Pes)`   | Pes: Pes  | Odgovor: Response  | Metoda prejme Uporabnika (glej `GUI_Profil`), in ga izbriše iz podatkovne baze.  Metoda vrne odgovor odjemalcu o uspešni/neuspešni izvedbi.|  
 
-#### 1.3.5.3. OglasController
+#### 1.4.3.3. OglasController
 
 Razred OglasController se uporablja pri upravljanju z oglasi o sprehodih. Uporabnik glede na svoje pravice objavlja in ureja ter pregleduje in filtrira oglase.
 
-##### 1.3.5.3.1. Metode
+##### 1.4.3.3.1. Metode
 
 |Opis metode   | Vhodni podatki   |Rezultat   |Opis   |
 |:---:|:---:|:---:|:---|
@@ -496,11 +498,11 @@ Razred OglasController se uporablja pri upravljanju z oglasi o sprehodih. Uporab
 |`zbrišiOglas(Oglas)`   | Oglas: Oglas  | Odgovor: Response | Metoda prejme `Oglas` (glej `GUI_Oglas`) in ga izbriše. |
 |`filtrirajOglase(Filtri)`   | Filtri: object  | Odgovor: Response | Metoda prejme objekt filtrov (glej `GUI_Iskalnik`) in prefiltrira Oglase, da ustrezajo filtrom. Prefiltrirane oglase vrne metoda kot odgovor. |  
 
-#### 1.3.5.4. SprehodController
+#### 1.4.3.4. SprehodController
 
 Razred SprehodController se uporablja za upravljanje vsega v okviru sprehoda. Upravlja s stvaritvijo, prikazom in potrditvijo sprehoda udeleženim uporabnikom, poleg tega pa tudi s podajanjem ocen in prijavljanjem kršitev.
 
-##### 1.3.5.4.1. Metode
+##### 1.4.3.4.1. Metode
 
 |Opis metode   | Vhodni podatki   |Rezultat   |Opis   |
 |:---:|:---:|:---:|:---|
@@ -510,11 +512,11 @@ Razred SprehodController se uporablja za upravljanje vsega v okviru sprehoda. Up
 |`prijaviKršitev(Sprehod, Kršitev)`   | Sprehod: Sprehod, Kršitev: String  | Odgovor: Response  | Metoda prejme `Sprehod` (glej `GUI_Sprehod`) in `Kršitev` v tekstualni obliki. Metoda podatke očisti in ustvari nov objekt `Kršitev` z `Vsebina` vhodnega parametra.  Metoda vrne odgovor odjemalcu o uspešni/neuspešni izvedbi. |
 |`ustvariSprehod(Oglas, Pes)`   | Oglas: Oglas, Pes: Pes  | Odgovor: Response | Metoda prejme `Oglas` ter `Psa` in ustvari nov objekt `Sprehod`. Metoda vrne odgovor odjemalcu o uspešni/neuspešni izvedbi. |
 
-#### 1.3.5.5. PasmeFasada
+#### 1.4.3.5. PasmeFasada
 
 Razred PasmeFasada upravlja s pridobivanjem potrebnih podatkov o pasmah psov, preko zunanjega aplikacijskega vmesnika `API_Pasme`. Gre za fasado po načrtovalskem vzorcu [Facade](https://refactoring.guru/design-patterns/facade).
 
-##### 1.3.5.5.1. Metode
+##### 1.4.3.5.1. Metode
 
 |Opis metode   | Vhodni podatki   |Rezultat   |Opis   |
 |:---:|:---:|:---:|:---|
@@ -522,43 +524,41 @@ Razred PasmeFasada upravlja s pridobivanjem potrebnih podatkov o pasmah psov, pr
 |`pridobiPasme()` | / | Odgovor: Response  | Metoda najprej preveri ali se podatki o Pasmah že nahajajo na predpolnilniku kliče metodo `pridobiPasme()` razreda `Predpolnilnik` (če, ja jih takoj vrne v odgovoru). Če tej ne obstajajo kliče zunanji aplikacijski vmesnik `API_Pasme` in pridobi seznam vseh pasem. Nato kliče metodo `normalizirajPasme(Pasme)` in pridobljene rezultate shrani v predpolnilnik s metodo `shraniPasme(Pasme)` razreda `Predpolnilnik` ter jih pošlje na odjemalca.|
 |`pridobiPasmo(idPasme)`   | idPasme: integer | PodatkiOPasmi: {Pasma_ime: String, Temperament: String, WikiPasmeUrl: String, Višina: Integer, Teža: Integer} | Metoda prejme idPasme in kliče aplikacijski vmesnik `API_Pasme`, da pridobi ostale informacije o izbrani pasmi. Iz pridobljenih podatkov zapakira v objekt le tiste podatke, ki jih potrebujemo za opis Psa. Metoda vrne objekt `PodatkiOPasmi`.  |
 
-#### 1.3.5.6. GoogleCalendarFasada
+#### 1.4.3.6. GoogleCalendarFasada
 
 Razred GoogleCalendarFasada upravlja z vnosi dogodkov (sprehodov) v koledar, preko aplikacijskega vmesnika `API_GoogleCalendar`. Gre za fasado po načrtovalskem vzorcu [Facade](https://refactoring.guru/design-patterns/facade).
 
-##### 1.3.5.6.1. Metode
+##### 1.4.3.6.1. Metode
 
 |Opis metode   | Vhodni podatki   |Rezultat   |Opis   |
 |:---:|:---:|:---:|:---|
 |`ustvariDogodek(Sprehod)` | / | void | Metoda preko aplikacijskega vmesnika `API_GoogleCalendar` ustvari dogodek za uporabnika  |
 
-#### 1.3.5.7. BazaTransakcij
+#### 1.4.3.7. BazaTransakcij
 
 Razred BazaTransakcij skrbi za upravljanje s relacijsko podatkovno bazo in ustreznimi podatki. Gre za načrtovalski vzorec [Singleton](https://refactoring.guru/design-patterns/singleton).
 
-##### 1.3.5.7.1. Metode
+##### 1.4.3.7.1. Metode
 
 |Opis metode   | Vhodni podatki   |Rezultat   |Opis   |
 |:---:|:---:|:---:|:---|
 |`poveži()` | / | void | Metoda pridobi parametre okolja za povezavo na podatkovno bazo in se poveže. |
 |`dobiIstanco()`   | / | IstancaDB: DB | Metoda preveri ali istanca podatkovne baze že obstaja. Če ja, jo vrne. Drugače ustvari novo se poveže (`poveži()`) in jo vrne.  |
 
-#### 1.3.5.8. Predpolnilnik
+#### 1.4.3.8. Predpolnilnik
 
 Razred Predpomnilnik je namenjen hranjenju določenih podatkov o pasmah psov. S hranjenjem teh podatkov se zmanjša število poizvedb preko zunanjega aplikacijskega vmesnika `API_Pasme`.
 
-##### 1.3.5.8.1. Metode
+##### 1.4.3.8.1. Metode
 
 |Opis metode   | Vhodni podatki   |Rezultat   |Opis   |
 |:---:|:---:|:---:|:---|
 |`pridobiPasme()` | / | Pasme: [{Pasma_ime: String, idPasme: integer }], False  | Metoda iz predpolnilnika pridobi pasme in jih vrne. V kolikor pasem ni shranjenih v predpolnilniku metoda vrne False. |
 |`shraniPasme(Pasme)`   | Pasme: [{Pasma_ime: String, idPasme: integer }] | void | Metoda prejme Pasme in jih shrani v predpolnilnik.  |
 
-
-
 ## 1.5. Načrt obnašanja
 
-## Urejanje profila
+## 1.6. Urejanje profila
 
 Diagram zaporedja za urejanje profila (akter: uporabnik - lastnik/sprehajalec/izkušeni sprehajalec/administrator,  funkcionalnost: urejanje profila).
 
@@ -566,7 +566,7 @@ Diagram zaporedja za urejanje profila (akter: uporabnik - lastnik/sprehajalec/iz
 
 Uporabnik shrani spremembe.
 
-![urejanje profila - osnovni](../img/urejanjeProfilaOsnovni.png)	
+![urejanje profila - osnovni](../img/urejanjeProfilaOsnovni.png)
 
 **Alternativni tok**
 
@@ -574,15 +574,13 @@ Uporabnik spremembe prekliče.
 
 ![urejanje profila - alternativni](../img/urejanjeProfilaAlternativni.png)
 
-
-## Zaklepanje računov uporabnikom
+## 1.7. Zaklepanje računov uporabnikom
 
 Diagram zaporedja za zaklepanje računov uporabnikom (akter: administrator, funkcionalnost: zaklep računa kršiteljev).
 
 ![zaklepanje racunov](../img/zaklepanjeRacunov.png)
 
-
-## Odziv na ponudbo
+## 1.8. Odziv na ponudbo
 
 V ta diagram sta vključeni tudi funkcionalnosti za izračun povprečnega odzivnega časa in zapis v osebni koledar, saj sta posledici odziva na ponudbo.
 Diagram zaporedja za odziv na ponudbo (akter: sprehajalec/izkušeni sprehajalec,  funkcionalnosti: Odziv na ponudbo sprehajanja psa, Izračun povprečnega odzivnega časa, Zapis v osebni koledar).
@@ -599,4 +597,29 @@ Sprehajalec zavrne ponudbo.
 
 ![odziv na ponudbo - alternativni](../img/odzivNaPonudboAlternativni.png)
 
+## 1.9. Dodajanje admina
 
+Povišanje uporabnika v admina. Akcija bo izvedeljiva le preko CLI skripte.
+
+Načrt v obliki pseudokode:
+
+```bash
+INPUT: email_uporabnika
+
+// Pridobi istanco podatkovne baze iz BazeTransakcij
+db = BazaTransakcij::pridobiIstanco()
+
+// Poišči uporabnika 
+user = db.select(uporabik).from(uporabniki).where({email = email_uporabnika})
+
+if user: 
+  // Nadgradi uporabnika v admina
+  db.update(uporabniki).set(vloga = "Administrator").where({email = email})
+
+  // Izpiši na standardni izhod odgovor
+  echo "Uporabnik z emailom {email_uporabnika} je nadgrajen v vlogo administratorja. Da bo vloga vidna, se mora uporabnik ponovno prijaviti."
+
+else:
+  // Izpiši na standardni izhod odgovor
+  echo "Uporabnik z emailom {email_uporabnika} ne obstaja, preveri ali si vnesel pravi email naslov."
+```
