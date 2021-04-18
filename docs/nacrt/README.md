@@ -558,7 +558,7 @@ Razred Predpomnilnik je namenjen hranjenju določenih podatkov o pasmah psov. S 
 
 ## 1.5. Načrt obnašanja
 
-## 1.6. Urejanje profila
+#### 1.5.1. Urejanje profila
 
 Diagram zaporedja za urejanje profila (akter: uporabnik - lastnik/sprehajalec/izkušeni sprehajalec/administrator,  funkcionalnost: urejanje profila).
 
@@ -574,13 +574,13 @@ Uporabnik spremembe prekliče.
 
 ![urejanje profila - alternativni](../img/urejanjeProfilaAlternativni.png)
 
-## 1.7. Zaklepanje računov uporabnikom
+#### 1.5.2. Zaklepanje računov uporabnikom
 
 Diagram zaporedja za zaklepanje računov uporabnikom (akter: administrator, funkcionalnost: zaklep računa kršiteljev).
 
 ![zaklepanje racunov](../img/zaklepanjeRacunov.png)
 
-## 1.8. Odziv na ponudbo
+#### 1.5.3. Odziv na ponudbo
 
 V ta diagram sta vključeni tudi funkcionalnosti za izračun povprečnega odzivnega časa in zapis v osebni koledar, saj sta posledici odziva na ponudbo.
 Diagram zaporedja za odziv na ponudbo (akter: sprehajalec/izkušeni sprehajalec,  funkcionalnosti: Odziv na ponudbo sprehajanja psa, Izračun povprečnega odzivnega časa, Zapis v osebni koledar).
@@ -597,7 +597,7 @@ Sprehajalec zavrne ponudbo.
 
 ![odziv na ponudbo - alternativni](../img/odzivNaPonudboAlternativni.png)
 
-## 1.9. Prijava
+#### 1.5.4. Prijava
 
 Diagram za prijavo v sistem(akter: sprehajalec/izkušen sprehajalec/lastnik/administrator, funkcionalnost: Prijava).
 
@@ -607,7 +607,7 @@ Uporabnik se prijavi v sistem. Izjemni tok prikazuje dogodek, ko uporabik vnese 
 
 ![prijava - osnovni](../img/prijava.png)
 
-## 1.10. Ogled oglasov
+#### 1.5.5. Ogled oglasov
 
 Diagram za ogled vseh oglasov(akter: lastnik/administrator, funkcionalnost: Ogled oglasov).
 
@@ -617,7 +617,7 @@ Uporabnik odpre iskalnik oglasov, tu se mu prikažejo vsi oglasi, ki so trenutno
 
 ![ogled oglasov - osnovni](../img/ogledOglasov.png)
 
-## 1.11. Brisanje oglasa
+#### 1.5.6. Brisanje oglasa
 
 Diagram za brisanje oglasa(akter: administrator, funkcionalnost: Brisanje oglasov).
 
@@ -627,7 +627,7 @@ Administrator klikne na oglas, ki ga želi izbrisati, potem tudi potrdi brisanje
 
 ![brisanje oglasa - osnovni](../img/brisanjeOglasa.png)
 
-## 1.12. Filtriranje oglasov
+#### 1.5.7. Filtriranje oglasov
 
 Diagram za filtriranje oglasov(akter: lastnik/administrator, funkcionalnost: Filtriranje oglasov).
 
@@ -637,7 +637,7 @@ Uporabnik izbere željene filtre in jih uporabi. Izjemi tok prikazuje dogodek, k
 
 ![filtriranje oglasov - osnovni](../img/filtriranjeOglasov.png)
 
-## 1.13. Podelitev ocene
+#### 1.5.8. Podelitev ocene
 
 Diagram za podelitev ocene(akter: lastnik, funkcionalnost: Podelitev ocene).
 
@@ -647,7 +647,7 @@ Uporabnik izbranemu sprehodu dodeli željeno oceno. Izjemni tok prikazuje dogode
 
 ![podelitev ocene - osnovni](../img/podelitevOcene.png)
 
-## 1.13. Pošiljanje ponudbe
+#### 1.5.9. Pošiljanje ponudbe
 
 Diagram za pošiljanje ponudbe za sprehod(akter: lastnik, funkcionalnost: Pošiljanje ponudbe).
 
@@ -657,7 +657,7 @@ Uporabnik pošlje ponudbo za sprehod izbranemu sprehajalcu. Izjemni tok prikazuj
 
 ![pošiljanje ponudbe - osnovni](../img/pošiljanjePonudbe.png)
 
-## 1.9. Dodajanje admina
+#### 1.5.10 Dodajanje admina
 
 Povišanje uporabnika v admina. Akcija bo izvedeljiva le preko CLI skripte.
 
