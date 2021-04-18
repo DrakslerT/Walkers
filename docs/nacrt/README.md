@@ -14,7 +14,21 @@
 
 ## 1.2. Načrt arhitekture
 
-**TO-DO**
+### Logični Pogled
+![logicni](../img/logicni.PNG)
+### Komponentni diagrami
+#### Podsistem Avtentikacija
+![Avtentikacija](../img/Avtentikacija.PNG)
+#### Podsistem Profil
+![Profil](../img/Profil.PNG)
+#### Podsistem Oglas
+![Oglas](../img/Oglas.PNG)
+#### Podsistem Sprehod
+![Sprehod](../img/Sprehod.PNG)
+### Razvojni Pogled
+#### Podsistem Avtentikacija
+![Razvojni](../img/Razvojni.PNG)
+
 
 - Za prikaz uporabite enostavne prikaze, kot so blokovni ali paketni diagrami. Uporabite arhitekturne vzorce.
 
