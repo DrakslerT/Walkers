@@ -614,7 +614,7 @@ user = db.select(uporabik).from(uporabniki).where({email = email_uporabnika})
 
 if user: 
   // Nadgradi uporabnika v admina
-  db.update(uporabniki).set(vloga = "Administrator").where({email = email})
+  db.update(uporabniki).set(vloga = "Administrator").where({email = email_uporabnika})
 
   // Izpiši na standardni izhod odgovor
   echo "Uporabnik z emailom {email_uporabnika} je nadgrajen v vlogo administratorja. Da bo vloga vidna, se mora uporabnik ponovno prijaviti."
