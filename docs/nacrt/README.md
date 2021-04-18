@@ -520,7 +520,7 @@ Razred GoogleCalendarFasada upravlja z vnosi dogodkov (sprehodov) v koledar, pre
 
 #### 1.3.5.7. BazaTransakcij
 
-Razred BazaTransakcij skrbi za upravljanje s podatkovnimi bazami in ustreznimi podatki. Gre za načrtovalski vzorec [Singleton](https://refactoring.guru/design-patterns/singleton).
+Razred BazaTransakcij skrbi za upravljanje s relacijsko podatkovno bazo in ustreznimi podatki. Gre za načrtovalski vzorec [Singleton](https://refactoring.guru/design-patterns/singleton).
 
 ##### 1.3.5.7.1. Metode
 
