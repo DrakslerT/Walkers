@@ -597,7 +597,7 @@ Sprehajalec zavrne ponudbo.
 
 ![odziv na ponudbo - alternativni](../img/odzivNaPonudboAlternativni.png)
 
-## 1.8. Prijava
+## 1.9. Prijava
 
 Diagram za prijavo v sistem(akter: sprehajalec/izkušen sprehajalec/lastnik/administrator, funkcionalnost: Prijava).
 
@@ -606,6 +606,56 @@ Diagram za prijavo v sistem(akter: sprehajalec/izkušen sprehajalec/lastnik/admi
 Uporabnik se prijavi v sistem. Izjemni tok prikazuje dogodek, ko uporabik vnese napačen email ali geslo.
 
 ![prijava - osnovni](../img/prijava.png)
+
+## 1.10. Ogled oglasov
+
+Diagram za ogled vseh oglasov(akter: lastnik/administrator, funkcionalnost: Ogled oglasov).
+
+**Osnovni tok**
+
+Uporabnik odpre iskalnik oglasov, tu se mu prikažejo vsi oglasi, ki so trenutno na voljo. Drugih tokov ni.
+
+![ogled oglasov - osnovni](../img/ogledOglasov.png)
+
+## 1.11. Brisanje oglasa
+
+Diagram za brisanje oglasa(akter: administrator, funkcionalnost: Brisanje oglasov).
+
+**Osnovni tok**
+
+Administrator klikne na oglas, ki ga želi izbrisati, potem tudi potrdi brisanje. Izjemi tok se zgodi, ko administrator ne potrdi brisanja.
+
+![brisanje oglasa - osnovni](../img/brisanjeOglasa.png)
+
+## 1.12. Filtriranje oglasov
+
+Diagram za filtriranje oglasov(akter: lastnik/administrator, funkcionalnost: Filtriranje oglasov).
+
+**Osnovni tok**
+
+Uporabnik izbere željene filtre in jih uporabi. Izjemi tok prikazuje dogodek, ko noben oglas ne ustreza izbranim filtrom.
+
+![filtriranje oglasov - osnovni](../img/filtriranjeOglasov.png)
+
+## 1.13. Podelitev ocene
+
+Diagram za podelitev ocene(akter: lastnik, funkcionalnost: Podelitev ocene).
+
+**Osnovni tok**
+
+Uporabnik izbranemu sprehodu dodeli željeno oceno. Izjemni tok prikazuje dogodek, ko lastnik ne potrdi oddaje ocene.
+
+![podelitev ocene - osnovni](../img/podelitevOcene.png)
+
+## 1.13. Pošiljanje ponudbe
+
+Diagram za pošiljanje ponudbe za sprehod(akter: lastnik, funkcionalnost: Pošiljanje ponudbe).
+
+**Osnovni tok**
+
+Uporabnik pošlje ponudbo za sprehod izbranemu sprehajalcu. Izjemni tok prikazuje dogodek, ko lastnik ne potrdi pošiljanja ponudbe.
+
+![pošiljanje ponudbe - osnovni](../img/pošiljanjePonudbe.png)
 
 ## 1.9. Dodajanje admina
 
