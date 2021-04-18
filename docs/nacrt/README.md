@@ -26,7 +26,6 @@
 #### Podsistem Sprehod
 ![Sprehod](../img/Sprehod.png)
 ### Razvojni Pogled
-#### Podsistem Avtentikacija
 ![Razvojni](../img/Razvojni.png)
 
 
