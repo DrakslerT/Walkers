@@ -110,7 +110,7 @@ Razred GUI_Sprehod se uporablja za prikaz posameznega sprehoda uporabniku. Glede
 |`pošljiPriljubljenega(Sprehod)`   | Sprehod: integer  | void | Metoda prejme id Sprehoda in pošlje zahtevek za dodajanje priljubljenega na strežnik.|
 |`pošljiOceno(Sprehod, ocena)`   | Sprehod: integer, Ocena: Float  | void | Metoda prejme id Sprehoda in oceno, ki je vrednost na intervalu med [0-5] in pošlje zahtevek za dodajanje ocene na strežnik.|
 |`pošljiOdzivNaSprehod(Sprehod, odziv)`   | Sprehod: integer, Odziv: boolean  | void | Metoda prejme id Sprehoda in odziv, ki je vrednost boolean in pošlje zahtevek za pošiljanje odziva na sprehod na strežnik.|
-|`izberiSprehod(Sprehod)`   | Sprehod: integer | odgovor: Response | Metoda prejme id Sprehoda in pošlje zahtevek za prikaz strani sprehoda na strežnik.|
+|`izberiSprehod(Sprehod)`   | Sprehod: integer | odgovor: Response | Metoda prejme id `Sprehoda` in pošlje zahtevek za prikaz strani sprehoda na strežnik.|
 
 #### 1.4.1.4. GUI_UstvarjanjeOglasa
 
@@ -512,8 +512,8 @@ Razred SprehodController se uporablja za upravljanje vsega v okviru sprehoda. Up
 |`dodajOceno(Sprehod, Ocena)`   | Sprehod: Sprehod, Ocena: Float  | Odgovor: Response | Metoda prejme `Sprehod` (glej `GUI_Sprehod`) in `Oceno` float na intervalu [0-5].Metoda ustvari nov objekt `Ocena` z `Vrednost` vhodnega parametra.  Metoda vrne odgovor odjemalcu o uspešni/neuspešni izvedbi.  |
 |`prijaviKršitev(Sprehod, Kršitev)`   | Sprehod: Sprehod, Kršitev: String  | Odgovor: Response  | Metoda prejme `Sprehod` (glej `GUI_Sprehod`) in `Kršitev` v tekstualni obliki. Metoda podatke očisti in ustvari nov objekt `Kršitev` z `Vsebina` vhodnega parametra.  Metoda vrne odgovor odjemalcu o uspešni/neuspešni izvedbi. |
 |`ustvariSprehod(Oglas, Pes)`   | Oglas: Oglas, Pes: Pes  | Odgovor: Response | Metoda prejme `Oglas` ter `Psa` in ustvari nov objekt `Sprehod`. Metoda vrne odgovor odjemalcu o uspešni/neuspešni izvedbi. |
-|`pokažiSprehod(Sprehod)`   | Sprehod: Sprehod | Odgovor: Response | Metoda prejme Sprehod, pridobi vse podatke o izbranem Sprehodu in vrne podatke kot odgovor. |
-|`obvestiSprehajalca(Oglas)`   | Oglas: Oglas | Void | Metoda prejme Oglas na katerega je bila poslana ponudba, ter o tem obvesti Sprehajalca, kateremu pripada oglas.|
+|`pokažiSprehod(Sprehod)`   | Sprehod: Sprehod | Odgovor: Response | Metoda prejme `Sprehod`, pridobi vse podatke o izbranem sprehodu in vrne podatke kot odgovor. |
+|`obvestiSprehajalca(Oglas)`   | Oglas: Oglas | Void | Metoda prejme `Oglas` na katerega je bila poslana ponudba, ter o tem obvesti `Sprehajalca`, kateremu pripada oglas.|
 
 #### 1.4.3.5. PasmeFasada
 
