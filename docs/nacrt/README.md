@@ -558,11 +558,45 @@ Razred Predpomnilnik je namenjen hranjenju določenih podatkov o pasmah psov. S 
 
 ## 1.5. Načrt obnašanja
 
-**TO-DO**
+## Urejanje profila
 
-- Za izdelavo načrta obnašanja lahko uporabite:
-  - diagrame zaporedja,
-  - končne avtomate,
-  - diagrame aktivnosti,
-  - diagrame stanj in
-  - psevdokodo.
+Diagram zaporedja za urejanje profila (akter: uporabnik - lastnik/sprehajalec/izkušeni sprehajalec/administrator,  funkcionalnost: urejanje profila).
+
+**Osnovni tok**
+
+Uporabnik shrani spremembe.
+
+![urejanje profila - osnovni](../img/urejanjeProfilaOsnovni.png)	
+
+**Alternativni tok**
+
+Uporabnik spremembe prekliče.
+
+![urejanje profila - alternativni](../img/urejanjeProfilaAlternativni.png)
+
+
+## Zaklepanje računov uporabnikom
+
+Diagram zaporedja za zaklepanje računov uporabnikom (akter: administrator, funkcionalnost: zaklep računa kršiteljev).
+
+![zaklepanje racunov](../img/zaklepanjeRacunov.png)
+
+
+## Odziv na ponudbo
+
+V ta diagram sta vključeni tudi funkcionalnosti za izračun povprečnega odzivnega časa in zapis v osebni koledar, saj sta posledici odziva na ponudbo.
+Diagram zaporedja za odziv na ponudbo (akter: sprehajalec/izkušeni sprehajalec,  funkcionalnosti: Odziv na ponudbo sprehajanja psa, Izračun povprečnega odzivnega časa, Zapis v osebni koledar).
+
+**Osnovni tok**
+
+Sprehajalec sprejme ponudbo. Izjemni tok prikazuje dogodek, ko sprehajalec ponudbe ne sprejme pravočasno, zato se smatra kot zavrnjena (False).
+
+![odziv na ponudbo - osnovni](../img/odzivNaPonudboOsnovni.png)
+
+**Alternativni tok**
+
+Sprehajalec zavrne ponudbo.
+
+![odziv na ponudbo - alternativni](../img/odzivNaPonudboAlternativni.png)
+
+
