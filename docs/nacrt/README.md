@@ -394,6 +394,7 @@ V razredu Sprehod se hranijo potrjeni termini sprehodov. Posamezen objekt je spr
 - `Oglas: Oglas`
 - `Pes: Pes`
 - `novaSprememba: boolean (default: True);`
+- `Priljubljen: boolean (default: False)`
 
 Atribut `Status` ima tri različne opcije:
 
@@ -686,3 +687,103 @@ else:
   // Izpiši na standardni izhod odgovor
   echo "Uporabnik z emailom {email_uporabnika} ne obstaja, preveri ali si vnesel pravi email naslov."
 ```
+
+#### 1.5.11. Registracija
+
+Diagram za pošiljanje ponudbe za registracijo.
+
+**Osnovni tok**
+
+Neregistriran uporabnik se registrira.
+
+![registracija - osnovni](../img/RegistracijaOsnovniTok.png)
+Pri dodajanju uporabnika v tabelo se zapišejo vsi njegovi atributi.
+Pri spreminjanju, se spremeni atribut Aktiviran na True.
+
+**Alternativni tok 1**
+
+Neregistriran uporabnik se registrira kot lastnik.
+
+![registracija - alternativni 1](../img/RegistracijaAlternativniTok1.png)
+Pri dodajanju psa v tabelo se zapišejo vsi njegovi atributi.
+
+**Alternativni tok 2**
+
+Neregistriran uporabnik poskusi dostopati do funkcionalnosti za registrirane uporabnike.
+
+![registracija - alternativni 2](../img/RegistracijaAlternativniTok2.png)
+
+**Izredni tok 1**
+
+Neregistriran uporabnik se poskusi registrirati z neveljavnim geslom.
+
+![registracija - izredni 1](../img/RegistracijaIzredniTok1.png)
+
+**Izredni tok 2**
+
+Neregistriran uporabnik se poskusi registrirati z že obstoječim email naslovom.
+
+![registracija - izredni 2](../img/RegistracijaIzredniTok2.png)
+
+#### 1.5.12. Prijavljanje kršitev kodeksa
+
+Diagram za prijavljanje kršitev kodeksa.
+
+**Osnovni tok**
+
+Lastnik prijavi kršitev kodeksa s strani sprehajalca.
+
+![kršitve - osnovni](../img/PrijavljanjeKršitevOsnovniTok.png)
+V tabelo kršitev se zapišejo vsi atributi.
+
+#### 1.5.13. Pregled zgodovine sprehodov
+
+Diagram za pregled zgodovine sprehodov.
+
+**Osnovni tok**
+
+Lastnik in sprehajalec pogledata pretekli sprehod. 
+
+![zgodovina - osnovni](../img/PregledZgodovineSprehodovOsnovniTok.png)
+V tabeli sprehod se vsem pridobljenim sprehodom z atributon novaSprememba= true, le-ta spremeni na false.
+
+#### 1.5.14. Objava oglasa
+
+Diagram za objavo novega oglasa.
+
+**Osnovni tok**
+
+Sprehajalec ustvari in objavi nov oglas.
+
+![novOglas - osnovni](../img/ObjavaOglasaOsnovniTok.png)
+V tabelo Oglas se zapišejo vsi atributi.
+
+#### 1.5.15. Dodajanje psa
+
+Diagram za dodajanje psa.
+
+**Osnovni tok**
+
+Lastnik doda novega psa na svoj profil.
+
+![pes - osnovni](../img/DodajanjePsaOsnovniTok.png)
+Pri pridobivanju seznama pasm, ki so na izbiro se najprej pogleda, če se v predpomnilniku nahaja veljaven podatek, če ne se naredi klic na Api. Pasme iz Api-ja se zapišejo v predpomnilnik.
+
+V tabelo Pes se zapišejo vsi atributi.
+
+**Izredni tok**
+
+Lastnik vpiše ime psa, ki ga je že dodal.
+
+![pes - izredni](../img/DodajanjePsaIzredniTok1.png)
+
+#### 1.5.16. Dodajanje priljubljenih sprehajalcev
+
+Diagram za dodajanje priljubljenih sprehajalcev.
+
+**Osnovni tok**
+
+Lastnik izbere priljubljenega sprehajalca iz preteklih sprehodov
+
+![priljubljen - osnovni](../img/DodajanjePriljubljenihOsnovniTok.png)
+V tabeli sprehod se atribut Priljubljen nastavi na true.

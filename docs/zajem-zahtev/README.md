@@ -913,7 +913,7 @@ SHOULD HAVE
 ![Registracija](../img/Registracija.PNG)
 
 #### Prijava
-![Prijava](../img/Prijava.PNG)
+![Prijava](../img/PrijavaZaslon.PNG)
 
 #### Dodajanje psa
 ![Dodajanje psa](../img/Dodajanje_psa.PNG)
