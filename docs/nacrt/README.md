@@ -1,16 +1,17 @@
 # 1. Načrt sistema
 
+
 |                             |                                                         |
 | :-------------------------- | :------------------------------------------------------ |
-| **Naziv projekta**          | **TO-DO** naziv projekta                                |
-| **Člani projektne skupine** | **TO-DO** 1. član, 2. član, 3. član, 4. član in 5. član |
-| **Kraj in datum**           | **TO-DO** kraj, datum                                   |
+| **Naziv projekta**          | Dog Walkers                             |
+| **Člani projektne skupine** | Martin Štrekelj, Mimi Klinec, Luka Bratina, Ilija Tavchioski, Tim Draksler |
+| **Kraj in datum**           | 18. 4. 2021                                   |
+
 
 ## 1.1. Povzetek
 
-**TO-DO**
+V dokumentu je predstavljen celoten načrt bodočega sistema. Načrt je sestavljen iz načrta arhitekture sistema, načrta strukture oziroma razrednega diagrama, opisa razredov (ter njihovih atributov in metod) in načrtov obnašanja. Arhitekturo smo načrtovali po vzorcu MVC in jo predstavili z logičnim pogledom. Za predstavitev podsistemov smo uporabili komponentne diagrame. Vključen je tudi razvojni pogled, kjer je delo okvirno razdeljeno med člani skupine. Za prikaz strukture sistema smo uporabili razredni diagram in ga podprli s tekstovnimi opisi posameznih razredov. Pri načrtovanju razredov smo bili pozorni, da smo uporabljali dobre načrtovalske vzorce kot so Singleton, Fasada in Template. Ključen del načrta pa je načrt obnašanja, kjer je s pomočjo diagramov zaporedja in psevdokode prikazana dinamika sistema.
 
-- Povzetek je, kot že vemo, celoten dokument, strnjen v največ 150 besed.
 
 ## 1.2. Načrt arhitekture
 
