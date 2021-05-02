@@ -1,7 +1,9 @@
-import React from "react";
+import React from 'react';
+import { getAccessToken } from '../../shared/AccessToken';
 
 interface IskalnikProps {}
 
 export const Iskalnik: React.FC<IskalnikProps> = ({}) => {
-  return <h1>Iskalnik page</h1>;
+  const AccessToken = getAccessToken();
+  return <h1>{AccessToken}</h1>;
 };
