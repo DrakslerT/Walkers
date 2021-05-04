@@ -34,7 +34,7 @@ export const DogForm: React.FC<DogFormProps> = ({ nextStep }) => {
         }
       } catch (e) {
         errorToast();
-        console.log(e);
+        console.error(e.response.data);
       }
       setLoading(false);
     },

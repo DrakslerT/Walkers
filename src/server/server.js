@@ -8,6 +8,7 @@ const {
   validateUser,
   refreshToken,
   activateUser,
+  loginUser
 } = require('./controller/AuthController');
 const { addDog } = require('./controller/ProfileController');
 const dotenv = require('dotenv');
@@ -17,6 +18,7 @@ const {
   registerValidationRules,
   addDogRules,
   confirmEmailValidationRules,
+  loginValidationRules
 } = require('./middleware/validationInputs');
 
 const app = express();
@@ -53,9 +55,7 @@ app.post(
   validateUser,
   (req, res) => activateUser(req, res)
 );
-app.post('/api/login', (req, res) => {
-  res.json({ message: 'login' });
-});
+app.post('/api/login', loginValidationRules(), validateInputs, (req, res) => loginUser(req,res));
 
 // Profile routes
 // app.get('api/dogs')

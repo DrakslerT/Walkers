@@ -5,6 +5,7 @@ import { UserTypeEnum } from '../../shared/Enums';
 import { setAccessToken } from '../../shared/AccessToken';
 import { request } from '../../shared/http';
 import { errorToast, successToast } from '../../shared/Toast';
+import styles from './forms.module.css';
 
 interface BasicFormProps {
   userType: UserTypeEnum;
@@ -36,12 +37,12 @@ export const BasicForm: React.FC<BasicFormProps> = ({ userType, nextStep }) => {
         const { accessToken } = response.data;
         if (accessToken) {
           setAccessToken(accessToken);
-          successToast("User succesfully registered! 🤗");
+          successToast('User succesfully registered! 🤗');
           nextStep();
         }
       } catch (e) {
-        console.log(e);
-        errorToast();
+        console.error(e.response.data);
+        errorToast('Error when inserting register form. 🙅‍♂️');
       }
       setLoading(false);
     },
@@ -95,15 +96,18 @@ export const BasicForm: React.FC<BasicFormProps> = ({ userType, nextStep }) => {
           name="gsm"
           value={formik.values.gsm}
           onChange={formik.handleChange}
+          fluid
         />
         <Label pointing="above">
           GSM field is optional and will never be publicly visible. It will only
           be shared with users that you agree to have a walk with.
         </Label>
       </Form.Field>
-      <Button type="submit" size="huge" primary>
-        Register
-      </Button>
+      <div className={styles.center_horizontal}>
+        <Button type="submit" size="huge" primary>
+          Register
+        </Button>
+      </div>
     </Form>
   );
 };

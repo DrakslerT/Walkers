@@ -14,7 +14,7 @@ export const Register: React.FC<RouteComponentProps> = ({ history }) => {
     if (width > 992) {
       return <Divider vertical>OR</Divider>;
     }
-  }, [width])
+  }, [width]);
 
   useEffect(() => {
     showDivider();
@@ -51,6 +51,7 @@ export const Register: React.FC<RouteComponentProps> = ({ history }) => {
         secondary
         content="I already have an account"
         icon="arrow left"
+        onClick={() => history.push('/login')}
       ></Button>
     </RegisterLayout>
   );

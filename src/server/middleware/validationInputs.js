@@ -1,14 +1,33 @@
 const { body, validationResult } = require('express-validator');
+const { checkIfEmailAvailable } = require('../controller/ProfileController');
 
 /** Validation rules */
 
 const registerValidationRules = () => {
   return [
     body('name').isAlphanumeric().bail(),
-    body('email').isEmail().bail(),
+    body('email')
+      .isEmail()
+      .custom(async (value) => {
+        const available = await checkIfEmailAvailable(value);
+        if (!available) {
+          return Promise.reject('E-mail already in use');
+        }
+      })
+      .bail(),
     body('password').isLength({ min: 5 }).bail(),
     body('gsm').trim(' ').optional(),
-    body('userType').replace('walker', 1).replace('owner', 2).isInt(),
+    body('userType')
+      .isIn(['walker', 'owner'])
+      .replace('walker', 1)
+      .replace('owner', 2),
+  ];
+};
+
+const loginValidationRules = () => {
+  return [
+    body('email').isEmail().bail(),
+    body('password').isLength({ min: 5 }).bail(),
   ];
 };
 
@@ -43,6 +62,7 @@ const validateInputs = (req, res, next) => {
 };
 
 module.exports = {
+  loginValidationRules,
   confirmEmailValidationRules,
   registerValidationRules,
   validateInputs,

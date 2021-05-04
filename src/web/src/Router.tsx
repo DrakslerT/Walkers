@@ -10,17 +10,6 @@ import { WalkerRegister } from './pages/Register/Walker';
 export const Routes: React.FC = () => {
   return (
       <BrowserRouter>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/register">register</Link>
-        </li>
-        <li>
-          <Link to="/login">login</Link>
-        </li>
-      </ul>
         <Switch>
           <ProtectedRoute exact path="/" component={Iskalnik} />
           <Route exact path="/register" component={Register} />

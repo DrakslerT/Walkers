@@ -55,13 +55,13 @@ const createProfile = async (user) => {
 };
 
 const updateProfile = async (user) => {
-  try{
+  try {
     await dbInstance('uporabnik')
-     .where('ID_uporabnik', user.ID_uporabnik)
-     .update(user);
-  } catch(e){
-    console.log(e)
-    throw new Error
+      .where('ID_uporabnik', user.ID_uporabnik)
+      .update(user);
+  } catch (e) {
+    console.log(e);
+    throw new Error();
   }
 };
 
@@ -72,6 +72,19 @@ const getUserById = async (userId) => {
     .where('ID_uporabnik', userId);
   return user.length ? user[0] : false;
 };
+
+const getUserByEmail = async (email) => {
+  const user = await dbInstance
+    .select()
+    .from('uporabnik')
+    .where('Email', email);
+  return user.length ? user[0] : false;
+};
+
+const checkIfEmailAvailable = async (email) => {
+  const user = await getUserByEmail(email)
+  return user ? false : true;
+}
 
 const addDog = async (req, res) => {
   const dog = { ...req.body };
@@ -108,5 +121,7 @@ module.exports = {
   addDog,
   createProfile,
   getUserById,
-  updateProfile
+  updateProfile,
+  getUserByEmail,
+  checkIfEmailAvailable
 };

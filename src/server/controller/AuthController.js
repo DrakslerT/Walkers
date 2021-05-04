@@ -2,15 +2,23 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const md5 = require('md5');
 const { sendCodeEmail } = require('./EmailController');
-const { createProfile, getUserById, updateProfile } = require('./ProfileController');
+const {
+  createProfile,
+  getUserById,
+  updateProfile,
+  getUserByEmail
+} = require('./ProfileController');
 
-const CRYPT_SALT = 10;
+const saltRounds = 10;
+
 
 const registerUser = async (req, res) => {
   const { name, email, password, gsm, userType } = req.body;
   const newGSM = gsm !== '' ? gsm : null;
 
-  hashedPass = await bcrypt.hash(password, CRYPT_SALT);
+  const SALT = await bcrypt.genSalt(saltRounds);
+  hashedPass = await bcrypt.hash(password, SALT);
+
   let newUser = {
     name: name,
     email: email,
@@ -38,9 +46,21 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-  res.status(200).json({ message: 'API: LoginUser' });
-  // just dummy token for userId = 1 .. correct to newUser.id
-  return AuthResponse(res, 1);
+  const { email, password } = req.body;
+
+  const user = await getUserByEmail(email);
+
+  if (!user) {
+     return res.status(404).json({ message: 'User not found' });
+  }
+
+  const correctPassword = await bcrypt.compare(password, user.Geslo)
+
+  if (!correctPassword) {
+    return res.status(400).json({message: 'Wrong password'})
+  }
+
+  return AuthResponse(res, user.ID_uporabnik);
 };
 
 /** Accepts user, generates tokens and responds with accessToken and sets refreshToken cookie    */
@@ -139,4 +159,5 @@ module.exports = {
   validateUser,
   refreshToken,
   activateUser,
+  loginUser,
 };
