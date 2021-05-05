@@ -6,11 +6,10 @@ const {
   createProfile,
   getUserById,
   updateProfile,
-  getUserByEmail
+  getUserByEmail,
 } = require('./ProfileController');
 
 const saltRounds = 10;
-
 
 const registerUser = async (req, res) => {
   const { name, email, password, gsm, userType } = req.body;
@@ -51,13 +50,13 @@ const loginUser = async (req, res) => {
   const user = await getUserByEmail(email);
 
   if (!user) {
-     return res.status(404).json({ message: 'User not found' });
+    return res.status(404).json({ message: 'User not found' });
   }
 
-  const correctPassword = await bcrypt.compare(password, user.Geslo)
+  const correctPassword = await bcrypt.compare(password, user.Geslo);
 
   if (!correctPassword) {
-    return res.status(400).json({message: 'Wrong password'})
+    return res.status(400).json({ message: 'Wrong password' });
   }
 
   return AuthResponse(res, user.ID_uporabnik);
@@ -124,7 +123,7 @@ const refreshToken = (req, res) => {
 };
 
 const createActivationCode = (username, creationDate) => {
-  const draft = username + creationDate.toString();
+  const draft = username + creationDate.getFullYear().toString();
   let code = md5(draft);
   code = code.slice(code.length - 7, -1);
   code = code.toUpperCase();
@@ -160,4 +159,5 @@ module.exports = {
   refreshToken,
   activateUser,
   loginUser,
+  createActivationCode,
 };

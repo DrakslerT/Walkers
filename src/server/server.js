@@ -74,3 +74,6 @@ app.listen(PORT, () => {
   /** If you want to test your DB connection uncomment this */
   // testConnection()
 });
+
+/** Export for testing */
+module.exports = app
