@@ -17,11 +17,11 @@ src
 │   |       AuthController.js
 │   |       ProfileController.js
 │   |       ...
-|   └───models <- entities
-|           Owner.js
-|           Walker.js
-|           Ad.js
-|           Walk.js
+|   └───DB <- instance connections to DB
+|   |        BazaTransakcij.js
+|   |        ...
+|   └───middleware <- custom expressjs middleware
+|           validationInputs.js
 |            ...
 │   
 └─── web
@@ -29,18 +29,22 @@ src
 |    │   
 |    └───src
 │       │   Router.tsx <- client side routing
+|       |   App.tsx <- App
 │       │   ...
 |       └───pages <- Views 
 |       |     └───Iskalnik
 |       |           index.tsx <- markup for GUI
-|       |           styled.ts <- styles for index.tsx
+|       |           iskalnik.module.css <- styles for index.tsx
 |       |    ...
-|       └───components <- shared components
-|       └───utils <- shared util functions
+|       └───components <- shared components eg. navbar, footer, card..
+|       └───shared <- shared util functions eg. access token, http,..
 
 ```
 
 ## Kako pognati razvojno okolje
+
+Poskrbite, da si s pomočjo DDL skripte ustvarite delujoče MySQL bazo.
+Po potrebi si prilagodite `.env` datoteko v server direktoriju.
 
 1. Run server:
 
