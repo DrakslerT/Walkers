@@ -13,7 +13,6 @@ export interface StepperProps {
   steps: StepProp[];
 }
 
-
 /** Currently not in use, but could be swapped in the future for other manually inserted steppers (mainly register maybe somewhere else) */
 export const Stepper: React.FC<StepperProps> = ({ steps }) => {
   return (

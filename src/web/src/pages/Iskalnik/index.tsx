@@ -1,10 +1,19 @@
 import React from 'react';
-import { getAccessToken } from '../../shared/AccessToken';
-import { ObjavaOglasa } from '../../components/modals/addAdd'
+import { Container } from 'semantic-ui-react';
+import { useWindowSize } from '../../shared/useWindow';
+import Layout from './Layout';
+import AddList from './List';
+import Sidebar from './Sidebar';
 
 interface IskalnikProps {}
 
 export const Iskalnik: React.FC<IskalnikProps> = ({}) => {
-  const AccessToken = getAccessToken();
-  return <ObjavaOglasa></ObjavaOglasa>;
+  const { width } = useWindowSize();
+  return (
+    <Layout sidebar={<Sidebar />}>
+      <Container>
+        <AddList adds={['a', 'b', 'c']} />
+      </Container>
+    </Layout>
+  );
 };

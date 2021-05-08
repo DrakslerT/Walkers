@@ -12,14 +12,6 @@ interface BasicFormProps {
   nextStep: () => void;
 }
 
-interface BasicForm {
-  name: string;
-  email: string;
-  password: string;
-  gsm?: string;
-  userType: UserTypeEnum;
-}
-
 export const BasicForm: React.FC<BasicFormProps> = ({ userType, nextStep }) => {
   const [loading, setLoading] = useState(false);
   const formik = useFormik({
