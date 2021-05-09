@@ -46,7 +46,7 @@ jobs:
           DB_PASS: ${{ secrets.DB_PASS }}
           DB_NAME: ${{ secrets.DB_NAME }}
 
-      - name: Deploy to Heroku
+      - name: Deploy Server to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
@@ -54,7 +54,7 @@ jobs:
           heroku_email: "martin.strekelj123@gmail.com"
           appdir: "src/server"
 
-      - name: Deploy to Heroku
+      - name: Deploy Client to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}

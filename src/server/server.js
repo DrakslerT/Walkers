@@ -33,7 +33,7 @@ app.use(cookieParser());
 
 const clientOrigin =
   process.env.NODE_ENV == 'production'
-    ? 'https://tpo11-dogwalkers.herokuapp.com/'
+    ? 'https://tpo11-dogwalkers.herokuapp.com'
     : 'http://localhost:3000';
 
 app.use(cors({ credentials: true, origin: clientOrigin }));
