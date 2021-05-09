@@ -183,7 +183,7 @@ KEY `fkIdx_119` (`ID_pasma`)
 -- ************************************** `KRSITEV`
 
 ALTER TABLE `KRSITEV`
-ADD CONSTRAINT `FK_35` FOREIGN KEY `fkIdx_36` (`ID_uporabnik`, `Tip`) REFERENCES `Sprehajalec` (`ID_uporabnik`, `Tip`);
+ADD CONSTRAINT `FK_35` FOREIGN KEY `fkIdx_36` (`ID_uporabnik`, `Tip`) REFERENCES `SPREHAJALEC` (`ID_uporabnik`, `Tip`);
 
 
 
@@ -194,7 +194,7 @@ ADD CONSTRAINT `FK_35` FOREIGN KEY `fkIdx_36` (`ID_uporabnik`, `Tip`) REFERENCES
 -- ************************************** `OCENA`
 
 ALTER TABLE `OCENA`
-ADD CONSTRAINT `FK_38` FOREIGN KEY `fkIdx_39` (`ID_uporabnik`, `Tip`) REFERENCES `Sprehajalec` (`ID_uporabnik`, `Tip`);
+ADD CONSTRAINT `FK_38` FOREIGN KEY `fkIdx_39` (`ID_uporabnik`, `Tip`) REFERENCES `SPREHAJALEC` (`ID_uporabnik`, `Tip`);
 
 
 
@@ -204,7 +204,7 @@ ADD CONSTRAINT `FK_38` FOREIGN KEY `fkIdx_39` (`ID_uporabnik`, `Tip`) REFERENCES
 -- ************************************** `OGLAS`
 
 ALTER TABLE `OGLAS`
-ADD CONSTRAINT `FK_44` FOREIGN KEY `fkIdx_45` (`ID_uporabnik`, `Tip`) REFERENCES `Sprehajalec` (`ID_uporabnik`, `Tip`);
+ADD CONSTRAINT `FK_44` FOREIGN KEY `fkIdx_45` (`ID_uporabnik`, `Tip`) REFERENCES `SPREHAJALEC` (`ID_uporabnik`, `Tip`);
 
 
 
@@ -213,7 +213,7 @@ ADD CONSTRAINT `FK_44` FOREIGN KEY `fkIdx_45` (`ID_uporabnik`, `Tip`) REFERENCES
 -- ************************************** `PES`
 
 ALTER TABLE `PES`
-ADD CONSTRAINT `FK_87` FOREIGN KEY `fkIdx_88` (`ID_uporabnik`, `Tip`) REFERENCES `Uporabnik` (`ID_uporabnik`, `Tip`);
+ADD CONSTRAINT `FK_87` FOREIGN KEY `fkIdx_88` (`ID_uporabnik`, `Tip`) REFERENCES `UPORABNIK` (`ID_uporabnik`, `Tip`);
 
 
 
@@ -222,7 +222,7 @@ ADD CONSTRAINT `FK_87` FOREIGN KEY `fkIdx_88` (`ID_uporabnik`, `Tip`) REFERENCES
 -- ************************************** `SPREHAJALEC`
 
 ALTER TABLE `SPREHAJALEC`
-ADD CONSTRAINT `FK_14` FOREIGN KEY `fkIdx_15` (`ID_uporabnik`, `Tip`) REFERENCES `Uporabnik` (`ID_uporabnik`, `Tip`);
+ADD CONSTRAINT `FK_14` FOREIGN KEY `fkIdx_15` (`ID_uporabnik`, `Tip`) REFERENCES `UPORABNIK` (`ID_uporabnik`, `Tip`);
 
 
 
@@ -231,17 +231,17 @@ ADD CONSTRAINT `FK_14` FOREIGN KEY `fkIdx_15` (`ID_uporabnik`, `Tip`) REFERENCES
 -- ************************************** `SPREHOD`
 
 ALTER TABLE `SPREHOD`
-ADD CONSTRAINT `FK_76` FOREIGN KEY `fkIdx_77` (`ID_pes`, `ID_uporabnik`, `Tip_1_1`) REFERENCES `Pes` (`ID_pes`, `ID_uporabnik`, `Tip`);
+ADD CONSTRAINT `FK_76` FOREIGN KEY `fkIdx_77` (`ID_pes`, `ID_uporabnik`, `Tip_1_1`) REFERENCES `PES` (`ID_pes`, `ID_uporabnik`, `Tip`);
 ALTER TABLE `SPREHOD`
-ADD CONSTRAINT `FK_80` FOREIGN KEY `fkIdx_81` (`ID_oglas`, `ID_uporabnik`, `Tip`) REFERENCES `Oglas` (`ID_oglas`, `ID_uporabnik`, `Tip`);
+ADD CONSTRAINT `FK_80` FOREIGN KEY `fkIdx_81` (`ID_oglas`, `ID_uporabnik`, `Tip`) REFERENCES `OGLAS` (`ID_oglas`, `ID_uporabnik`, `Tip`);
 
 -- ************************************** `OGLAS_PASME`
 
 ALTER TABLE `OGLAS_PASME`
-ADD CONSTRAINT `FK_112` FOREIGN KEY `fkIdx_113` (`ID_oglas`, `ID_uporabnik`, `Tip`) REFERENCES `Oglas` (`ID_oglas`, `ID_uporabnik`, `Tip`);
+ADD CONSTRAINT `FK_112` FOREIGN KEY `fkIdx_113` (`ID_oglas`, `ID_uporabnik`, `Tip`) REFERENCES `OGLAS` (`ID_oglas`, `ID_uporabnik`, `Tip`);
 
 ALTER TABLE `OGLAS_PASME`
-ADD CONSTRAINT `FK_118` FOREIGN KEY `fkIdx_119` (`ID_pasma`) REFERENCES `Pasma` (`ID_pasma`);
+ADD CONSTRAINT `FK_118` FOREIGN KEY `fkIdx_119` (`ID_pasma`) REFERENCES `PASMA` (`ID_pasma`);
 
 
 
