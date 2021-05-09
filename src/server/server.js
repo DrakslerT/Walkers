@@ -8,7 +8,7 @@ const {
   validateUser,
   refreshToken,
   activateUser,
-  loginUser
+  loginUser,
 } = require('./controller/AuthController');
 const { addDog } = require('./controller/ProfileController');
 const dotenv = require('dotenv');
@@ -18,9 +18,10 @@ const {
   registerValidationRules,
   addDogRules,
   confirmEmailValidationRules,
-  loginValidationRules
+  loginValidationRules,
 } = require('./middleware/validationInputs');
 const { getOglasi } = require('./controller/OglasController');
+const { addAdd } = require('./controller/AddController');
 
 const app = express();
 app.set('trust proxy', 1);
@@ -56,7 +57,9 @@ app.post(
   validateUser,
   (req, res) => activateUser(req, res)
 );
-app.post('/api/login', loginValidationRules(), validateInputs, (req, res) => loginUser(req,res));
+app.post('/api/login', loginValidationRules(), validateInputs, (req, res) =>
+  loginUser(req, res)
+);
 
 // Profile routes
 // app.get('api/dogs')
@@ -69,15 +72,20 @@ app.post(
   (req, res) => addDog(req, res)
 );
 
+
 // Oglas routes
 app.get('/api/oglas/getOglasi', validateUser, (req, res) => getOglasi(req, res));
 
-const PORT = process.env.SERVER_PORT || 4000;
+//Add add
+app.post('/api/addAdd', validateUser, (req, res) => addAdd(req, res));
+
+const PORT = process.env.PORT || 4000;
+
 app.listen(PORT, () => {
   console.log(`Server is listening at ${PORT}`);
   /** If you want to test your DB connection uncomment this */
-  // testConnection()
+  //testConnection()
 });
 
 /** Export for testing */
-module.exports = app
+module.exports = app;

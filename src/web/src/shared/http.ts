@@ -6,9 +6,8 @@ const API_URL =
     ? 'productionAPI'
     : 'http://localhost:4000/api';
 
-
 export const getAuthRequest = (): AxiosInstance => {
-  let token = getAccessToken()
+  let token = getAccessToken();
   return axios.create({
     baseURL: API_URL,
     headers: {

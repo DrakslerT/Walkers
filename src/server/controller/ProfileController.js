@@ -23,7 +23,7 @@ const createProfile = async (user) => {
   // If not walker
   if (user.type !== 1) {
     try {
-      const user = await dbInstance('uporabnik').insert(normalisedUserForDb);
+      const user = await dbInstance('Uporabnik').insert(normalisedUserForDb);
       return user.length ? user[0] : false;
     } catch (e) {
       console.error(e);
@@ -32,7 +32,7 @@ const createProfile = async (user) => {
   } else {
     const userId = await dbInstance.transaction(async (trx) => {
       try {
-        const user = await trx('uporabnik').insert(normalisedUserForDb);
+        const user = await trx('Uporabnik').insert(normalisedUserForDb);
         const id = user[0];
 
         /**  Add walker specific information to user */
@@ -44,7 +44,7 @@ const createProfile = async (user) => {
           Index: 0,
           StSprehodov: 0,
         };
-        await trx('sprehajalec').insert(normalisedWalkerForDb);
+        await trx('Sprehajalec').insert(normalisedWalkerForDb);
         return user[0];
       } catch (err) {
         trx.rollback();
@@ -56,7 +56,7 @@ const createProfile = async (user) => {
 
 const updateProfile = async (user) => {
   try {
-    await dbInstance('uporabnik')
+    await dbInstance('Uporabnik')
       .where('ID_uporabnik', user.ID_uporabnik)
       .update(user);
   } catch (e) {
@@ -68,7 +68,7 @@ const updateProfile = async (user) => {
 const getUserById = async (userId) => {
   const user = await dbInstance
     .select()
-    .from('uporabnik')
+    .from('Uporabnik')
     .where('ID_uporabnik', userId);
   return user.length ? user[0] : false;
 };
@@ -76,15 +76,15 @@ const getUserById = async (userId) => {
 const getUserByEmail = async (email) => {
   const user = await dbInstance
     .select()
-    .from('uporabnik')
+    .from('Uporabnik')
     .where('Email', email);
   return user.length ? user[0] : false;
 };
 
 const checkIfEmailAvailable = async (email) => {
-  const user = await getUserByEmail(email)
+  const user = await getUserByEmail(email);
   return user ? false : true;
-}
+};
 
 const addDog = async (req, res) => {
   const dog = { ...req.body };
@@ -110,7 +110,7 @@ const addDog = async (req, res) => {
   };
 
   try {
-    await dbInstance('pes').insert(normalisedDogForDb);
+    await dbInstance('Pes').insert(normalisedDogForDb);
     return res.status(200).json({ message: 'Dog added' });
   } catch (err) {
     return res.status(400).json({ message: err });
@@ -123,5 +123,5 @@ module.exports = {
   getUserById,
   updateProfile,
   getUserByEmail,
-  checkIfEmailAvailable
+  checkIfEmailAvailable,
 };
