@@ -11,17 +11,18 @@ const addAdd = async (req, res) => {
   if (!user) {
     res.status(400).json({ message: 'User not found' });
   }
-
   const { ID_uporabnik, Tip } = user;
 
   const normalisedAddForDb = {
     ID_uporabnik,
     Tip,
-    Lokacija: add.lokacija,
+    Lokacija_lat: "",
     casZacetka,
     casKonca,
+    JeAktiven: 1,
+    Lokacija_lng: "",
+    Lokacija: add.lokacija
   };
-
   try {
     await dbInstance('OGLAS').insert(normalisedAddForDb);
     return res.status(200).json({ message: 'Add added' });
