@@ -102,7 +102,7 @@ const addDog = async (req, res) => {
     Ime_pes: dog.name,
     Opis_pes: null,
     Spol: dog.gender,
-    ID_pasme: dog.breed,
+    ID_pasma: dog.breed,
   };
 
   try {

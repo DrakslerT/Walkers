@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon server.js",
-    "test": "mocha \"../../test/*.test.js\" --exit --resursive",
+    "test": "mocha \"../../test/*.test.js\" --exit --resursive --timeout 15000",
     "coverage": "nyc --reporter=html --reporter=text --temp-dir=../../test/coverage/.nyc_output --report-dir=../../test/coverage mocha \"../../test/*.test.js\" --exit --resursive"
   },
   "dependencies": {

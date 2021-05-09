@@ -68,7 +68,7 @@ const getPriljubljeniUporabniki = async (user) => {
 };
 const getOglasi = async (req, res) => {
   try {
-    const filters = { ...req.params };
+    const filters = { ...req.query };
     const user = await getUserById(res.locals.userId);
     if (!user) {
       res.status(400).json({ message: 'User not found' });

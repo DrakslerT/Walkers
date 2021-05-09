@@ -4,7 +4,7 @@ const { getUserById } = require('./ProfileController');
 const addAdd = async (req, res) => {
   const add = { ...req.body };
   const user = await getUserById(res.locals.userId);
-
+  console.log(add);
   var casZacetka = changeFormat(add.startDate);
   var casKonca = changeFormat(add.endDate);
 
@@ -22,12 +22,12 @@ const addAdd = async (req, res) => {
   const normalisedAddForDb = {
     ID_uporabnik,
     Tip,
-    Lokacija_lat: "",
+    Lokacija_lat: '',
     casZacetka,
     casKonca,
     JeAktiven: 1,
-    Lokacija_lng: "",
-    Lokacija: add.lokacija
+    Lokacija_lng: '',
+    Lokacija: add.lokacija,
   };
   try {
     await dbInstance('OGLAS').insert(normalisedAddForDb);
@@ -39,10 +39,10 @@ const addAdd = async (req, res) => {
 
 const canAddNew = async (user) => {
   const num = await dbInstance
-        .count('OGLAS.ID_oglas')
-        .from('OGLAS')
-        .where('OGLAS.JeAktiven', 1)
-        .where('OGLAS.ID_uporabnik', user.ID_uporabnik);
+    .count('OGLAS.ID_oglas')
+    .from('OGLAS')
+    .where('OGLAS.JeAktiven', 1)
+    .where('OGLAS.ID_uporabnik', user.ID_uporabnik);
   if (user.Tip == 0) {
     if (num < 99) {
       return true;
@@ -55,8 +55,8 @@ const canAddNew = async (user) => {
     } else {
       return false;
     }
-  } 
-}
+  }
+};
 
 function changeFormat(time) {
   var datetime = time.split('T');
@@ -68,7 +68,7 @@ function changeFormat(time) {
 }
 
 //export function getAllOglasi() {
-  //return dbInstance('OGLAS');
+//return dbInstance('OGLAS');
 //}
 module.exports = {
   addAdd,
