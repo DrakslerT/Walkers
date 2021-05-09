@@ -96,9 +96,16 @@ const getOglasi = async (req, res) => {
 
                 if (user.Tip <= 1) {
                     qb.whereRaw('oglas.ID_uporabnik = ?', user.ID_uporabnik);
+                } else {
+                    console.log(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                    qb.whereRaw('oglas.CasZacetka < ?', new Date().toISOString().slice(0, 19).replace('T', ' '));
+                    qb.whereRaw('oglas.CasKonca > ?', new Date().toISOString().slice(0, 19).replace('T', ' '));
                 }
             })
-            .groupBy('ID_oglas');
+            .groupBy('ID_oglas')
+            .orderBy('sprehajalec.OdzivniCas', 'asc')
+            .orderBy('sprehajalec.PovprecnaOcena', 'desc')
+            .orderBy('oglas.CasZacetka', 'desc');
             
         res.status(200).json({oglasi: oglasi});
     } catch (err) {
