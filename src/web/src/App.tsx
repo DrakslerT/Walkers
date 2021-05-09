@@ -5,6 +5,9 @@ import { request } from './shared/http';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { setUser } from './shared/UserInformation';
+import Navbar from './components/navbar/Navbar';
+import Footer from './components/footer/Footer';
+import { Icon } from 'semantic-ui-react';
 
 export const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -25,23 +28,27 @@ export const App: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div>loading...</div>;
+    return <div><i aria-hidden="true" className="large spinner loading icon"></i> Loading...</div>;
   }
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={false}
-        pauseOnHover={false}
-      />
-      <Routes />
+      <Navbar />
+      <main>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable={false}
+          pauseOnHover={false}
+        />
+        <Routes />
+        <Footer />
+      </main>
     </>
   );
 };
