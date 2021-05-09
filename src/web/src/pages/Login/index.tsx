@@ -5,6 +5,7 @@ import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react';
 import { setAccessToken } from '../../shared/AccessToken';
 import { request } from '../../shared/http';
 import { errorToast, successToast } from '../../shared/Toast';
+import { setUser } from '../../shared/UserInformation';
 import styles from './login.module.css';
 
 export const Login: React.FC<RouteComponentProps> = ({ history }) => {
@@ -20,18 +21,19 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
         const response = await request.post('/login', values);
         if (response.status == 200) {
           const { accessToken } = response.data;
+          const { user } = response.data;
+          setUser(user);
           setAccessToken(accessToken);
           successToast();
           history.push('/');
         }
       } catch (e) {
         const { message } = e.response.data;
-        console.error(e.response.status)
+        console.error(e.response.status);
         errorToast(message);
       }
       setLoading(false);
     },
-
   });
 
   return (

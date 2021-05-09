@@ -63,10 +63,14 @@ const loginUser = async (req, res) => {
 };
 
 /** Accepts user, generates tokens and responds with accessToken and sets refreshToken cookie    */
-const AuthResponse = (res, User) => {
-  const accessToken = generateToken(User, process.env.JWT_ACCESS_SECRET, '3h');
+const AuthResponse = async (res, user_id) => {
+  const accessToken = generateToken(
+    user_id,
+    process.env.JWT_ACCESS_SECRET,
+    '3h'
+  );
   const refreshToken = generateToken(
-    User,
+    user_id,
     process.env.JWT_REFRESH_SECRET,
     '7d'
   );
@@ -74,7 +78,15 @@ const AuthResponse = (res, User) => {
     httpOnly: true,
     path: '/api/refresh_token',
   });
-  return res.status(200).json({ accessToken });
+
+  const user = await getUserById(user_id);
+  const userModel = {
+    username: user.Ime_uporabnik,
+    activated: user.Aktiviran,
+    userType: user.Tip,
+    accessToken: accessToken,
+  };
+  return res.status(200).json({ user: userModel, accessToken });
 };
 
 const generateToken = (userId, secret, TTL) => {

@@ -23,7 +23,7 @@ const addAdd = async (req, res) => {
   };
 
   try {
-    await dbInstance('Oglas').insert(normalisedAddForDb);
+    await dbInstance('OGLAS').insert(normalisedAddForDb);
     return res.status(200).json({ message: 'Add added' });
   } catch (err) {
     return res.status(400).json({ message: err });

@@ -102,11 +102,7 @@ const addDog = async (req, res) => {
     Ime_pes: dog.name,
     Opis_pes: null,
     Spol: dog.gender,
-    Pasma_ime: 'TODO when connect to API',
-    Temperament: 'TODO when connect to API',
-    WikiPasmeUrl: 'TODO when connect to API',
-    Visina: 0,
-    Teza: 0,
+    ID_pasme: dog.breed,
   };
 
   try {

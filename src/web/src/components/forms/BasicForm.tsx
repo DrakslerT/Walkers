@@ -6,6 +6,7 @@ import { setAccessToken } from '../../shared/AccessToken';
 import { request } from '../../shared/http';
 import { errorToast, successToast } from '../../shared/Toast';
 import styles from './forms.module.css';
+import { setUser } from '../../shared/UserInformation';
 
 interface BasicFormProps {
   userType: UserTypeEnum;
@@ -27,8 +28,10 @@ export const BasicForm: React.FC<BasicFormProps> = ({ userType, nextStep }) => {
       try {
         const response = await request.post(`/register`, values);
         const { accessToken } = response.data;
-        if (accessToken) {
+        const { user } = response.data;
+        if (accessToken && user) {
           setAccessToken(accessToken);
+          setUser(user);
           successToast('User succesfully registered! 🤗');
           nextStep();
         }
