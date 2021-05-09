@@ -1,3 +1,4 @@
+//import {getAllOglasi} from './controller/AddController';
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -86,6 +87,7 @@ app.listen(PORT, () => {
   /** If you want to test your DB connection uncomment this */
   //testConnection()
 });
-
+//console.log(getAllOglasi());
 /** Export for testing */
 module.exports = app;
+//module.exports = getAllOglasi;

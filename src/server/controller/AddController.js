@@ -39,6 +39,9 @@ function changeFormat(time) {
   return date + ' ' + time;
 }
 
+//export function getAllOglasi() {
+  //return dbInstance('OGLAS');
+//}
 module.exports = {
   addAdd,
 };
