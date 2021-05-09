@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from 'semantic-ui-react';
-import { getUser } from '../../shared/UserInformation';
-import { useWindowSize } from '../../shared/useWindow';
+import { getAuthRequest } from '../../shared/http';
+import { errorToast } from '../../shared/Toast';
 import Layout from './Layout';
 import AddList from './List';
 import Sidebar from './Sidebar';
@@ -9,14 +9,26 @@ import Sidebar from './Sidebar';
 interface IskalnikProps {}
 
 export const Iskalnik: React.FC<IskalnikProps> = ({}) => {
-  const { width } = useWindowSize();
-  const user = getUser();
+  const [loading, setLoading] = useState(false);
+  const [adds, setAdds] = useState([]);
+  useEffect(() => {
+    setLoading(true);
+    const authRequest = getAuthRequest();
+    authRequest
+      .get('/oglas/getOglasi')
+      .then((response) => {
+        setAdds(response.data.oglasi);
+      })
+      .catch((e) => {
+        console.error(e);
+        errorToast();
+      })
+      .finally(() => setLoading(false));
+  }, []);
   return (
     <Layout sidebar={<Sidebar />}>
       <Container>
-        {user.username}
-        {user.userType}
-        <AddList adds={['a', 'b', 'c']} />
+        {loading ? <div>loading... </div> : <AddList adds={adds} />}
       </Container>
     </Layout>
   );

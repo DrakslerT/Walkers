@@ -1,4 +1,3 @@
-import React from 'react';
 import { Sidebar, Menu, Icon } from 'semantic-ui-react';
 
 // TODO probably for second release
