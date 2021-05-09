@@ -1,0 +1,11 @@
+.bord {
+  background-color: white;
+  border: 3px double blue;
+  border-radius: 25px;
+  text-align: center;
+}
+
+.Og {
+  font-size: 30px;
+  color: crimson;
+}
