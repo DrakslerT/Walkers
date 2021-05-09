@@ -23,7 +23,7 @@ const createProfile = async (user) => {
   // If not walker
   if (user.type !== 1) {
     try {
-      const user = await dbInstance('Uporabnik').insert(normalisedUserForDb);
+      const user = await dbInstance('UPORABNIK').insert(normalisedUserForDb);
       return user.length ? user[0] : false;
     } catch (e) {
       console.error(e);
@@ -32,7 +32,7 @@ const createProfile = async (user) => {
   } else {
     const userId = await dbInstance.transaction(async (trx) => {
       try {
-        const user = await trx('Uporabnik').insert(normalisedUserForDb);
+        const user = await trx('UPORABNIK').insert(normalisedUserForDb);
         const id = user[0];
 
         /**  Add walker specific information to user */
@@ -44,7 +44,7 @@ const createProfile = async (user) => {
           Index: 0,
           StSprehodov: 0,
         };
-        await trx('Sprehajalec').insert(normalisedWalkerForDb);
+        await trx('SPREHAJALEC').insert(normalisedWalkerForDb);
         return user[0];
       } catch (err) {
         trx.rollback();
@@ -56,7 +56,7 @@ const createProfile = async (user) => {
 
 const updateProfile = async (user) => {
   try {
-    await dbInstance('Uporabnik')
+    await dbInstance('UPORABNIK')
       .where('ID_uporabnik', user.ID_uporabnik)
       .update(user);
   } catch (e) {
@@ -68,7 +68,7 @@ const updateProfile = async (user) => {
 const getUserById = async (userId) => {
   const user = await dbInstance
     .select()
-    .from('Uporabnik')
+    .from('UPORABNIK')
     .where('ID_uporabnik', userId);
   return user.length ? user[0] : false;
 };
@@ -76,7 +76,7 @@ const getUserById = async (userId) => {
 const getUserByEmail = async (email) => {
   const user = await dbInstance
     .select()
-    .from('Uporabnik')
+    .from('UPORABNIK')
     .where('Email', email);
   return user.length ? user[0] : false;
 };
@@ -102,15 +102,11 @@ const addDog = async (req, res) => {
     Ime_pes: dog.name,
     Opis_pes: null,
     Spol: dog.gender,
-    Pasma_ime: 'TODO when connect to API',
-    Temperament: 'TODO when connect to API',
-    WikiPasmeUrl: 'TODO when connect to API',
-    Visina: 0,
-    Teza: 0,
+    ID_pasme: dog.breed,
   };
 
   try {
-    await dbInstance('Pes').insert(normalisedDogForDb);
+    await dbInstance('PES').insert(normalisedDogForDb);
     return res.status(200).json({ message: 'Dog added' });
   } catch (err) {
     return res.status(400).json({ message: err });

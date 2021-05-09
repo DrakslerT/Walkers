@@ -4,6 +4,7 @@ import { setAccessToken } from './shared/AccessToken';
 import { request } from './shared/http';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { setUser } from './shared/UserInformation';
 
 export const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -13,8 +14,10 @@ export const App: React.FC = () => {
       .post('/refresh_token')
       .then((response) => {
         const { accessToken } = response.data;
-        if (accessToken) {
+        const { user } = response.data;
+        if (accessToken && user) {
           setAccessToken(accessToken);
+          setUser(user);
         }
       })
       .catch((e) => console.log(e))
