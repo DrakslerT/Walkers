@@ -20,6 +20,7 @@ const {
   confirmEmailValidationRules,
   loginValidationRules
 } = require('./middleware/validationInputs');
+const { getOglasi } = require('./controller/OglasController');
 
 const app = express();
 app.set('trust proxy', 1);
@@ -67,6 +68,9 @@ app.post(
   validateUser,
   (req, res) => addDog(req, res)
 );
+
+// Oglas routes
+app.get('/api/oglas/getOglasi', validateUser, (req, res) => getOglasi(req, res));
 
 const PORT = process.env.SERVER_PORT || 4000;
 app.listen(PORT, () => {
