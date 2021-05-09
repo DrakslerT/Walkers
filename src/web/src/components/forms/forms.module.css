@@ -1,0 +1,31 @@
+
+/* Forms styles module */
+.row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.radio {
+    margin: 5px 5px;
+}
+
+.radioLabel {
+    margin-left: 5px;
+}
+
+.center_horizontal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.resend_confirmation {
+    cursor: pointer;
+    text-decoration: underline;
+    user-select: none;
+}
+
+.text_centre input {
+    text-align: center !important;
+}
