@@ -1,0 +1,7 @@
+[build]
+    # Client path
+    base = "src/web/"
+    # publish
+    publish = "src/web/build/"
+    # Ignore build if no differences
+    ignore = "git diff --quiet HEAD^ HEAD src/web/"

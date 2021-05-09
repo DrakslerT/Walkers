@@ -1,8 +1,3 @@
--- ****************** SqlDBM: MySQL ******************;
--- ***************************************************;
-
-
--- ************************************** `Krsitev`
 
 CREATE TABLE `Krsitev`
 (
@@ -15,11 +10,6 @@ PRIMARY KEY (`ID_krsitev`, `ID_uporabnik`, `Tip`),
 KEY `fkIdx_36` (`ID_uporabnik`, `Tip`)
 );
 
-
-
-
-
--- ************************************** `Ocena`
 
 CREATE TABLE `Ocena`
 (
@@ -34,11 +24,6 @@ CONSTRAINT `check_87` CHECK ( Vrednost>=0 AND Vrednost<=5 )
 ) AUTO_INCREMENT=0;
 
 
-
-
-
--- ************************************** `Oglas`
-
 CREATE TABLE `Oglas`
 (
  `ID_oglas`     integer NOT NULL AUTO_INCREMENT ,
@@ -52,11 +37,6 @@ PRIMARY KEY (`ID_oglas`, `ID_uporabnik`, `Tip`),
 KEY `fkIdx_45` (`ID_uporabnik`, `Tip`)
 ) AUTO_INCREMENT=0;
 
-
-
-
-
--- ************************************** `Pes`
 
 CREATE TABLE `Pes`
 (
@@ -77,12 +57,6 @@ KEY `fkIdx_88` (`ID_uporabnik`, `Tip`),
 CONSTRAINT `check_101` CHECK ( Tip=2 )
 );
 
-
-
-
-
--- ************************************** `Sprehajalec`
-
 CREATE TABLE `Sprehajalec`
 (
  `ID_uporabnik`   integer NOT NULL ,
@@ -96,12 +70,6 @@ PRIMARY KEY (`ID_uporabnik`, `Tip`),
 KEY `fkIdx_15` (`ID_uporabnik`, `Tip`),
 CONSTRAINT `check_100` CHECK ( Tip<=1 )
 );
-
-
-
-
-
--- ************************************** `Sprehod`
 
 CREATE TABLE `Sprehod`
 (
@@ -122,12 +90,6 @@ KEY `fkIdx_77` (`ID_pes`, `ID_uporabnik`, `Tip_1_1`),
 KEY `fkIdx_81` (`ID_oglas`, `ID_uporabnik`, `Tip`)
 ) AUTO_INCREMENT=0;
 
-
-
-
-
--- ************************************** `Uporabnik`
-
 CREATE TABLE `Uporabnik`
 (
  `ID_uporabnik`      integer NOT NULL AUTO_INCREMENT ,
@@ -145,57 +107,20 @@ PRIMARY KEY (`ID_uporabnik`, `Tip`),
  CONSTRAINT `check_91` CHECK ( Tip<4 )
 ) AUTO_INCREMENT=0;
 
-
-
--- ************************************** `Krsitev`
-
 ALTER TABLE `Krsitev`
 ADD CONSTRAINT `FK_35` FOREIGN KEY `fkIdx_36` (`ID_uporabnik`, `Tip`) REFERENCES `Sprehajalec` (`ID_uporabnik`, `Tip`);
-
-
-
-
-
-
-
--- ************************************** `Ocena`
 
 ALTER TABLE `Ocena`
 ADD CONSTRAINT `FK_38` FOREIGN KEY `fkIdx_39` (`ID_uporabnik`, `Tip`) REFERENCES `Sprehajalec` (`ID_uporabnik`, `Tip`);
 
-
-
-
-
-
--- ************************************** `Oglas`
-
 ALTER TABLE `Oglas`
 ADD CONSTRAINT `FK_44` FOREIGN KEY `fkIdx_45` (`ID_uporabnik`, `Tip`) REFERENCES `Sprehajalec` (`ID_uporabnik`, `Tip`);
-
-
-
-
-
--- ************************************** `Pes`
 
 ALTER TABLE `Pes`
 ADD CONSTRAINT `FK_87` FOREIGN KEY `fkIdx_88` (`ID_uporabnik`, `Tip`) REFERENCES `Uporabnik` (`ID_uporabnik`, `Tip`);
 
-
-
-
-
--- ************************************** `Sprehajalec`
-
 ALTER TABLE `Sprehajalec`
 ADD CONSTRAINT `FK_14` FOREIGN KEY `fkIdx_15` (`ID_uporabnik`, `Tip`) REFERENCES `Uporabnik` (`ID_uporabnik`, `Tip`);
-
-
-
-
-
--- ************************************** `Sprehod`
 
 ALTER TABLE `Sprehod`
 ADD CONSTRAINT `FK_76` FOREIGN KEY `fkIdx_77` (`ID_pes`, `ID_uporabnik`, `Tip_1_1`) REFERENCES `Pes` (`ID_pes`, `ID_uporabnik`, `Tip`);

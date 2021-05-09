@@ -10,7 +10,8 @@ const dbInstance = knex({
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
   },
-  acquireConnectionTimeout: 10000,
+  tls: true,
+  ssl: true,
 });
 
 const testConnection = async () => {
