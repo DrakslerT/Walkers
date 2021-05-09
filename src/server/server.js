@@ -20,6 +20,7 @@ const {
   confirmEmailValidationRules,
   loginValidationRules,
 } = require('./middleware/validationInputs');
+const { getOglasi } = require('./controller/OglasController');
 const { addAdd } = require('./controller/AddController');
 
 const app = express();
@@ -71,10 +72,15 @@ app.post(
   (req, res) => addDog(req, res)
 );
 
+
+// Oglas routes
+app.get('/api/oglas/getOglasi', validateUser, (req, res) => getOglasi(req, res));
+
 //Add add
 app.post('/api/addAdd', validateUser, (req, res) => addAdd(req, res));
 
 const PORT = process.env.PORT || 4000;
+
 app.listen(PORT, () => {
   console.log(`Server is listening at ${PORT}`);
   /** If you want to test your DB connection uncomment this */
