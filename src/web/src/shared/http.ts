@@ -3,7 +3,7 @@ import { getAccessToken } from './AccessToken';
 
 const API_URL =
   process.env.NODE_ENV === 'production'
-    ? 'productionAPI'
+    ? 'https://tpo11-dogwalkers-server.herokuapp.com/api'
     : 'http://localhost:4000/api';
 
 export const getAuthRequest = (): AxiosInstance => {
