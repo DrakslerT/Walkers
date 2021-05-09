@@ -180,11 +180,7 @@
 <a name='L121'></a><a href='#L121'>121</a>
 <a name='L122'></a><a href='#L122'>122</a>
 <a name='L123'></a><a href='#L123'>123</a>
-<a name='L124'></a><a href='#L124'>124</a>
-<a name='L125'></a><a href='#L125'>125</a>
-<a name='L126'></a><a href='#L126'>126</a>
-<a name='L127'></a><a href='#L127'>127</a>
-<a name='L128'></a><a href='#L128'>128</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L124'></a><a href='#L124'>124</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -249,14 +245,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -265,6 +253,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -291,15 +287,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -336,7 +328,7 @@ const createProfile = async (user) =&gt; {
   // If not walker
   if (user.type !== 1) {
     try {
-      const user = await dbInstance('uporabnik').insert(normalisedUserForDb);
+      const user = await dbInstance('UPORABNIK').insert(normalisedUserForDb);
       return user.length ? user[0] : <span class="branch-1 cbranch-no" title="branch not covered" >false;</span>
     } catch (e) {
 <span class="cstat-no" title="statement not covered" >      console.error(e);</span>
@@ -345,7 +337,7 @@ const createProfile = async (user) =&gt; {
   } else {
     const userId = await dbInstance.transaction(async (trx) =&gt; {
       try {
-        const user = await trx('uporabnik').insert(normalisedUserForDb);
+        const user = await trx('UPORABNIK').insert(normalisedUserForDb);
         const id = user[0];
 &nbsp;
         /**  Add walker specific information to user */
@@ -357,7 +349,7 @@ const createProfile = async (user) =&gt; {
           Index: 0,
           StSprehodov: 0,
         };
-        await trx('sprehajalec').insert(normalisedWalkerForDb);
+        await trx('SPREHAJALEC').insert(normalisedWalkerForDb);
         return user[0];
       } catch (err) {
 <span class="cstat-no" title="statement not covered" >        trx.rollback();</span>
@@ -369,7 +361,7 @@ const createProfile = async (user) =&gt; {
 &nbsp;
 const updateProfile = async (user) =&gt; {
   try {
-    await dbInstance('uporabnik')
+    await dbInstance('UPORABNIK')
       .where('ID_uporabnik', user.ID_uporabnik)
       .update(user);
   } catch (e) {
@@ -381,7 +373,7 @@ const updateProfile = async (user) =&gt; {
 const getUserById = async (userId) =&gt; {
   const user = await dbInstance
     .select()
-    .from('uporabnik')
+    .from('UPORABNIK')
     .where('ID_uporabnik', userId);
   return user.length ? user[0] : <span class="branch-1 cbranch-no" title="branch not covered" >false;</span>
 };
@@ -389,15 +381,15 @@ const getUserById = async (userId) =&gt; {
 const getUserByEmail = async (email) =&gt; {
   const user = await dbInstance
     .select()
-    .from('uporabnik')
+    .from('UPORABNIK')
     .where('Email', email);
   return user.length ? user[0] : false;
 };
 &nbsp;
 const checkIfEmailAvailable = async (email) =&gt; {
-  const user = await getUserByEmail(email)
+  const user = await getUserByEmail(email);
   return user ? false : true;
-}
+};
 &nbsp;
 const addDog = async (req, res) =&gt; {
   const dog = { ...req.body };
@@ -415,18 +407,14 @@ const addDog = async (req, res) =&gt; {
     Ime_pes: dog.name,
     Opis_pes: null,
     Spol: dog.gender,
-    Pasma_ime: 'TODO when connect to API',
-    Temperament: 'TODO when connect to API',
-    WikiPasmeUrl: 'TODO when connect to API',
-    Visina: 0,
-    Teza: 0,
+    ID_pasme: dog.breed,
   };
 &nbsp;
   try {
-    await dbInstance('pes').insert(normalisedDogForDb);
-    return res.status(200).json({ message: 'Dog added' });
+    await dbInstance('PES').insert(normalisedDogForDb);
+<span class="cstat-no" title="statement not covered" >    return res.status(200).json({ message: 'Dog added' });</span>
   } catch (err) {
-<span class="cstat-no" title="statement not covered" >    return res.status(400).json({ message: err });</span>
+    return res.status(400).json({ message: err });
   }
 };
 &nbsp;
@@ -436,7 +424,7 @@ module.exports = {
   getUserById,
   updateProfile,
   getUserByEmail,
-  checkIfEmailAvailable
+  checkIfEmailAvailable,
 };
 &nbsp;</pre></td></tr></table></pre>
 
@@ -445,7 +433,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed May 05 2021 21:40:29 GMT+0200 (Central European Summer Time)
+                at Sun May 09 2021 19:14:00 GMT+0200 (Central European Summer Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>

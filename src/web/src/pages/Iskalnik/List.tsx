@@ -1,5 +1,6 @@
 import { Item } from 'semantic-ui-react';
 import Oglas from './Oglas';
+import styles from './List.module.css';
 
 interface AddListProps {
   adds: {

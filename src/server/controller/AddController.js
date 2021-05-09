@@ -11,17 +11,24 @@ const addAdd = async (req, res) => {
   if (!user) {
     res.status(400).json({ message: 'User not found' });
   }
-
   const { ID_uporabnik, Tip } = user;
+
+  const overflow = await canAddNew(user);
+
+  if (!overflow) {
+    res.status(400).json({ message: 'User has max number of oglasi' });
+  }
 
   const normalisedAddForDb = {
     ID_uporabnik,
     Tip,
-    Lokacija: add.lokacija,
+    Lokacija_lat: "",
     casZacetka,
     casKonca,
+    JeAktiven: 1,
+    Lokacija_lng: "",
+    Lokacija: add.lokacija
   };
-
   try {
     await dbInstance('OGLAS').insert(normalisedAddForDb);
     return res.status(200).json({ message: 'Add added' });
@@ -29,6 +36,27 @@ const addAdd = async (req, res) => {
     return res.status(400).json({ message: err });
   }
 };
+
+const canAddNew = async (user) => {
+  const num = await dbInstance
+        .count('OGLAS.ID_oglas')
+        .from('OGLAS')
+        .where('OGLAS.JeAktiven', 1)
+        .where('OGLAS.ID_uporabnik', user.ID_uporabnik);
+  if (user.Tip == 0) {
+    if (num < 99) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    if (num < 5) {
+      return true;
+    } else {
+      return false;
+    }
+  } 
+}
 
 function changeFormat(time) {
   var datetime = time.split('T');
