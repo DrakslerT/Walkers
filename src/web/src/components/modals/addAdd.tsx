@@ -6,6 +6,12 @@ import DateTimePicker from 'react-datetime-picker';
 
 interface ObjavaOglasaProps {}
 
+interface Pasma {
+  value: number;
+  text: string;
+  key: string;
+}
+
 export const ObjavaOglasa: React.FC<ObjavaOglasaProps> = ({}) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -13,10 +19,11 @@ export const ObjavaOglasa: React.FC<ObjavaOglasaProps> = ({}) => {
   const [lokacija, setLokacija] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [pasma, setPasma] = useState(2);
 
   const handleSubmit = async () => {
     setLoading(true);
-    const payload = { lokacija, startDate, endDate };
+    const payload = { lokacija, startDate, endDate, pasma };
     try {
       const authRequest = getAuthRequest();
       const response = await authRequest.post('/addAdd', payload);
@@ -30,6 +37,12 @@ export const ObjavaOglasa: React.FC<ObjavaOglasaProps> = ({}) => {
     }
     setLoading(false);
   };
+
+  let pasme: Pasma[] = [
+    { value: 1, text: 'Samoyed', key: 'S' },
+    { value: 2, text: 'German sheppard', key: 'G' },
+    { value: 3, text: 'Terier', key: 'T' },
+  ];
 
   return (
     <Modal
@@ -73,6 +86,19 @@ export const ObjavaOglasa: React.FC<ObjavaOglasaProps> = ({}) => {
                   value={endDate}
                   disableClock={true}
                   key="end"
+                />
+              </div>
+              <br />
+              <div>
+                <label>Breed:</label>
+                <br />
+                <Form.Select
+                  options={pasme}
+                  name="pasma"
+                  onChange={(e, data) => {
+                  if (typeof data.value === 'number') {
+                    setPasma(data.value)
+                  }}}
                 />
               </div>
             </Modal.Description>

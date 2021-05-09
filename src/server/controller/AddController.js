@@ -16,7 +16,7 @@ const addAdd = async (req, res) => {
   const overflow = await canAddNew(user);
 
   if (!overflow) {
-    res.status(400).json({ message: 'User has max number of oglasi' });
+    return res.status(400).json({ message: 'User has max number of oglasi' });
   }
 
   const normalisedAddForDb = {
@@ -29,28 +29,46 @@ const addAdd = async (req, res) => {
     Lokacija_lng: '',
     Lokacija: add.lokacija,
   };
-  try {
-    await dbInstance('OGLAS').insert(normalisedAddForDb);
-    return res.status(200).json({ message: 'Add added' });
-  } catch (err) {
-    return res.status(400).json({ message: err });
-  }
+
+  const addId = await dbInstance.transaction(async (trx) => {
+    try {
+      const addId = await trx('OGLAS').insert(normalisedAddForDb);
+      const id = addId[0];
+      /**  Add breed specific information to add */
+      const normalisedAddBreedForDb = {
+        ID_oglas: id,
+        ID_uporabnik,
+        Tip,
+        ID_pasma: add.pasma
+      }
+
+      await trx('OGLAS_PASME').insert(normalisedAddBreedForDb);
+      return id;
+    } catch (err) {
+      trx.rollback();
+    }
+  });
+  if(!addId)
+    return res.status(400).json({ message: "error" });
+  else
+    return res.status(200).json({ message: "add added" });
 };
 
 const canAddNew = async (user) => {
   const num = await dbInstance
-    .count('OGLAS.ID_oglas')
-    .from('OGLAS')
-    .where('OGLAS.JeAktiven', 1)
-    .where('OGLAS.ID_uporabnik', user.ID_uporabnik);
+        .count('OGLAS.ID_oglas', {as: 'num'})
+        .from('OGLAS')
+        .where('OGLAS.JeAktiven', 1)
+        .where('OGLAS.ID_uporabnik', user.ID_uporabnik);
+
   if (user.Tip == 0) {
-    if (num < 99) {
+    if (num[0].num < 99) {
       return true;
     } else {
       return false;
     }
   } else {
-    if (num < 5) {
+    if (num[0].num < 5) {
       return true;
     } else {
       return false;
