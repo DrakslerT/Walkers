@@ -16,7 +16,9 @@ const AddList = ({ adds }: AddListProps) => {
           <div>
             <div className={styles.bord}>
               <p className={styles.Og}>Oglas</p>
-              
+              <p className={styles.Start}>Čas Začetka: {new Date().toISOString()}</p>
+              <p className={styles.End}>Čas Konca: {new Date().toISOString()}</p>
+              <p className={styles.Mesto}>Lokacija: Ljubljana</p>
               <Oglas
                 username="dummy"
                 location="ljubljana"
