@@ -82,7 +82,7 @@ const getOglasi = async (req, res) => {
         }
 
         const oglasi = await dbInstance
-            .select('oglas.*', 'OdzivniCas')
+            .select('oglas.*', 'uporabnik.Ime_uporabnik')
             .from('oglas')
             .innerJoin('sprehajalec', 'sprehajalec.ID_uporabnik', 'oglas.ID_uporabnik')
             .innerJoin('uporabnik', 'uporabnik.ID_uporabnik', 'sprehajalec.ID_uporabnik')
