@@ -54,10 +54,6 @@ jobs:
           heroku_email: "martin.strekelj123@gmail.com"
           appdir: "src/server"
 
-      - name: build Client app
-        working-directory: ./src/web/
-        run: yarn && yarn build
-
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.2
         with:
