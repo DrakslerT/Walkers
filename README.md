@@ -2,22 +2,20 @@
 
 Vsaka skupina, ki je sestavljena iz 4 oz. 5 članov, mora razviti lastni projekt (LP) na izbrani problemski domeni, in sicer od **predloga projekta** do **implementacije**, kjer je podrobna razdelitev naslednja:
 
-* **1. LP** - [Predlog projekta](docs/predlog-projekta),
-* **2. LP** - [Zajem zahtev](docs/zajem-zahtev),
-* **3. LP** - [Načrt rešitve](docs/nacrt) in
-* **4. LP** - [Implementacija](src).
+- **1. LP** - [Predlog projekta](docs/predlog-projekta),
+- **2. LP** - [Zajem zahtev](docs/zajem-zahtev),
+- **3. LP** - [Načrt rešitve](docs/nacrt) in
+- **4. LP** - [Implementacija](src).
 
 ## Implementacija
 
-Production: **TODO URL**
+[![CD for DogWalkers](https://github.com/tpo-2020-2021/LP234-11/actions/workflows/CD.yml/badge.svg?branch=production)](https://github.com/tpo-2020-2021/LP234-11/actions/workflows/CD.yml)
+[![CI for DogWalkers](https://github.com/tpo-2020-2021/LP234-11/actions/workflows/CI.yml/badge.svg?branch=stage)](https://github.com/tpo-2020-2021/LP234-11/actions/workflows/CI.yml)
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/d5606299-733d-4c51-bce8-eea7f7d9103d/deploy-status)](https://app.netlify.com/sites/tpo11-dogwalkers/deploys)
+[Production Live site](https://tpo11-dogwalkers.herokuapp.com/)
 
-**CI BADGE**
-**CD BADGE**
 
 ### Projektna struktura za implementacijo
-
 
 ```md
 src
@@ -56,7 +54,7 @@ src
 |
 |
 test <- project tests
-└─── 
+└───
 |    Auth.test.js <- .. define tests like *.test.js
 |    ...
 |    |
@@ -86,5 +84,5 @@ cd src/web/
 
 yarn
 
-yarn start
+yarn dev
 ```
