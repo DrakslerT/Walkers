@@ -28,27 +28,28 @@ export const App: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div><i aria-hidden="true" className="large spinner loading icon"></i> Loading...</div>;
+    return (
+      <div>
+        <i aria-hidden="true" className="large spinner loading icon"></i>{' '}
+        Loading...
+      </div>
+    );
   }
 
   return (
     <>
-      <Navbar />
-      <main>
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss={false}
-          draggable={false}
-          pauseOnHover={false}
-        />
-        <Routes />
-        <Footer />
-      </main>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+      />
+      <Routes />
     </>
   );
 };

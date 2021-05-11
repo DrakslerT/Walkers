@@ -15,9 +15,6 @@ const Sidebar = () => {
       style={{ height: '100vh', width: '100%' }}
       color="blue"
     >
-      <Header as="h1" style={{ padding: '10px' }} textAlign="center">
-        🐕 DogWalkers 🐕
-      </Header>
       {user.userType === 1 && (
         <Menu.Item>
           <ObjavaOglasa />

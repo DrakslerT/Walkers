@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form } from 'semantic-ui-react';
+import { Button, Modal, Form, Icon } from 'semantic-ui-react';
 import { getAuthRequest } from '../../shared/http';
 import { errorToast, successToast } from '../../shared/Toast';
 import DateTimePicker from 'react-datetime-picker';
@@ -49,7 +49,12 @@ export const ObjavaOglasa: React.FC<ObjavaOglasaProps> = ({}) => {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={<Button primary>Add new</Button>}
+      trigger={
+        <Button fluid icon labelPosition="left" color="green">
+          Add new
+          <Icon name="add" />
+        </Button>
+      }
     >
       <Modal.Header>Dodajanje oglasa</Modal.Header>
       {loading ? (
@@ -96,9 +101,10 @@ export const ObjavaOglasa: React.FC<ObjavaOglasaProps> = ({}) => {
                   options={pasme}
                   name="pasma"
                   onChange={(e, data) => {
-                  if (typeof data.value === 'number') {
-                    setPasma(data.value)
-                  }}}
+                    if (typeof data.value === 'number') {
+                      setPasma(data.value);
+                    }
+                  }}
                 />
               </div>
             </Modal.Description>
