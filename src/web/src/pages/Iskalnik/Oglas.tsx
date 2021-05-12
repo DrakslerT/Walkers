@@ -10,7 +10,7 @@ interface IOglas {
 
 const Oglas = ({ username, startTime, endTime, location }: IOglas) => (
   <Card color="blue">
-    <Label color="blue" ribbon size="large" icon>
+    <Label color="blue" ribbon size="large">
       <Icon name="map marker alternate" />
       {location}
     </Label>

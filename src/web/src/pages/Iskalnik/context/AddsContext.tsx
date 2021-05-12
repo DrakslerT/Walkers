@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { createContext, useState } from 'react';
 import { getAuthRequest } from '../../../shared/http';
 
-interface AddsContextProvider {
+interface IAddsContextProvider {
   children: React.ReactElement[] | React.ReactElement;
 }
 
@@ -35,7 +35,7 @@ export const AddsContext = createContext<AddsContextType>({
   updateAdds: () => {},
 });
 
-export const AddsContextProvider = ({ children }: AddsContextProvider) => {
+export const AddsContextProvider = ({ children }: IAddsContextProvider) => {
   const [adds, setAdds] = useState<IAdd[]>([]);
   const [isFetching, setIsFetching] = useState(false);
 

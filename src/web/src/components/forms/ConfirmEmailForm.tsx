@@ -6,9 +6,7 @@ import { getAuthRequest } from '../../shared/http';
 import { errorToast, successToast } from '../../shared/Toast';
 import styles from './forms.module.css';
 
-interface ConfirmEmailFormProps {}
-
-export const ConfirmEmailForm: React.FC<ConfirmEmailFormProps> = ({}) => {
+export const ConfirmEmailForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const formik = useFormik({

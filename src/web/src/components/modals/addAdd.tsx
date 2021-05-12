@@ -1,11 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { Button, Modal, Form, Icon } from 'semantic-ui-react';
+import { Button, Modal, Form, Icon, Loader } from 'semantic-ui-react';
 import { getAuthRequest } from '../../shared/http';
 import { errorToast, successToast } from '../../shared/Toast';
 import DateTimePicker from 'react-datetime-picker';
 import { AddsContext } from '../../pages/Iskalnik/context/AddsContext';
-
-interface ObjavaOglasaProps {}
 
 interface Pasma {
   value: number;
@@ -13,7 +11,7 @@ interface Pasma {
   key: string;
 }
 
-export const ObjavaOglasa: React.FC<ObjavaOglasaProps> = ({}) => {
+export const ObjavaOglasa: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [lokacija, setLokacija] = useState('');
@@ -59,7 +57,9 @@ export const ObjavaOglasa: React.FC<ObjavaOglasaProps> = ({}) => {
     >
       <Modal.Header>Dodajanje oglasa</Modal.Header>
       {loading ? (
-        <Modal.Content>loading...</Modal.Content>
+        <Modal.Content>
+          <Loader />
+        </Modal.Content>
       ) : (
         <>
           <Modal.Content>

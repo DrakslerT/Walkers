@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import styles from './navbar.module.css';
 import { getUser } from '../../shared/UserInformation';
-import { useHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
 
 const MenuItems = [
@@ -45,7 +44,6 @@ const MenuItems = [
 
 const Navbar = () => {
   const [clicked, setClicked] = useState(false);
-  const history = useHistory();
   const user = getUser();
   return (
     <nav className={styles.NavbarItems}>
