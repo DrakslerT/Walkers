@@ -19,7 +19,7 @@ export const ConfirmEmailForm: React.FC<ConfirmEmailFormProps> = ({}) => {
       try {
         const authRequest = getAuthRequest();
         const response = await authRequest.post('/activate_user', values);
-        if (response.status == 200) {
+        if (response.status === 200) {
           successToast('Account has been activated! 🎉');
           history.push('/');
         }

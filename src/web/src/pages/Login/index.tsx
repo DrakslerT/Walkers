@@ -19,7 +19,7 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
       try {
         setLoading(true);
         const response = await request.post('/login', values);
-        if (response.status == 200) {
+        if (response.status === 200) {
           const { accessToken } = response.data;
           const { user } = response.data;
           setUser(user);

@@ -17,6 +17,11 @@ const Sidebar = () => {
     >
       {user.userType === 1 && (
         <Menu.Item>
+          <span className={styles.horizontal_container}>
+            <Header as="h1" content="Actions" />
+            <Icon name="tasks" size="large" />
+          </span>
+          <hr />
           <ObjavaOglasa />
         </Menu.Item>
       )}

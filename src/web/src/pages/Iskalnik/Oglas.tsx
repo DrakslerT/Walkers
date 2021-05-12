@@ -1,21 +1,20 @@
 import { Card, Icon, Header, Label, Rating } from 'semantic-ui-react';
 import styles from './Iskalnik.module.css';
 
-interface Oglas {
+interface IOglas {
   username?: string;
   startTime?: string;
   endTime?: string;
   location?: string;
 }
 
-const Oglas = ({ username, startTime, endTime, location }: Oglas) => (
+const Oglas = ({ username, startTime, endTime, location }: IOglas) => (
   <Card color="blue">
     <Label color="blue" ribbon size="large" icon>
-      <Icon name="map" />
+      <Icon name="map marker alternate" />
       {location}
     </Label>
-    {/* Empty content to show the ribbon */}
-    <Card.Content />
+    <Card.Content /> {/* Empty content to show the ribbon */}
     <Card.Header>
       <Header
         as="h3"
@@ -23,7 +22,7 @@ const Oglas = ({ username, startTime, endTime, location }: Oglas) => (
         textAlign="left"
         className={styles.card_header}
       >
-        <Icon name="user" size="tiny" />
+        <Icon name="user circle outline" size="tiny" />
         {username}
       </Header>
     </Card.Header>
@@ -39,7 +38,7 @@ const Oglas = ({ username, startTime, endTime, location }: Oglas) => (
         <b>End:</b> {endTime}
       </span>
     </Card.Content>
-    <Card.Content description>
+    <Card.Content>
       <b>Avg. rating: </b>
       <Rating
         maxRating={5}
@@ -49,7 +48,7 @@ const Oglas = ({ username, startTime, endTime, location }: Oglas) => (
         disabled
       />
     </Card.Content>
-    <Card.Content description style={{ userSelect: 'none' }}>
+    <Card.Content style={{ userSelect: 'none' }}>
       <Icon name="talk" />
       Avg. response time: <b>Weekly</b>
     </Card.Content>

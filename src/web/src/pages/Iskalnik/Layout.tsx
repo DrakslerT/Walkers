@@ -1,10 +1,11 @@
+import React from 'react';
 import { Grid } from 'semantic-ui-react';
 import Footer from '../../components/footer/Footer';
 import Navbar from '../../components/navbar/Navbar';
 
 interface LayoutProps {
   sidebar?: React.ReactElement;
-  children: any;
+  children: React.ReactElement | React.ReactElement[];
 }
 
 const Layout = ({ sidebar, children }: LayoutProps) => {
