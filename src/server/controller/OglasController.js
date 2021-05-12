@@ -120,7 +120,6 @@ const getOglasi = async (req, res) => {
       .orderBy('SPREHAJALEC.OdzivniCas', 'asc')
       .orderBy('SPREHAJALEC.PovprecnaOcena', 'desc')
       .orderBy('OGLAS.CasZacetka', 'desc');
-    console.log(oglasi);
     res.status(200).json({ oglasi: oglasi });
   } catch (err) {
     console.log(err);
