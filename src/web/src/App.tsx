@@ -5,6 +5,7 @@ import { request } from './shared/http';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { setUser } from './shared/UserInformation';
+import { Loader } from './components/Loader';
 
 export const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -25,7 +26,7 @@ export const App: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div>loading...</div>;
+    return <Loader />;
   }
 
   return (

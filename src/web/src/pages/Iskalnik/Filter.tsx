@@ -1,15 +1,8 @@
 import styles from './Iskalnik.module.css';
-import {
-  Button,
-  Checkbox,
-  Form,
-  Header,
-  Icon,
-  Select,
-} from 'semantic-ui-react';
+import { Button, Form, Header, Icon } from 'semantic-ui-react';
 import { useFormik } from 'formik';
-import { getAuthRequest } from '../../shared/http';
-import { useState } from 'react';
+import { useContext } from 'react';
+import { AddsContext } from './context/AddsContext';
 // import React, { useState } from 'react';
 // import DateTimePicker from 'react-datetime-picker';
 
@@ -22,8 +15,7 @@ const avgTimeOptions = [
 
 const Filter = () => {
   // const [when, setWhen] = useState(new Date());
-  const [loading, setLoading] = useState(false);
-
+  const { updateAdds } = useContext(AddsContext);
   const formik = useFormik({
     initialValues: {
       0: '', // name
@@ -35,7 +27,6 @@ const Filter = () => {
       6: false, // izkušeni
     },
     onSubmit: async (values) => {
-      setLoading(false);
       let queryString = `?0=${values[0]}&1=${values[1]}&2=${values[2]}&3=${values[3]}&4=${values[4]}`;
       if (values[5]) {
         queryString += `&5=${formik.values[5] ?? 'true'}`;
@@ -43,10 +34,7 @@ const Filter = () => {
       if (values[6]) {
         queryString += `&6=${formik.values[6] ?? 'true'}`;
       }
-      const authRequest = getAuthRequest();
-      const response = await authRequest(`/oglas/getOglasi${queryString}`);
-      setLoading(false);
-      console.log(response.data);
+      updateAdds(queryString);
     },
   });
 
@@ -62,11 +50,7 @@ const Filter = () => {
       <br />
       <DateTimePicker value={when} onChange={setWhen} /> */}
 
-      <Form
-        className={styles.filter_form}
-        onSubmit={formik.handleSubmit}
-        loading={loading}
-      >
+      <Form className={styles.filter_form} onSubmit={formik.handleSubmit}>
         <Form.Field>
           <label>Walker's name</label>
           <Form.Input
@@ -92,7 +76,7 @@ const Filter = () => {
           <Form.Input
             type="number"
             fluid
-            placeholder="John"
+            placeholder="0-5"
             name="4"
             min="0"
             max="5"
@@ -140,7 +124,7 @@ const Filter = () => {
         </Button>
         <br />
         <Button
-          type="submit"
+          type="reset"
           size="small"
           icon
           labelPosition="left"

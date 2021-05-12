@@ -19,13 +19,13 @@ export const ConfirmEmailForm: React.FC<ConfirmEmailFormProps> = ({}) => {
       try {
         const authRequest = getAuthRequest();
         const response = await authRequest.post('/activate_user', values);
-        if (response.status == 200) {
+        if (response.status === 200) {
           successToast('Account has been activated! 🎉');
           history.push('/');
         }
       } catch (e) {
         errorToast();
-        console.log(e);
+        console.error(e);
       }
       setLoading(false);
     },
@@ -63,10 +63,7 @@ export const ConfirmEmailForm: React.FC<ConfirmEmailFormProps> = ({}) => {
         <Button type="submit" size="huge" primary>
           Activate
         </Button>
-        <span
-          className={styles.resend_confirmation}
-          onClick={() => console.log('Resend confirmation')}
-        >
+        <span className={styles.resend_confirmation} onClick={handleResendCode}>
           Resend the activation code
         </span>
       </div>

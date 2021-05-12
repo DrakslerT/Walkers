@@ -54,7 +54,7 @@ src
 |
 |
 test <- project tests
-└───
+└─── 
 |    Auth.test.js <- .. define tests like *.test.js
 |    ...
 |    |

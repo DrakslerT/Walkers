@@ -1,34 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Container } from 'semantic-ui-react';
-import { getAuthRequest } from '../../shared/http';
-import { errorToast } from '../../shared/Toast';
+import { Loader } from '../../components/Loader';
+import { AddsContext, AddsContextType } from './context/AddsContext';
+
 import Layout from './Layout';
 import AddList from './List';
 import Sidebar from './Sidebar';
 
-interface IskalnikProps {}
-
-export const Iskalnik: React.FC<IskalnikProps> = ({}) => {
-  const [loading, setLoading] = useState(false);
-  const [adds, setAdds] = useState([]);
+export const Iskalnik: React.FC = () => {
+  const { adds, isFetching, updateAdds } = useContext(
+    AddsContext
+  ) as AddsContextType;
+  /** Fetch Adds on initial load */
   useEffect(() => {
-    setLoading(true);
-    const authRequest = getAuthRequest();
-    authRequest
-      .get('/oglas/getOglasi')
-      .then((response) => {
-        setAdds(response.data.oglasi);
-      })
-      .catch((e) => {
-        console.error(e);
-        errorToast();
-      })
-      .finally(() => setLoading(false));
+    updateAdds();
   }, []);
   return (
     <Layout sidebar={<Sidebar />}>
       <Container>
-        {loading ? <div>loading... </div> : <AddList adds={adds} />}
+        {isFetching ? <Loader msg="Fetching Ads" /> : <AddList adds={adds} />}
       </Container>
     </Layout>
   );
