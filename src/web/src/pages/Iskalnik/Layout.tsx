@@ -1,28 +1,37 @@
+import React from 'react';
 import { Grid } from 'semantic-ui-react';
+import Footer from '../../components/footer/Footer';
+import Navbar from '../../components/navbar/Navbar';
 
 interface LayoutProps {
   sidebar?: React.ReactElement;
-  children: any;
+  children: React.ReactElement | React.ReactElement[];
 }
 
 const Layout = ({ sidebar, children }: LayoutProps) => {
   return (
-    <Grid style={{ minHeight: '100vh' }}>
-      <Grid.Column
-        computer={3}
-        tablet={2}
-        style={{ backgroundColor: 'lightgray' }}
-      >
-        {sidebar}
-      </Grid.Column>
-      <Grid.Column
-        computer={13}
-        tablet={14}
-        style={{ backgroundColor: 'snow' }}
-      >
-        {children}
-      </Grid.Column>
-    </Grid>
+    <>
+      <Navbar />
+      <main>
+        <Grid style={{ minHeight: '100vh' }}>
+          <Grid.Column
+            computer={4}
+            only="computer"
+            style={{ backgroundColor: 'lightgray' }}
+          >
+            {sidebar}
+          </Grid.Column>
+          <Grid.Column
+            computer={12}
+            tablet={16}
+            style={{ backgroundColor: 'snow' }}
+          >
+            {children}
+          </Grid.Column>
+        </Grid>
+        <Footer />
+      </main>
+    </>
   );
 };
 

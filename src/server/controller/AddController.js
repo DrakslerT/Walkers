@@ -4,7 +4,6 @@ const { getUserById } = require('./ProfileController');
 const addAdd = async (req, res) => {
   const add = { ...req.body };
   const user = await getUserById(res.locals.userId);
-  console.log(add);
   var casZacetka = changeFormat(add.startDate);
   var casKonca = changeFormat(add.endDate);
 
@@ -16,7 +15,7 @@ const addAdd = async (req, res) => {
   const overflow = await canAddNew(user);
 
   if (!overflow) {
-    return res.status(400).json({ message: 'User has max number of oglasi' });
+    return res.status(400).json({ message: 'User has max number of adds' });
   }
 
   const normalisedAddForDb = {
@@ -39,8 +38,8 @@ const addAdd = async (req, res) => {
         ID_oglas: id,
         ID_uporabnik,
         Tip,
-        ID_pasma: add.pasma
-      }
+        ID_pasma: add.pasma,
+      };
 
       await trx('OGLAS_PASME').insert(normalisedAddBreedForDb);
       return id;
@@ -48,18 +47,16 @@ const addAdd = async (req, res) => {
       trx.rollback();
     }
   });
-  if(!addId)
-    return res.status(400).json({ message: "error" });
-  else
-    return res.status(200).json({ message: "add added" });
+  if (!addId) return res.status(400).json({ message: 'error' });
+  else return res.status(200).json({ message: 'add added' });
 };
 
 const canAddNew = async (user) => {
   const num = await dbInstance
-        .count('OGLAS.ID_oglas', {as: 'num'})
-        .from('OGLAS')
-        .where('OGLAS.JeAktiven', 1)
-        .where('OGLAS.ID_uporabnik', user.ID_uporabnik);
+    .count('OGLAS.ID_oglas', { as: 'num' })
+    .from('OGLAS')
+    .where('OGLAS.JeAktiven', 1)
+    .where('OGLAS.ID_uporabnik', user.ID_uporabnik);
 
   if (user.Tip == 0) {
     if (num[0].num < 99) {
@@ -85,9 +82,6 @@ function changeFormat(time) {
   return date + ' ' + time;
 }
 
-//export function getAllOglasi() {
-//return dbInstance('OGLAS');
-//}
 module.exports = {
   addAdd,
 };
