@@ -10,6 +10,10 @@
     "test": "mocha \"../../test/*.test.js\" --exit --resursive --timeout 15000",
     "coverage": "nyc --reporter=html --reporter=text --temp-dir=../../test/coverage/.nyc_output --report-dir=../../test/coverage mocha \"../../test/*.test.js\" --exit --resursive"
   },
+  "engines": {
+    "node": ">=15.11.0",
+    "yarn": ">=1.22.5"
+  },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.5",

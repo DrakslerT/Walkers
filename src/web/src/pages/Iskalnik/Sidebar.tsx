@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Header, Icon, Menu, Form } from 'semantic-ui-react';
+import { Header, Icon, Menu } from 'semantic-ui-react';
 import { ObjavaOglasa } from '../../components/modals/addAdd';
 import { getUser } from '../../shared/UserInformation';
 import Filter from './Filter';

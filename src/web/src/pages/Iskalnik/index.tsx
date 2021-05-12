@@ -1,17 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Container } from 'semantic-ui-react';
 import { Loader } from '../../components/Loader';
-import { getAuthRequest } from '../../shared/http';
-import { errorToast } from '../../shared/Toast';
 import { AddsContext, AddsContextType } from './context/AddsContext';
 
 import Layout from './Layout';
 import AddList from './List';
 import Sidebar from './Sidebar';
 
-interface IskalnikProps {}
-
-export const Iskalnik: React.FC<IskalnikProps> = ({}) => {
+export const Iskalnik: React.FC = () => {
   const { adds, isFetching, updateAdds } = useContext(
     AddsContext
   ) as AddsContextType;

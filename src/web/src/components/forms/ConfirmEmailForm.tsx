@@ -25,7 +25,7 @@ export const ConfirmEmailForm: React.FC<ConfirmEmailFormProps> = ({}) => {
         }
       } catch (e) {
         errorToast();
-        console.log(e);
+        console.error(e);
       }
       setLoading(false);
     },
@@ -63,10 +63,7 @@ export const ConfirmEmailForm: React.FC<ConfirmEmailFormProps> = ({}) => {
         <Button type="submit" size="huge" primary>
           Activate
         </Button>
-        <span
-          className={styles.resend_confirmation}
-          onClick={() => console.log('Resend confirmation')}
-        >
+        <span className={styles.resend_confirmation} onClick={handleResendCode}>
           Resend the activation code
         </span>
       </div>
