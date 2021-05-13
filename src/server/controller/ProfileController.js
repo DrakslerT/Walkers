@@ -113,6 +113,14 @@ const addDog = async (req, res) => {
   }
 };
 
+const getDogsCountByProfile = async (req, res) => {
+  const userId = res.locals.userId;
+  const dogs = await dbInstance('PES')
+    .countDistinct('ID_PES as dogsCount')
+    .where('ID_uporabnik', userId);
+  res.status(200).json(dogs[0]);
+};
+
 module.exports = {
   addDog,
   createProfile,
@@ -120,4 +128,5 @@ module.exports = {
   updateProfile,
   getUserByEmail,
   checkIfEmailAvailable,
+  getDogsCountByProfile,
 };

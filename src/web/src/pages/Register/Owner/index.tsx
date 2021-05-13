@@ -6,6 +6,10 @@ import { BasicForm } from '../../../components/forms/BasicForm';
 import { ConfirmEmailForm } from '../../../components/forms/ConfirmEmailForm';
 import { RegisterLayout } from '../Layout';
 import { DogForm } from '../../../components/forms/DogForm';
+import { getAuthRequest } from '../../../shared/http';
+import { getUser } from '../../../shared/UserInformation';
+import { Loader } from '../../../components/Loader';
+import { RouteComponentProps } from 'react-router-dom';
 
 enum OwnerStepEnum {
   BasicInfo = 1,
@@ -13,16 +17,9 @@ enum OwnerStepEnum {
   Activate = 3,
 }
 
-export const OwnerRegister: React.FC = () => {
-  const setCorrectStep = () => {
-    const auth = isAuth();
-    if (auth) {
-      return OwnerStepEnum.DogInfo;
-    }
-    return OwnerStepEnum.BasicInfo;
-  };
-
-  const [step, setStep] = useState<number>(setCorrectStep);
+export const OwnerRegister: React.FC<RouteComponentProps> = ({ history }) => {
+  const [step, setStep] = useState<number>(1);
+  const [loading, setLoading] = useState(false);
 
   const renderStep = useCallback(() => {
     switch (step) {
@@ -34,14 +31,41 @@ export const OwnerRegister: React.FC = () => {
         return <ConfirmEmailForm />;
     }
   }, [step]);
+  /** Set correct step on inital load */
+  useEffect(() => {
+    setLoading(true);
+    const user = getUser();
+    const auth = isAuth();
+    if (!auth) {
+      setLoading(false);
+      return;
+    }
+
+    if (user.userType === 1) {
+      return history.replace('/register/walker');
+    }
+
+    const authRequest = getAuthRequest();
+    authRequest
+      .get(`dogs/count`)
+      .then((response) => {
+        if (response.data.dogsCount < 1) {
+          setStep(OwnerStepEnum.DogInfo);
+        } else {
+          if (user.activated !== 1) {
+            setStep(OwnerStepEnum.Activate);
+          } else {
+            history.push('/');
+          }
+        }
+      })
+      .catch((e) => console.error(e))
+      .finally(() => setLoading(false));
+  }, []);
 
   const nextStep = useCallback(() => {
     setStep((s) => s + 1);
   }, [setStep]);
-
-  useEffect(() => {
-    renderStep();
-  }, [renderStep]);
 
   return (
     <RegisterLayout>
@@ -85,7 +109,7 @@ export const OwnerRegister: React.FC = () => {
       </Step.Group>
 
       <Segment raised padded="very">
-        {renderStep()}
+        {loading ? <Loader /> : renderStep()}
       </Segment>
     </RegisterLayout>
   );

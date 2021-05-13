@@ -1,4 +1,3 @@
-//import {getAllOglasi} from './controller/AddController';
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -10,8 +9,12 @@ const {
   refreshToken,
   activateUser,
   loginUser,
+  resendActivationCode,
 } = require('./controller/AuthController');
-const { addDog } = require('./controller/ProfileController');
+const {
+  addDog,
+  getDogsCountByProfile,
+} = require('./controller/ProfileController');
 const dotenv = require('dotenv');
 const { testConnection } = require('./DB/BazaTransakcij');
 const {
@@ -21,7 +24,7 @@ const {
   confirmEmailValidationRules,
   loginValidationRules,
 } = require('./middleware/validationInputs');
-const { getOglasi, getAllOglasi } = require('./controller/OglasController');
+const { getOglasi } = require('./controller/OglasController');
 const { addAdd } = require('./controller/AddController');
 
 const app = express();
@@ -58,12 +61,17 @@ app.post(
   validateUser,
   (req, res) => activateUser(req, res)
 );
+app.get('/api/resend_activation', validateUser, (req, res) =>
+  resendActivationCode(req, res)
+);
 app.post('/api/login', loginValidationRules(), validateInputs, (req, res) =>
   loginUser(req, res)
 );
 
 // Profile routes
-// app.get('api/dogs')
+app.get('/api/dogs/count', validateUser, (req, res) =>
+  getDogsCountByProfile(req, res)
+);
 // app.get('api/dogs/:id')
 app.post(
   '/api/dogs/add',
@@ -85,7 +93,6 @@ app.listen(PORT, () => {
   /** If you want to test your DB connection uncomment this */
   //testConnection()
 });
-//console.log(getAllOglasi());
+
 /** Export for testing */
 module.exports = app;
-//module.exports = getAllOglasi;

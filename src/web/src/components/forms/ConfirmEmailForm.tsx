@@ -4,18 +4,20 @@ import { useHistory } from 'react-router';
 import { Button, Form, Header } from 'semantic-ui-react';
 import { getAuthRequest } from '../../shared/http';
 import { errorToast, successToast } from '../../shared/Toast';
+import { getUser } from '../../shared/UserInformation';
 import styles from './forms.module.css';
 
 export const ConfirmEmailForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
+  const [resend, setResend] = useState(false);
+  const user = getUser();
+  const authRequest = getAuthRequest();
   const history = useHistory();
   const formik = useFormik({
     initialValues: { ActivationCode: '' },
-
     onSubmit: async (values) => {
       setLoading(true);
       try {
-        const authRequest = getAuthRequest();
         const response = await authRequest.post('/activate_user', values);
         if (response.status === 200) {
           successToast('Account has been activated! 🎉');
@@ -29,8 +31,19 @@ export const ConfirmEmailForm: React.FC = () => {
     },
   });
 
-  const handleResendCode = () => {
-    console.log('resend code');
+  const handleResendCode = async () => {
+    if (resend) {
+      errorToast('Only one resend is permitted! ⚠️');
+      return;
+    }
+    try {
+      const response = await authRequest.get('/resend_activation');
+      successToast(response.data.message);
+      setResend(true);
+    } catch (e) {
+      console.error(e);
+      errorToast();
+    }
   };
 
   return (
@@ -44,7 +57,7 @@ export const ConfirmEmailForm: React.FC = () => {
         as="h1"
         content="Activation code"
         textAlign="center"
-        subheader="We sent you an email with confirmation code. Please enter it here to activate your account"
+        subheader={`Hey ${user.username}! We sent you an email with confirmation code. Please enter it here to activate your account`}
       />
       <Form.Field>
         <Form.Input
