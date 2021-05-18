@@ -13,7 +13,7 @@ const getOglasiWhere = async (user, filter) => {
     //console.log(filter);
     switch (filter.type) {
       case '0':
-        ret.query = "Ime_uporabnik like '%??%'";
+        ret.query = 'Ime_uporabnik = ?';
         break;
       case '1':
         ret.query = 'ID_pasma IN (?';
@@ -113,6 +113,7 @@ const getOglasi = async (req, res) => {
         //console.log(qb);
         for (where in wheres) {
           if (wheres[where].query != '') {
+            console.log(wheres[where].query);
             qb.whereRaw(wheres[where].query, wheres[where].value);
           }
         }
@@ -134,7 +135,7 @@ const getOglasi = async (req, res) => {
       .orderBy('SPREHAJALEC.OdzivniCas', 'asc')
       .orderBy('SPREHAJALEC.PovprecnaOcena', 'desc')
       .orderBy('OGLAS.CasZacetka', 'desc');
-      console.log(oglasi);
+      //console.log(oglasi);
     res.status(200).json({ oglasi: oglasi });
   } catch (err) {
     console.log(err);
