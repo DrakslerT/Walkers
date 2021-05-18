@@ -1,21 +1,22 @@
 import { Card, Icon, Header, Label, Rating, FormButton } from 'semantic-ui-react';
 import styles from './Iskalnik.module.css';
 import { getUser } from '../../shared/UserInformation';
-
+import { zbrisi } from './List';
 interface IOglas {
+  IdOglas: number;
+  key: number;
   username?: string;
   startTime?: string;
   endTime?: string;
   location?: string;
   OdzivniCas?: string;
-  isDeleted?: boolean;
 }
 
 const user = getUser();
 console.log(user);
 
-const Oglas = ({username, startTime, endTime, location }: IOglas) => (
-  <Card color="blue" id = "card">
+const Oglas = ({IdOglas, key, username, startTime, endTime, location }: IOglas) => (
+  <Card color="blue">
     <Label color="blue" ribbon size="large">
       <Icon name="map marker alternate" />
       {location}
@@ -61,7 +62,7 @@ const Oglas = ({username, startTime, endTime, location }: IOglas) => (
     {user.userType === 1 && ( 
 
         <Card.Content>
-        <FormButton color="red" onClick = {() => document.getElementById("card")?.remove()}>
+        <FormButton color="red" onClick={()=>zbrisi(IdOglas)}>
           <Icon name="delete"/>
           <b>Delete</b>
         </FormButton>
