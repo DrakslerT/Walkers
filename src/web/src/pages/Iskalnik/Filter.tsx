@@ -101,16 +101,6 @@ const Filter = () => {
             }
           }}
         />
-        <Form.Select
-          label="Average response time"
-          options={avgTimeOptions}
-          placeholder="eg. Daily"
-          onChange={(e, data) => {
-            if (typeof data.value === 'number') {
-              formik.values[2] = data.value;
-            }
-          }}
-        />
         <Button
           type="submit"
           size="small"

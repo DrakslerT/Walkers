@@ -35,9 +35,11 @@ const AddList = () => {
       ) : (
         <Card.Group itemsPerRow={width > 992 ? 3 : 1}>
           {adds.map((add) => {
+            
+            
             const startTime = new Date(add.CasZacetka).toDateString();
             const endTime = new Date(add.CasKonca).toDateString();
-
+            
             return (
               <Oglas
                 key={add.Index}
@@ -45,8 +47,10 @@ const AddList = () => {
                 location={add.Lokacija}
                 startTime={startTime}
                 endTime={endTime}
+                
               />
             );
+           
           })}
         </Card.Group>
       )}
