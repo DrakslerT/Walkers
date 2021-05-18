@@ -2,33 +2,36 @@ const { dbInstance } = require('../DB/BazaTransakcij');
 const { getUserById } = require('./ProfileController');
 
 const getOglasiWhere = async (user, filter) => {
+  //console.log("HERE IS MY FILTER");
+  //console.log(filter);
   try {
     var ret = {
       query: '',
       value: filter.value,
     };
-
+    //console.log("Filter---->");
+    //console.log(filter);
     switch (filter.type) {
-      case 0:
+      case '0':
         ret.query = "Ime_uporabnik like '%??%'";
         break;
-      case 1:
+      case '1':
         ret.query = 'ID_pasma IN (?';
         for (var i = 1; i < filter.value.length; i++) {
           ret.query += ', ?';
         }
         ret.query += ')';
         break;
-      case 2:
+      case '2':
         ret.query = 'OdzivniCas <= ?';
         break;
-      case 3:
+      case '3':
         ret.query = 'Lokacija = ?';
         break;
-      case 4:
+      case '4':
         ret.query = 'PovprecnaOcena >= ?';
         break;
-      case 5:
+      case '5':
         const priljubljeni = await getPriljubljeniUporabniki(user);
 
         if (priljubljeni) {
@@ -44,7 +47,7 @@ const getOglasiWhere = async (user, filter) => {
         }
 
         break;
-      case 6:
+      case '6':
         ret.query = 'SPREHAJALEC.Tip = ?';
         break;
       default:
@@ -73,11 +76,20 @@ const getOglasi = async (req, res) => {
     if (!user) {
       res.status(400).json({ message: 'User not found' });
     }
-
+    //console.log(req.query);
     var wheres = [];
     for (filter in filters) {
-      if (filters[filter] && typeof filters[filter].type != 'undefined') {
-        wheres[filter] = await getOglasiWhere(user, filters[filter]);
+      //console.log(filter);
+      //console.log(filters[filter] == "");
+      //console.log(filters[filter]);
+      if (!(filters[filter] == "")) {
+        //console.log("GETIN");
+        filter1 = {
+          type: filter,
+          value: filters[filter]
+        };
+        wheres[filter] = await getOglasiWhere(user, filter1);
+        console.log(wheres[filter]);
       }
     }
 
@@ -97,12 +109,14 @@ const getOglasi = async (req, res) => {
       )
       .innerJoin('OGLAS_PASME', 'OGLAS_PASME.ID_oglas', 'OGLAS.ID_oglas')
       .where(async (qb) => {
+        console.log("QB");
+        //console.log(qb);
         for (where in wheres) {
           if (wheres[where].query != '') {
             qb.whereRaw(wheres[where].query, wheres[where].value);
           }
         }
-
+       
         if (user.Tip <= 1) {
           qb.whereRaw('OGLAS.ID_uporabnik = ?', user.ID_uporabnik);
         } else {
@@ -120,6 +134,7 @@ const getOglasi = async (req, res) => {
       .orderBy('SPREHAJALEC.OdzivniCas', 'asc')
       .orderBy('SPREHAJALEC.PovprecnaOcena', 'desc')
       .orderBy('OGLAS.CasZacetka', 'desc');
+      console.log(oglasi);
     res.status(200).json({ oglasi: oglasi });
   } catch (err) {
     console.log(err);

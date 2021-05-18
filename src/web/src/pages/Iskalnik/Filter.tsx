@@ -20,7 +20,7 @@ const Filter = () => {
     initialValues: {
       0: '', // name
       1: '', // pasma
-      2: 1, // odzivniCas
+      2: 7, // odzivniCas
       3: '', // lokacija
       4: '', // ocena
       5: false, // priljubljeni
