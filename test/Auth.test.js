@@ -195,6 +195,59 @@ describe("#AuthTest - owner", () => {
         return done();
       });
   });
+
+  it("login", (done) => {
+    supertestRequest(app)
+      .post("/api/login")
+      .send({ email: randomUser.email, password: randomUser.password })
+      .expect(200)
+      .end(function (err, res) {
+        if (err) {
+          console.error(res.body);
+          return done(err);
+        }
+        token = res.body.accessToken;
+        randomUser = { ...randomUser, token };
+        return done();
+      });
+  });
+
+  let add = {
+    lokacija: "Ljubljana",
+    startDate: "2021-05-09T17:35:36.123",
+    startEnd: "2021-05-09T17:55:36.412",
+    breed: 1
+  };
+
+  it("Create an add with no token", (done) => {
+    supertestRequest(app)
+      .post("/api/addAdd")
+      .send(add)
+      .expect(401)
+      .end(function (err, res) {
+        if (err) {
+          console.error(res.body);
+          return done(err);
+        }
+        return done();
+      });
+  });
+
+  // it("Succesfully create an add", (done) => {
+  //   supertestRequest(app)
+  //     .post("/api/addAdd")
+  //     .send(add)
+  //     .set("Authorization", `Bearer ${randomUser.token}`)
+  //     .expect(200)
+  //     .end(function (err, res) {
+  //       if (err) {
+  //         console.error(res.body);
+  //         return done(err);
+  //       }
+
+  //       return done();
+  //     });
+  // });
 });
 
 describe("#AuthTest - other role eg. admin", () => {
@@ -221,62 +274,10 @@ describe("#AuthTest - other role eg. admin", () => {
 });
 
 describe("Create add test", () => {
-  let add = {
-    lokacija: "Ljubljana",
-    startDate: "2021-05-09T17:35:36.123",
-    startEnd: "2021-05-09T17:55:36.412",
-  };
 
   let user = {
-    email: "covag82250@httptuan.com",
+    email: "",
     password: "12345",
   };
 
-  it("login", (done) => {
-    supertestRequest(app)
-      .post("/api/login")
-      .send({ email: user.email, password: user.password })
-      .expect(200)
-      .end(function (err, res) {
-        if (err) {
-          console.error(res.body);
-          return done(err);
-        }
-        token = res.body.accessToken;
-        user = { ...user, token };
-        return done();
-      });
-  });
-
-  // it("Succesfully create an add", (done) => {
-  //   console.log(add);
-  //   console.log(user);
-  //   supertestRequest(app)
-  //     .post("/api/addAdd")
-  //     .send(add)
-  //     .set("Authorization", `Bearer ${user.token}`)
-  //     .expect(200)
-  //     .end(function (err, res) {
-  //       if (err) {
-  //         console.error(res.body);
-  //         return done(err);
-  //       }
-
-  //       return done();
-  //     });
-  // });
-
-  it("Create an add with no token", (done) => {
-    supertestRequest(app)
-      .post("/api/addAdd")
-      .send(add)
-      .expect(401)
-      .end(function (err, res) {
-        if (err) {
-          console.error(res.body);
-          return done(err);
-        }
-        return done();
-      });
-  });
 });
