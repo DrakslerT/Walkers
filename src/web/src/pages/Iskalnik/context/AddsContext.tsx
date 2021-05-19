@@ -38,14 +38,13 @@ export const AddsContext = createContext<AddsContextType>({
 export const AddsContextProvider = ({ children }: IAddsContextProvider) => {
   const [adds, setAdds] = useState<IAdd[]>([]);
   const [isFetching, setIsFetching] = useState(false);
-  //console.log("BLABLA");
+
   const updateAdds = async (q = '') => {
     setIsFetching(true);
     const authRequest = await getAuthRequest();
     let query = '/oglas/getOglasi';
 
     /** Appends query params to request url */
-    console.log(q);
     if ('' !== q) {
       query += q;
     }

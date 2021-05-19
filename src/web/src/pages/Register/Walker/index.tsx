@@ -4,14 +4,19 @@ import { UserTypeEnum } from '../../../shared/Enums';
 import { BasicForm } from '../../../components/forms/BasicForm';
 import { ConfirmEmailForm } from '../../../components/forms/ConfirmEmailForm';
 import { RegisterLayout } from '../Layout';
+import { isAuth } from '../../../shared/AccessToken';
+import { getUser } from '../../../shared/UserInformation';
+import { RouteComponentProps } from 'react-router-dom';
+import { Loader } from '../../../components/Loader';
 
 enum WalkerStepEnum {
   BasicInfo = 1,
   Activate = 2,
 }
 
-export const WalkerRegister: React.FC = () => {
+export const WalkerRegister: React.FC<RouteComponentProps> = ({ history }) => {
   const [step, setStep] = useState<number>(1);
+  const [loading, setLoading] = useState(false);
 
   const renderStep = useCallback(() => {
     switch (step) {
@@ -22,13 +27,32 @@ export const WalkerRegister: React.FC = () => {
     }
   }, [step]);
 
+  /** Set correct step on inital load */
+  useEffect(() => {
+    setLoading(true);
+    const user = getUser();
+    const auth = isAuth();
+    if (!auth) {
+      setLoading(false);
+      return;
+    }
+
+    if (user.userType === 2) {
+      history.replace('/register/owner');
+    }
+
+    if (user.activated !== 1) {
+      setStep(WalkerStepEnum.Activate);
+    } else {
+      history.push('/');
+    }
+    setLoading(false);
+    return () => {};
+  }, []);
+
   const nextStep = useCallback(() => {
     setStep((s) => s + 1);
   }, [setStep]);
-
-  useEffect(() => {
-    renderStep();
-  }, [renderStep]);
 
   return (
     <RegisterLayout>
@@ -61,7 +85,7 @@ export const WalkerRegister: React.FC = () => {
       </Step.Group>
 
       <Segment raised padded="very">
-        {renderStep()}
+        {loading ? <Loader /> : renderStep()}
       </Segment>
     </RegisterLayout>
   );

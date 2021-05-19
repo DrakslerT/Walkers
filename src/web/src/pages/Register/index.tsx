@@ -1,10 +1,16 @@
 import React, { useCallback, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Header, Grid, Button, Divider, Segment } from 'semantic-ui-react';
+import { getAccessToken } from '../../shared/AccessToken';
 import { useWindowSize } from '../../shared/useWindow';
 import { RegisterLayout } from './Layout';
 
 export const Register: React.FC<RouteComponentProps> = ({ history }) => {
+  const accessToken = getAccessToken();
+  if ('' !== accessToken) {
+    history.replace('/');
+  }
+
   const { width } = useWindowSize();
 
   const showDivider = useCallback(() => {

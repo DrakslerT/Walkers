@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import { NotFoundPage } from './pages/404';
 import { Iskalnik } from './pages/Iskalnik';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
@@ -16,6 +17,7 @@ export const Routes: React.FC = () => {
         <Route exact path="/register/walker" component={WalkerRegister} />
         <Route exact path="/register/owner" component={OwnerRegister} />
         <Route path="/login" component={Login} />
+        <Route component={NotFoundPage} />
       </Switch>
     </BrowserRouter>
   );

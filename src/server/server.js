@@ -1,4 +1,3 @@
-//import {getAllOglasi} from './controller/AddController';
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -10,8 +9,13 @@ const {
   refreshToken,
   activateUser,
   loginUser,
+  resendActivationCode,
+  logout
 } = require('./controller/AuthController');
-const { addDog } = require('./controller/ProfileController');
+const {
+  addDog,
+  getDogsCountByProfile,
+} = require('./controller/ProfileController');
 const dotenv = require('dotenv');
 const { testConnection } = require('./DB/BazaTransakcij');
 const {
@@ -21,7 +25,7 @@ const {
   confirmEmailValidationRules,
   loginValidationRules,
 } = require('./middleware/validationInputs');
-const { getOglasi, getAllOglasi } = require('./controller/OglasController');
+const { getOglasi } = require('./controller/OglasController');
 const { addAdd } = require('./controller/AddController');
 
 const app = express();
@@ -36,7 +40,7 @@ const clientOrigin =
     ? 'https://tpo11-dogwalkers.herokuapp.com'
     : 'http://localhost:3000';
 
-app.use(cors({ credentials: true, origin: clientOrigin }));
+app.use(cors({ credentials: true, origin: clientOrigin,  }));
 app.use(morgan('dev'));
 app.use(helmet());
 dotenv.config();
@@ -58,12 +62,19 @@ app.post(
   validateUser,
   (req, res) => activateUser(req, res)
 );
+app.get('/api/resend_activation', validateUser, (req, res) =>
+  resendActivationCode(req, res)
+);
 app.post('/api/login', loginValidationRules(), validateInputs, (req, res) =>
   loginUser(req, res)
 );
 
+app.post('/api/logout', (req, res) => logout(req,res))
+
 // Profile routes
-// app.get('api/dogs')
+app.get('/api/dogs/count', validateUser, (req, res) =>
+  getDogsCountByProfile(req, res)
+);
 // app.get('api/dogs/:id')
 app.post(
   '/api/dogs/add',
@@ -85,7 +96,6 @@ app.listen(PORT, () => {
   /** If you want to test your DB connection uncomment this */
   //testConnection()
 });
-//console.log(getAllOglasi());
+
 /** Export for testing */
 module.exports = app;
-//module.exports = getAllOglasi;

@@ -74,9 +74,9 @@ const AuthResponse = async (res, user_id) => {
     process.env.JWT_REFRESH_SECRET,
     '7d'
   );
+
   res.cookie('jid', refreshToken, {
     httpOnly: true,
-    path: '/api/refresh_token',
   });
 
   const user = await getUserById(user_id);
@@ -84,8 +84,8 @@ const AuthResponse = async (res, user_id) => {
     username: user.Ime_uporabnik,
     activated: user.Aktiviran,
     userType: user.Tip,
-    accessToken: accessToken,
   };
+
   return res.status(200).json({ user: userModel, accessToken });
 };
 
@@ -142,8 +142,28 @@ const createActivationCode = (username, creationDate) => {
   return code;
 };
 
-const resendActivationCode = (req, res) => {
-  // TODO
+const resendActivationCode = async (req, res) => {
+  const userId = res.locals.userId;
+  const user = await getUserById(userId);
+  const updatedTime = new Date();
+  const updatedUser = {
+    ...user,
+    DatumUstvaritve: updatedTime,
+    DatumSpremembe: updatedTime,
+  };
+  try {
+    await updateProfile(updatedUser);
+    const newActivactionCode = createActivationCode(
+      updatedUser.Ime_uporabnik,
+      updatedUser.DatumUstvaritve
+    );
+    sendCodeEmail(newActivactionCode, updatedUser.Email);
+    res.status(200).json({
+      message: `New Email Confirmation Code sent to ${updatedUser.Email}!`,
+    });
+  } catch (e) {
+    res.status(500).json(e);
+  }
 };
 
 const activateUser = async (req, res) => {
@@ -165,6 +185,11 @@ const activateUser = async (req, res) => {
   return res.status(400).json({ message: 'Wrong activaction code' });
 };
 
+const logout = (req, res) => {
+  res.clearCookie('jid');
+  return res.status(200).json({message: 'Cookie cleared!'});
+};
+
 module.exports = {
   registerUser,
   validateUser,
@@ -172,4 +197,6 @@ module.exports = {
   activateUser,
   loginUser,
   createActivationCode,
+  resendActivationCode,
+  logout,
 };

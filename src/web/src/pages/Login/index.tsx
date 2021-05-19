@@ -2,13 +2,17 @@ import { useFormik } from 'formik';
 import React, { useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react';
-import { setAccessToken } from '../../shared/AccessToken';
+import { getAccessToken, setAccessToken } from '../../shared/AccessToken';
 import { request } from '../../shared/http';
 import { errorToast, successToast } from '../../shared/Toast';
 import { setUser } from '../../shared/UserInformation';
 import styles from './login.module.css';
 
 export const Login: React.FC<RouteComponentProps> = ({ history }) => {
+  const accessToken = getAccessToken();
+  if ('' !== accessToken) {
+    history.replace('/');
+  }
   const [loading, setLoading] = useState(false);
   const formik = useFormik({
     initialValues: {

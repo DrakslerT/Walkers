@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import styles from './navbar.module.css';
-import { getUser } from '../../shared/UserInformation';
-import { NavLink } from 'react-router-dom';
+import { clearUserInfo, getUser } from '../../shared/UserInformation';
+import { NavLink, useHistory } from 'react-router-dom';
+import { removeToken } from '../../shared/AccessToken';
+import { request } from '../../shared/http';
 
 const MenuItems = [
   {
@@ -34,17 +36,23 @@ const MenuItems = [
     icon: 'link large cog icon',
     userID: -1,
   },
-  {
-    name: 'Log out',
-    url: '/',
-    icon: 'link large log out icon',
-    userID: -1,
-  },
 ];
 
 const Navbar = () => {
   const [clicked, setClicked] = useState(false);
   const user = getUser();
+  const history = useHistory();
+
+  const handleLogout =  async () => {
+    // first remove information on client
+    clearUserInfo();
+    removeToken();
+    // Clear the server auth data
+    await request.post('logout')
+    // redirect to / -> should auto redirect to login
+    history.replace('/');
+  };
+
   return (
     <nav className={styles.NavbarItems}>
       <a href="/">
@@ -71,6 +79,15 @@ const Navbar = () => {
             );
           }
         })}
+        {/* Logout link */}
+        <li>
+          <div className={styles.nav_links} onClick={handleLogout}>
+            <div className={styles.item_icon}>
+              <i aria-hidden="true" className={'link large log out icon'}></i>
+            </div>
+            <div className={styles.item_text}>Logout</div>
+          </div>
+        </li>
       </ul>
     </nav>
   );
