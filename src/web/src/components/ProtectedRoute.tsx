@@ -21,7 +21,7 @@ export const ProtectedRoute = ({
     return <Redirect to="/login" />;
   }
 
-  console.log(user.activated);
+  
   if (auth && user.activated !== 1) {
     if (user.userType === 1) {
       // walker

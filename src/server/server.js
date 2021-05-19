@@ -10,6 +10,7 @@ const {
   activateUser,
   loginUser,
   resendActivationCode,
+  logout
 } = require('./controller/AuthController');
 const {
   addDog,
@@ -39,7 +40,7 @@ const clientOrigin =
     ? 'https://tpo11-dogwalkers.herokuapp.com'
     : 'http://localhost:3000';
 
-app.use(cors({ credentials: true, origin: clientOrigin }));
+app.use(cors({ credentials: true, origin: clientOrigin,  }));
 app.use(morgan('dev'));
 app.use(helmet());
 dotenv.config();
@@ -67,6 +68,8 @@ app.get('/api/resend_activation', validateUser, (req, res) =>
 app.post('/api/login', loginValidationRules(), validateInputs, (req, res) =>
   loginUser(req, res)
 );
+
+app.post('/api/logout', (req, res) => logout(req,res))
 
 // Profile routes
 app.get('/api/dogs/count', validateUser, (req, res) =>

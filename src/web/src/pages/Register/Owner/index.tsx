@@ -36,6 +36,7 @@ export const OwnerRegister: React.FC<RouteComponentProps> = ({ history }) => {
     setLoading(true);
     const user = getUser();
     const auth = isAuth();
+    
     if (!auth) {
       setLoading(false);
       return;

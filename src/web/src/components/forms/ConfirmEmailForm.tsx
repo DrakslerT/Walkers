@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import { Button, Form, Header } from 'semantic-ui-react';
 import { getAuthRequest } from '../../shared/http';
 import { errorToast, successToast } from '../../shared/Toast';
-import { getUser } from '../../shared/UserInformation';
+import { activateUser, getUser } from '../../shared/UserInformation';
 import styles from './forms.module.css';
 
 export const ConfirmEmailForm: React.FC = () => {
@@ -21,6 +21,7 @@ export const ConfirmEmailForm: React.FC = () => {
         const response = await authRequest.post('/activate_user', values);
         if (response.status === 200) {
           successToast('Account has been activated! 🎉');
+          activateUser()
           history.push('/');
         }
       } catch (e) {
