@@ -121,6 +121,122 @@ const getDogsCountByProfile = async (req, res) => {
   res.status(200).json(dogs[0]);
 };
 
+const getOwnerDogs = async (userId) => {
+  const dogs = await dbInstance('PES')
+    .join('PASMA', 'PES.ID_pasma', '=', 'PASMA.ID_pasma')
+    .select(
+      'PES.ID_pes',
+      'PES.Ime_pes',
+      'PES.Spol',
+      'PES.Opis_pes',
+      'PASMA.Pasma_ime',
+      'PASMA.Temperament',
+      'PASMA.WikiPasmeUrl',
+      'PASMA.Visina',
+      'PASMA.Teza'
+    )
+    .where('PES.ID_uporabnik', userId);
+  return dogs;
+};
+
+const getWalkerStats = async (userId) => {
+  const stats = await dbInstance
+    .select('OdzivniCas', 'PovprecnaOcena', 'StSprehodov')
+    .from('SPREHAJALEC')
+    .where('ID_uporabnik', userId);
+  return stats[0];
+};
+
+const getProfile = async (req, res) => {
+  try {
+    const userId = res.locals.userId;
+    const user = await getUserById(userId);
+    let profile = user;
+    if (user.Tip === 1) {
+      // walker
+      const stats = await getWalkerStats(userId);
+      profile = { ...profile, stats, dogs: [] };
+    } else if (user.Tip === 2) {
+      // owner
+      const dogs = await getOwnerDogs(userId);
+      profile = {
+        ...profile,
+        dogs,
+        stats: { OdzivniCas: 0, PovprecnaOcena: 0, StSprehodov: 0 },
+      };
+    }
+
+    return res.status(200).json(profile);
+  } catch (e) {
+    return res.status(400).json({ message: 'Error when fetching profile' });
+  }
+};
+
+const checkIfRightOwner = async (userID, dogID) => {
+  const dog = await dbInstance('PES')
+    .where({
+      ID_pes: dogID,
+      ID_uporabnik: userID,
+    })
+    .select('ID_pes');
+  return dog.length ?? false;
+};
+
+const deleteDog = async (dogID) => {
+  const delRows = await dbInstance('PES').where('ID_PES', dogID).del();
+  return delRows;
+};
+
+const deleteDogAction = async (req, res) => {
+  try {
+    const userID = res.locals.userId;
+    const { dogId } = req.body;
+    const isUsersDogs = await checkIfRightOwner(userID, dogId);
+
+    console.log(isUsersDogs ? 'true' : 'false');
+    if (!isUsersDogs) {
+      return res
+        .status(400)
+        .json({ message: 'You can only delete dogs you own!' });
+    }
+
+    const delRows = await deleteDog(dogId);
+    if (delRows > 0) {
+      return res.status(200).json({ message: 'Delete action sucessfull' });
+    }
+
+    return res
+      .status(500)
+      .json({ message: 'Something went wrong when deleting dog' });
+  } catch (e) {
+    console.log(e);
+    return res
+      .status(500)
+      .json({ message: 'Something went wrong when deleting dog' });
+  }
+};
+
+const updateProfileAction = async (req, res) => {
+  const { name, email, GSM } = req.body;
+  const normalisedGSM = '' !== GSM ? GSM : null;
+  const userId = res.locals.userId;
+  try {
+    const user = await getUserById(userId);
+    const updatedUser = {
+      ...user,
+      Ime_uporabnik: name,
+      Email: email,
+      GSM: normalisedGSM,
+    };
+    await updateProfile(updatedUser);
+
+    return res.status(200).json({ message: 'Sucessfully updated profile' });
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ message: 'Error when updating' });
+  }
+};
+
 module.exports = {
   addDog,
   createProfile,
@@ -129,4 +245,7 @@ module.exports = {
   getUserByEmail,
   checkIfEmailAvailable,
   getDogsCountByProfile,
+  getProfile,
+  deleteDogAction,
+  updateProfileAction,
 };
