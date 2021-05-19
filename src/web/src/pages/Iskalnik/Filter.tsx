@@ -20,7 +20,7 @@ const Filter = () => {
     initialValues: {
       0: '', // name
       1: '', // pasma
-      2: 7, // odzivniCas
+      2: 1, // odzivniCas
       3: '', // lokacija
       4: '', // ocena
       5: false, // priljubljeni
@@ -98,6 +98,16 @@ const Filter = () => {
           onChange={(e, data) => {
             if (typeof data.checked === 'boolean') {
               formik.values[6] = data.checked;
+            }
+          }}
+        />
+        <Form.Select
+          label="Average response time"
+          options={avgTimeOptions}
+          placeholder="eg. Daily"
+          onChange={(e, data) => {
+            if (typeof data.value === 'number') {
+              formik.values[2] = data.value;
             }
           }}
         />
