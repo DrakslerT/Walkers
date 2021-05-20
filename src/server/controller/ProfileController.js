@@ -1,4 +1,16 @@
 const { dbInstance } = require('../DB/BazaTransakcij');
+const bcrypt = require('bcrypt');
+
+const saltRounds = 10;
+
+const hashPassword = async (password) => {
+  const SALT = await bcrypt.genSalt(saltRounds);
+  return await bcrypt.hash(password, SALT);
+};
+
+const checkPassword = async (password, usersPass) => {
+  return (correctPassword = await bcrypt.compare(password, usersPass));
+};
 
 /** 
 OdzivniČasEnum	Omejitev	        Vrednost
@@ -121,7 +133,176 @@ const getDogsCountByProfile = async (req, res) => {
   res.status(200).json(dogs[0]);
 };
 
+const getOwnerDogs = async (userId) => {
+  const dogs = await dbInstance('PES')
+    .join('PASMA', 'PES.ID_pasma', '=', 'PASMA.ID_pasma')
+    .select(
+      'PES.ID_pes',
+      'PES.Ime_pes',
+      'PES.Spol',
+      'PES.Opis_pes',
+      'PASMA.Pasma_ime',
+      'PASMA.Temperament',
+      'PASMA.WikiPasmeUrl',
+      'PASMA.Visina',
+      'PASMA.Teza'
+    )
+    .where('PES.ID_uporabnik', userId)
+    .andWhere('PES.JeIzbrisan', 0); // Only get not deleted dogs
+  return dogs;
+};
+
+const getWalkerStats = async (userId) => {
+  const stats = await dbInstance
+    .select('OdzivniCas', 'PovprecnaOcena', 'StSprehodov')
+    .from('SPREHAJALEC')
+    .where('ID_uporabnik', userId);
+  return stats[0];
+};
+
+const getProfileAction = async (req, res) => {
+  try {
+    const userId = res.locals.userId;
+    const user = await getUserById(userId);
+    let profile = user;
+    if (user.Tip === 1) {
+      // walker
+      const stats = await getWalkerStats(userId);
+      profile = { ...profile, stats, dogs: [] };
+    } else if (user.Tip === 2) {
+      // owner
+      const dogs = await getOwnerDogs(userId);
+      profile = {
+        ...profile,
+        dogs,
+        stats: { OdzivniCas: 0, PovprecnaOcena: 0, StSprehodov: 0 },
+      };
+    }
+
+    return res.status(200).json(profile);
+  } catch (e) {
+    return res.status(400).json({ message: 'Error when fetching profile' });
+  }
+};
+
+const checkIfRightOwner = async (userID, dogID) => {
+  const dog = await dbInstance('PES')
+    .where({
+      ID_pes: dogID,
+      ID_uporabnik: userID,
+    })
+    .select('ID_pes');
+  return dog.length ?? false;
+};
+
+const getDogById = async (dogID) => {
+  const dog = await dbInstance.select().from('PES').where('ID_pes', dogID);
+  return dog.length ? dog[0] : false;
+};
+
+const updateDog = async (dog) => {
+  try {
+    await dbInstance('PES').where('ID_pes', dog.ID_pes).update(dog);
+  } catch (e) {
+    console.log(e);
+    throw new Error();
+  }
+};
+
+/** Hard deletes a dog from the db. Return a number of deleted rows */
+const deleteDog = async (dogID) => {
+  const delRows = await dbInstance('PES').where('ID_PES', dogID).del();
+  return delRows;
+};
+
+const softDeleteDog = async (dogId) => {
+  try {
+    const dog = await getDogById(dogId);
+    const updatedDog = { ...dog, JeIzbrisan: true };
+    await updateDog(updatedDog);
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+};
+
+const deleteDogAction = async (req, res) => {
+  try {
+    const userID = res.locals.userId;
+    const { dogId } = req.body;
+    const isUsersDogs = await checkIfRightOwner(userID, dogId);
+
+    if (!isUsersDogs) {
+      return res
+        .status(400)
+        .json({ message: 'You can only delete dogs you own!' });
+    }
+
+    const deleted = await softDeleteDog(dogId);
+    if (deleted) {
+      return res.status(200).json({ message: 'Delete action sucessfull' });
+    }
+
+    return res
+      .status(500)
+      .json({ message: 'Something went wrong when deleting dog' });
+  } catch (e) {
+    console.log(e);
+    return res
+      .status(500)
+      .json({ message: 'Something went wrong when deleting dog' });
+  }
+};
+
+const updateProfileAction = async (req, res) => {
+  const { name, email, GSM } = req.body;
+  const normalisedGSM = '' !== GSM ? GSM : null;
+  const userId = res.locals.userId;
+  try {
+    const user = await getUserById(userId);
+    const updatedUser = {
+      ...user,
+      Ime_uporabnik: name,
+      Email: email,
+      GSM: normalisedGSM,
+    };
+    await updateProfile(updatedUser);
+
+    return res.status(200).json({ message: 'Sucessfully updated profile' });
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ message: 'Error when updating' });
+  }
+};
+
+const updatePasswordAction = async (req, res) => {
+  const userId = res.locals.userId;
+  const user = await getUserById(userId);
+  const { oldPassword, newPassword } = req.body;
+  const correctPassword = await checkPassword(oldPassword, user.Geslo);
+
+  if (!correctPassword) {
+    return res
+      .status(400)
+      .json({ message: 'Given old password does not match users password' });
+  }
+  try {
+    const hashedNew = await hashPassword(newPassword);
+    const updatedUser = { ...user, Geslo: hashedNew };
+    await updateProfile(updatedUser);
+    return res.status(200).json({ message: 'Sucessfully updated password' });
+  } catch (e) {
+    console.log(e);
+    return res
+      .status(400)
+      .json({ message: 'Something went wrong when changing password' });
+  }
+};
+
 module.exports = {
+  checkPassword,
+  hashPassword,
   addDog,
   createProfile,
   getUserById,
@@ -129,4 +310,8 @@ module.exports = {
   getUserByEmail,
   checkIfEmailAvailable,
   getDogsCountByProfile,
+  getProfileAction,
+  deleteDogAction,
+  updateProfileAction,
+  updatePasswordAction,
 };
