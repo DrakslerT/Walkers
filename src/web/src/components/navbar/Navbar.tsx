@@ -8,7 +8,7 @@ import { request } from '../../shared/http';
 const MenuItems = [
   {
     name: 'Home',
-    url: '/register',
+    url: '/',
     icon: 'link large home icon',
     userID: -1,
   },
@@ -43,12 +43,12 @@ const Navbar = () => {
   const user = getUser();
   const history = useHistory();
 
-  const handleLogout =  async () => {
+  const handleLogout = async () => {
     // first remove information on client
     clearUserInfo();
     removeToken();
     // Clear the server auth data
-    await request.post('logout')
+    await request.post('logout');
     // redirect to / -> should auto redirect to login
     history.replace('/');
   };

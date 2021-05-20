@@ -4,11 +4,14 @@ import { useWindowSize } from '../../shared/useWindow';
 import React, { useContext, useEffect } from 'react';
 import { AddsContext, AddsContextType } from './context/AddsContext';
 import { Loader } from '../../components/Loader';
+import { handleDate } from '../../shared/utils';
+import { getUser } from '../../shared/UserInformation';
 
 const AddList = () => {
   const { adds, isFetching, updateAdds } = useContext(
     AddsContext
   ) as AddsContextType;
+  const user = getUser();
 
   /** Fetch Adds on initial load */
   useEffect(() => {
@@ -35,9 +38,8 @@ const AddList = () => {
       ) : (
         <Card.Group itemsPerRow={width > 992 ? 3 : 1}>
           {adds.map((add) => {
-            const startTime = new Date(add.CasZacetka).toDateString();
-            const endTime = new Date(add.CasKonca).toDateString();
-
+            const startTime = handleDate(add.CasZacetka);
+            const endTime = handleDate(add.CasKonca);
             return (
               <Oglas
                 key={add.Index}
@@ -45,6 +47,10 @@ const AddList = () => {
                 location={add.Lokacija}
                 startTime={startTime}
                 endTime={endTime}
+                rating={add.PovprecnaOcena}
+                responseTime={add.OdzivniCas}
+                numOfWalks={add.StSprehodov}
+                asOwner={user.userType === 2}
               />
             );
           })}
