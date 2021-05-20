@@ -1,6 +1,7 @@
 import React from 'react';
 import { Divider, Header, Icon, Rating, Statistic } from 'semantic-ui-react';
 import { useWindowSize } from '../../shared/useWindow';
+import { handleResponseTime } from '../../shared/utils';
 import { IProfile } from './context/ProfileContext';
 
 interface WalkerStatsProps {
@@ -8,19 +9,6 @@ interface WalkerStatsProps {
 }
 
 export const WalkerStats: React.FC<WalkerStatsProps> = ({ profile }) => {
-  const responseTime = (n: number) => {
-    switch (n) {
-      case 7:
-        return 'Daily';
-      case 5:
-        return 'Less than 3 days';
-      case 3:
-        return 'Weekly';
-      case 1:
-        return 'More than a week';
-    }
-  };
-
   const { width } = useWindowSize();
 
   if (!profile || !width) {
@@ -38,7 +26,7 @@ export const WalkerStats: React.FC<WalkerStatsProps> = ({ profile }) => {
       <Statistic.Group size="large" widths={width > 992 ? '3' : '1'}>
         <Statistic>
           <Statistic.Value>
-            {responseTime(profile.stats.OdzivniCas)}
+            {handleResponseTime(profile.stats.OdzivniCas)}
           </Statistic.Value>
           <Statistic.Label>Response time</Statistic.Label>
         </Statistic>

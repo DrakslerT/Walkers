@@ -1,6 +1,7 @@
 import React from 'react';
 import { Divider, Header, Icon, Table } from 'semantic-ui-react';
 import { EditProfileModal } from '../../components/modals/EditProfileModal';
+import { handleDate } from '../../shared/utils';
 import { IProfile } from './context/ProfileContext';
 
 interface ProfileInfoProps {
@@ -51,7 +52,7 @@ export const ProfileInfo: React.FC<ProfileInfoProps> = ({ profile }) => {
           </Table.Row>
           <Table.Row>
             <Table.Cell>Joined DogWalkers at</Table.Cell>
-            <Table.Cell>{profile.DatumUstvaritve}</Table.Cell>
+            <Table.Cell>{handleDate(profile.DatumUstvaritve ?? '')}</Table.Cell>
           </Table.Row>
         </Table.Body>
       </Table>
