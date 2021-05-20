@@ -15,9 +15,10 @@ const {
 const {
   addDog,
   getDogsCountByProfile,
-  getProfile,
+  getProfileAction,
   deleteDogAction,
-  updateProfileAction
+  updateProfileAction,
+  updatePasswordAction
 } = require('./controller/ProfileController');
 const dotenv = require('dotenv');
 const { testConnection } = require('./DB/BazaTransakcij');
@@ -79,9 +80,10 @@ app.get('/api/dogs/count', validateUser, (req, res) =>
   getDogsCountByProfile(req, res)
 );
 
-app.get('/api/profile', validateUser, (req, res) => getProfile(req, res))
-
+app.get('/api/profile', validateUser, (req, res) => getProfileAction(req, res))
 app.put('/api/profile/update', validateUser, (req, res) => updateProfileAction(req, res))
+app.put('/api/profile/password', validateUser, (req, res) => updatePasswordAction(req,res))
+
 // app.get('api/dogs/:id')
 app.post(
   '/api/dogs/add',
@@ -90,7 +92,6 @@ app.post(
   validateUser,
   (req, res) => addDog(req, res)
 );
-
 app.post('/api/dogs/delete', validateUser, (req,res) => deleteDogAction(req,res))
 
 // Oglas routes

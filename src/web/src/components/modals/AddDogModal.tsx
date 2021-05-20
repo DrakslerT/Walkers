@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 import { ProfileContext } from '../../pages/Profile/context/ProfileContext';
-import { successToast } from '../../shared/Toast';
 import { DogForm } from '../forms/DogForm';
 
 export const AddDogModal: React.FC = () => {

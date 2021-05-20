@@ -79,7 +79,7 @@ export const ProfileContextProvider = ({
     () => ({
       profile,
       isFetching,
-      updateProfile: updateProfile,
+      updateProfile
     }),
     [profile, isFetching, updateProfile]
   );

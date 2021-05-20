@@ -32,7 +32,7 @@ const MenuItems = [
   },
   {
     name: 'Settings',
-    url: '#',
+    url: '/settings',
     icon: 'link large cog icon',
     userID: -1,
   },

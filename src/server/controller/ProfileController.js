@@ -1,4 +1,16 @@
 const { dbInstance } = require('../DB/BazaTransakcij');
+const bcrypt = require('bcrypt');
+
+const saltRounds = 10;
+
+const hashPassword = async (password) => {
+  const SALT = await bcrypt.genSalt(saltRounds);
+  return await bcrypt.hash(password, SALT);
+};
+
+const checkPassword = async (password, usersPass) => {
+  return (correctPassword = await bcrypt.compare(password, usersPass));
+};
 
 /** 
 OdzivniČasEnum	Omejitev	        Vrednost
@@ -135,7 +147,8 @@ const getOwnerDogs = async (userId) => {
       'PASMA.Visina',
       'PASMA.Teza'
     )
-    .where('PES.ID_uporabnik', userId);
+    .where('PES.ID_uporabnik', userId)
+    .andWhere('PES.JeIzbrisan', 0); // Only get not deleted dogs
   return dogs;
 };
 
@@ -147,7 +160,7 @@ const getWalkerStats = async (userId) => {
   return stats[0];
 };
 
-const getProfile = async (req, res) => {
+const getProfileAction = async (req, res) => {
   try {
     const userId = res.locals.userId;
     const user = await getUserById(userId);
@@ -182,9 +195,36 @@ const checkIfRightOwner = async (userID, dogID) => {
   return dog.length ?? false;
 };
 
+const getDogById = async (dogID) => {
+  const dog = await dbInstance.select().from('PES').where('ID_pes', dogID);
+  return dog.length ? dog[0] : false;
+};
+
+const updateDog = async (dog) => {
+  try {
+    await dbInstance('PES').where('ID_pes', dog.ID_pes).update(dog);
+  } catch (e) {
+    console.log(e);
+    throw new Error();
+  }
+};
+
+/** Hard deletes a dog from the db. Return a number of deleted rows */
 const deleteDog = async (dogID) => {
   const delRows = await dbInstance('PES').where('ID_PES', dogID).del();
   return delRows;
+};
+
+const softDeleteDog = async (dogId) => {
+  try {
+    const dog = await getDogById(dogId);
+    const updatedDog = { ...dog, JeIzbrisan: true };
+    await updateDog(updatedDog);
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
 };
 
 const deleteDogAction = async (req, res) => {
@@ -193,15 +233,14 @@ const deleteDogAction = async (req, res) => {
     const { dogId } = req.body;
     const isUsersDogs = await checkIfRightOwner(userID, dogId);
 
-    console.log(isUsersDogs ? 'true' : 'false');
     if (!isUsersDogs) {
       return res
         .status(400)
         .json({ message: 'You can only delete dogs you own!' });
     }
 
-    const delRows = await deleteDog(dogId);
-    if (delRows > 0) {
+    const deleted = await softDeleteDog(dogId);
+    if (deleted) {
       return res.status(200).json({ message: 'Delete action sucessfull' });
     }
 
@@ -237,7 +276,33 @@ const updateProfileAction = async (req, res) => {
   }
 };
 
+const updatePasswordAction = async (req, res) => {
+  const userId = res.locals.userId;
+  const user = await getUserById(userId);
+  const { oldPassword, newPassword } = req.body;
+  const correctPassword = await checkPassword(oldPassword, user.Geslo);
+
+  if (!correctPassword) {
+    return res
+      .status(400)
+      .json({ message: 'Given old password does not match users password' });
+  }
+  try {
+    const hashedNew = await hashPassword(newPassword);
+    const updatedUser = { ...user, Geslo: hashedNew };
+    await updateProfile(updatedUser);
+    return res.status(200).json({ message: 'Sucessfully updated password' });
+  } catch (e) {
+    console.log(e);
+    return res
+      .status(400)
+      .json({ message: 'Something went wrong when changing password' });
+  }
+};
+
 module.exports = {
+  checkPassword,
+  hashPassword,
   addDog,
   createProfile,
   getUserById,
@@ -245,7 +310,8 @@ module.exports = {
   getUserByEmail,
   checkIfEmailAvailable,
   getDogsCountByProfile,
-  getProfile,
+  getProfileAction,
   deleteDogAction,
   updateProfileAction,
+  updatePasswordAction,
 };

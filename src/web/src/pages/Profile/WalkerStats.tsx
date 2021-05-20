@@ -1,5 +1,6 @@
 import React from 'react';
-import { Divider, Header, Icon, Rating, Table } from 'semantic-ui-react';
+import { Divider, Header, Icon, Rating, Statistic } from 'semantic-ui-react';
+import { useWindowSize } from '../../shared/useWindow';
 import { IProfile } from './context/ProfileContext';
 
 interface WalkerStatsProps {
@@ -20,7 +21,9 @@ export const WalkerStats: React.FC<WalkerStatsProps> = ({ profile }) => {
     }
   };
 
-  if (!profile) {
+  const { width } = useWindowSize();
+
+  if (!profile || !width) {
     return <div>...</div>;
   }
 
@@ -32,30 +35,30 @@ export const WalkerStats: React.FC<WalkerStatsProps> = ({ profile }) => {
           Stats
         </Header>
       </Divider>
-      <Table definition>
-        <Table.Body>
-          <Table.Row>
-            <Table.Cell width={4}>Average response time</Table.Cell>
-            <Table.Cell>{responseTime(profile.stats.OdzivniCas)}</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Average rating</Table.Cell>
-            <Table.Cell>
-              <Rating
-                maxRating={5}
-                defaultRating={profile.stats.PovprecnaOcena}
-                icon="star"
-                size="large"
-                disabled
-              />
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Number of walks</Table.Cell>
-            <Table.Cell>{profile.stats.StSprehodov}</Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
+      <Statistic.Group size="large" widths={width > 992 ? '3' : '1'}>
+        <Statistic>
+          <Statistic.Value>
+            {responseTime(profile.stats.OdzivniCas)}
+          </Statistic.Value>
+          <Statistic.Label>Response time</Statistic.Label>
+        </Statistic>
+        <Statistic>
+          <Statistic.Value>
+            <Rating
+              maxRating={5}
+              defaultRating={profile.stats.PovprecnaOcena}
+              icon="star"
+              size="massive"
+              disabled
+            />
+          </Statistic.Value>
+          <Statistic.Label>Average rating</Statistic.Label>
+        </Statistic>
+        <Statistic>
+          <Statistic.Value>{profile.stats.StSprehodov}</Statistic.Value>
+          <Statistic.Label>Number of walks</Statistic.Label>
+        </Statistic>
+      </Statistic.Group>
     </>
   );
 };

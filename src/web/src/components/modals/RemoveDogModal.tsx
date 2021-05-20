@@ -3,7 +3,6 @@ import { Button, Dropdown, Header, Icon, Modal } from 'semantic-ui-react';
 import { ProfileContext } from '../../pages/Profile/context/ProfileContext';
 import { getAuthRequest } from '../../shared/http';
 import { errorToast, successToast } from '../../shared/Toast';
-import { DogForm } from '../forms/DogForm';
 
 interface RemoveDogModalProps {
   dogs: any[];
@@ -29,10 +28,10 @@ export const RemoveDogModal: React.FC<RemoveDogModalProps> = ({ dogs }) => {
         text: dog.Ime_pes,
         value: dog.ID_pes,
       };
-      d.push(Dog);
+      return d.push(Dog);
     });
     setDogList(d);
-  }, []);
+  }, [dogs]);
 
   const handleDeletion = async () => {
     try {

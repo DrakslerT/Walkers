@@ -1,4 +1,3 @@
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const md5 = require('md5');
 const { sendCodeEmail } = require('./EmailController');
@@ -7,16 +6,17 @@ const {
   getUserById,
   updateProfile,
   getUserByEmail,
+  hashPassword,
+  checkPassword
 } = require('./ProfileController');
 
-const saltRounds = 10;
+
 
 const registerUser = async (req, res) => {
   const { name, email, password, gsm, userType } = req.body;
   const newGSM = gsm !== '' ? gsm : null;
 
-  const SALT = await bcrypt.genSalt(saltRounds);
-  hashedPass = await bcrypt.hash(password, SALT);
+  const hashedPass = await hashPassword(password);
 
   let newUser = {
     name: name,
@@ -53,7 +53,7 @@ const loginUser = async (req, res) => {
     return res.status(404).json({ message: 'User not found' });
   }
 
-  const correctPassword = await bcrypt.compare(password, user.Geslo);
+  const correctPassword = await checkPassword(password, user.Geslo);
 
   if (!correctPassword) {
     return res.status(400).json({ message: 'Wrong password' });
@@ -187,7 +187,7 @@ const activateUser = async (req, res) => {
 
 const logout = (req, res) => {
   res.clearCookie('jid');
-  return res.status(200).json({message: 'Cookie cleared!'});
+  return res.status(200).json({ message: 'Cookie cleared!' });
 };
 
 module.exports = {

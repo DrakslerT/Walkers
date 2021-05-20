@@ -41,7 +41,7 @@ export const Settings: React.FC = ({}) => {
         {isFetching && profile === null ? (
           <Loader msg="Fetching user information..." />
         ) : (
-            displayInfo()
+          displayInfo()
         )}
       </Segment>
     </>

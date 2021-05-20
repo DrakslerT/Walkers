@@ -8,20 +8,20 @@ interface ProfileInfoProps {
 }
 
 export const ProfileInfo: React.FC<ProfileInfoProps> = ({ profile }) => {
-    const userType = (t: number) => {
-        switch(t){
-            case 1:
-                return 'Walker';
-            case 2: 
-                return 'Owner';
-            case 3:
-                return 'Admin'
-        }
+  const userType = (t: number) => {
+    switch (t) {
+      case 1:
+        return 'Walker';
+      case 2:
+        return 'Owner';
+      case 3:
+        return 'Admin';
     }
+  };
 
-    if (!profile) {
-      return <div>...</div>
-    }
+  if (!profile) {
+    return <div>...</div>;
+  }
 
   return (
     <>
@@ -55,7 +55,7 @@ export const ProfileInfo: React.FC<ProfileInfoProps> = ({ profile }) => {
           </Table.Row>
         </Table.Body>
       </Table>
-      <EditProfileModal profile={profile}/>
+      <EditProfileModal profile={profile} />
     </>
   );
 };
