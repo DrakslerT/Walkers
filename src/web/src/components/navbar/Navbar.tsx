@@ -20,7 +20,7 @@ const MenuItems = [
   },
   {
     name: 'My ads',
-    url: '#',
+    url: '/ads',
     icon: 'link large clone outline icon',
     userID: 1,
   },
