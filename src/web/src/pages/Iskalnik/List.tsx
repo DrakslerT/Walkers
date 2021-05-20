@@ -42,7 +42,7 @@ const AddList = () => {
             const endTime = handleDate(add.CasKonca);
             return (
               <Oglas
-                key={add.Index}
+                key={add.ID_oglas}
                 username={add.Ime_uporabnik}
                 location={add.Lokacija}
                 startTime={startTime}

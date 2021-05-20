@@ -10,7 +10,7 @@ const {
   activateUser,
   loginUser,
   resendActivationCode,
-  logout
+  logout,
 } = require('./controller/AuthController');
 const {
   addDog,
@@ -18,7 +18,7 @@ const {
   getProfileAction,
   deleteDogAction,
   updateProfileAction,
-  updatePasswordAction
+  updatePasswordAction,
 } = require('./controller/ProfileController');
 const dotenv = require('dotenv');
 const { testConnection } = require('./DB/BazaTransakcij');
@@ -30,7 +30,11 @@ const {
   loginValidationRules,
 } = require('./middleware/validationInputs');
 const { getOglasi } = require('./controller/OglasController');
-const { addAdd } = require('./controller/AddController');
+const {
+  addAdd,
+  myAdsAction,
+  deleteAdAction,
+} = require('./controller/AddController');
 
 const app = express();
 app.set('trust proxy', 1);
@@ -44,7 +48,7 @@ const clientOrigin =
     ? 'https://tpo11-dogwalkers.herokuapp.com'
     : 'http://localhost:3000';
 
-app.use(cors({ credentials: true, origin: clientOrigin,  }));
+app.use(cors({ credentials: true, origin: clientOrigin }));
 app.use(morgan('dev'));
 app.use(helmet());
 dotenv.config();
@@ -73,16 +77,20 @@ app.post('/api/login', loginValidationRules(), validateInputs, (req, res) =>
   loginUser(req, res)
 );
 
-app.post('/api/logout', (req, res) => logout(req,res))
+app.post('/api/logout', (req, res) => logout(req, res));
 
 // Profile routes
 app.get('/api/dogs/count', validateUser, (req, res) =>
   getDogsCountByProfile(req, res)
 );
 
-app.get('/api/profile', validateUser, (req, res) => getProfileAction(req, res))
-app.put('/api/profile/update', validateUser, (req, res) => updateProfileAction(req, res))
-app.put('/api/profile/password', validateUser, (req, res) => updatePasswordAction(req,res))
+app.get('/api/profile', validateUser, (req, res) => getProfileAction(req, res));
+app.put('/api/profile/update', validateUser, (req, res) =>
+  updateProfileAction(req, res)
+);
+app.put('/api/profile/password', validateUser, (req, res) =>
+  updatePasswordAction(req, res)
+);
 
 // app.get('api/dogs/:id')
 app.post(
@@ -92,11 +100,18 @@ app.post(
   validateUser,
   (req, res) => addDog(req, res)
 );
-app.post('/api/dogs/delete', validateUser, (req,res) => deleteDogAction(req,res))
+app.post('/api/dogs/delete', validateUser, (req, res) =>
+  deleteDogAction(req, res)
+);
 
 // Oglas routes
 app.get('/api/oglas/getOglasi', validateUser, (req, res) =>
   getOglasi(req, res)
+);
+
+app.get('/api/oglas/me', validateUser, (req, res) => myAdsAction(req, res));
+app.post('/api/oglas/delete', validateUser, (req, res) =>
+  deleteAdAction(req, res)
 );
 app.post('/api/addAdd', validateUser, (req, res) => addAdd(req, res));
 

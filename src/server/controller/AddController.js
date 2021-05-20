@@ -73,6 +73,65 @@ const canAddNew = async (user) => {
   }
 };
 
+const checkIfUsersAd = async (AdId, userId) => {
+  const ad = await dbInstance('OGLAS')
+    .where({ ID_uporabnik: userId, ID_oglas: AdId })
+    .select('ID_oglas');
+  return ad.length ?? false;
+};
+
+const getUserAds = async (userId) => {
+  const ads = await dbInstance('OGLAS')
+    .select(
+      'OGLAS.lokacija',
+      'OGLAS.CasZacetka',
+      'OGLAS.CasKonca',
+      'OGLAS.ID_oglas'
+    )
+    .where('OGLAS.ID_uporabnik', userId)
+    .andWhere('OGLAS.JeAktiven', 1);
+  return ads;
+};
+
+const myAdsAction = async (req, res) => {
+  const userId = res.locals.userId;
+  try {
+    const ads = await getUserAds(userId);
+    return res.status(200).json(ads);
+  } catch (e) {
+    return res.status(400).json({ message: 'Error when fetching ads' });
+  }
+};
+
+const deleteAd = async (AdId) => {
+  await dbInstance('OGLAS_PASME').where('ID_oglas', AdId).del();
+  const delRows = await dbInstance('OGLAS').where('ID_oglas', AdId).del();
+  return delRows;
+};
+
+const deleteAdAction = async (req, res) => {
+  const userId = res.locals.userId;
+  const { AdId } = req.body;
+  try {
+    const isRightOwner = await checkIfUsersAd(AdId, userId);
+    if (!isRightOwner) {
+      return res
+        .status(400)
+        .json({ message: 'You can only delete Ads you own!' });
+    }
+
+    const delRows = await deleteAd(AdId);
+    if (delRows > 0) {
+      return res.status(200).json({ message: 'Succesfully deleted Ad' });
+    }
+
+    return res.status(204).json({ message: 'No Ads were deleted ??' });
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ message: 'Error when deleting Ad' });
+  }
+};
+
 function changeFormat(time) {
   var datetime = time.split('T');
   var date = datetime[0];
@@ -84,4 +143,6 @@ function changeFormat(time) {
 
 module.exports = {
   addAdd,
+  myAdsAction,
+  deleteAdAction,
 };
