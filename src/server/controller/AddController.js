@@ -17,7 +17,7 @@ const addAdd = async (req, res) => {
   if (!overflow) {
     return res.status(400).json({ message: 'User has max number of adds' });
   }
-
+  console.log("asd")
   const normalisedAddForDb = {
     ID_uporabnik,
     Tip,
@@ -40,13 +40,16 @@ const addAdd = async (req, res) => {
         Tip,
         ID_pasma: add.pasma,
       };
-
-      await trx('OGLAS_PASME').insert(normalisedAddBreedForDb);
+      console.log(normalisedAddBreedForDb)
+      const a = await trx('OGLAS_PASME').insert(normalisedAddBreedForDb);
+      //trx.commit();
+      console.log("asd3")
       return id;
     } catch (err) {
       trx.rollback();
     }
   });
+  
   if (!addId) return res.status(400).json({ message: 'error' });
   else return res.status(200).json({ message: 'add added' });
 };
