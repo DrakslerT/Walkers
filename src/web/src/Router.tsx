@@ -4,6 +4,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import { NotFoundPage } from './pages/404';
 import { Iskalnik } from './pages/Iskalnik';
 import { Login } from './pages/Login';
+import { MyAds } from './pages/MyAds';
 import { ProfilePage } from './pages/Profile';
 import { Register } from './pages/Register';
 import { OwnerRegister } from './pages/Register/Owner';
@@ -15,6 +16,7 @@ export const Routes: React.FC = () => {
       <Switch>
         <ProtectedRoute exact path="/" component={Iskalnik} />
         <ProtectedRoute exact path="/settings" component={ProfilePage} />
+        <ProtectedRoute exact path="/ads" component={MyAds} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/register/walker" component={WalkerRegister} />
         <Route exact path="/register/owner" component={OwnerRegister} />
