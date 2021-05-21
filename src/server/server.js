@@ -30,6 +30,7 @@ const {
   loginValidationRules,
 } = require('./middleware/validationInputs');
 const { getOglasi } = require('./controller/OglasController');
+const { getPasme } = require('./controller/PasmeFasada');
 const {
   addAdd,
   myAdsAction,
@@ -114,6 +115,11 @@ app.post('/api/oglas/delete', validateUser, (req, res) =>
   deleteAdAction(req, res)
 );
 app.post('/api/addAdd', validateUser, (req, res) => addAdd(req, res));
+
+// Pasme routes
+app.get('/api/pasme/getPasme', validateUser, (req, res) =>
+  getPasme(req, res)
+);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
