@@ -31,6 +31,7 @@ const {
 } = require('./middleware/validationInputs');
 const { getOglasi } = require('./controller/OglasController');
 const { addAdd } = require('./controller/AddController');
+const { getPasme } = require('./controller/PasmeFasada');
 
 const app = express();
 app.set('trust proxy', 1);
@@ -99,6 +100,11 @@ app.get('/api/oglas/getOglasi', validateUser, (req, res) =>
   getOglasi(req, res)
 );
 app.post('/api/addAdd', validateUser, (req, res) => addAdd(req, res));
+
+// Pasme routes
+app.get('/api/pasme/getPasme', validateUser, (req, res) =>
+  getPasme(req, res)
+);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
