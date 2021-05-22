@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { createContext, useState } from 'react';
 import { getAuthRequest } from '../../../shared/http';
-import { errorToast } from '../../../shared/Toast';
 
 interface IAddsContextProvider {
   children: React.ReactElement[] | React.ReactElement;
@@ -56,7 +55,6 @@ export const AddsContextProvider = ({ children }: IAddsContextProvider) => {
     } catch (e) {
       console.error(e);
       setAdds([]);
-      errorToast()
     }
     setIsFetching(false);
   };

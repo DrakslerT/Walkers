@@ -51,7 +51,6 @@ const AddList = () => {
                 responseTime={add.OdzivniCas}
                 numOfWalks={add.StSprehodov}
                 asOwner={user.userType === 2}
-                IDoglas={add.ID_oglas}
               />
             );
           })}

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Confirm, Icon, Label, Message, Table } from 'semantic-ui-react';
 import { IAd } from '.';
-import { EditAdModal } from '../../components/modals/EditAdModal';
 import { getAuthRequest } from '../../shared/http';
 import { errorToast, successToast } from '../../shared/Toast';
 import { handleDate } from '../../shared/utils';
@@ -11,8 +10,9 @@ interface AdProps {
   refetch: () => {};
 }
 
-export const Ad: React.FC<AdProps> = ({ ad, refetch }) => {
+export const Ad: React.FC<AdProps> = ({ ad, refetch}) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [editModal, setEditModalOpen] = useState(false); // TODO
   const authRequest = getAuthRequest();
 
   const handleDelete = async () => {
@@ -22,15 +22,15 @@ export const Ad: React.FC<AdProps> = ({ ad, refetch }) => {
       });
       if (response.status === 200) {
         successToast(`Successfully deleted Ad ✔️`);
-        refetch(); // update users ad list
-        return setDeleteModalOpen(false);
+        refetch() // update users ad list
+        setDeleteModalOpen(false);
       }
     } catch (e) {
       errorToast('Error when deleting Ad. Try Again! ⚠️');
-      return setDeleteModalOpen(false);
+      setDeleteModalOpen(false);
     }
 
-    return setDeleteModalOpen(false);
+    setDeleteModalOpen(false);
   };
 
   return (
@@ -49,7 +49,15 @@ export const Ad: React.FC<AdProps> = ({ ad, refetch }) => {
         size="large"
       />
       <Message.Content>
-        <EditAdModal Ad={ad} refetch={refetch}/>
+        <Label
+          corner="right"
+          onClick={() => console.log(ad.ID_oglas)}
+          color="yellow"
+          as="a"
+        >
+          <Icon name="edit" />
+        </Label>
+
         <Label
           attached="bottom right"
           onClick={() => setDeleteModalOpen(true)}

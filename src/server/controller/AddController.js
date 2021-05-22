@@ -17,7 +17,7 @@ const addAdd = async (req, res) => {
   if (!overflow) {
     return res.status(400).json({ message: 'User has max number of adds' });
   }
-  console.log("asd")
+
   const normalisedAddForDb = {
     ID_uporabnik,
     Tip,
@@ -40,16 +40,13 @@ const addAdd = async (req, res) => {
         Tip,
         ID_pasma: add.pasma,
       };
-      console.log(normalisedAddBreedForDb)
-      const a = await trx('OGLAS_PASME').insert(normalisedAddBreedForDb);
-      //trx.commit();
-      console.log("asd3")
+
+      await trx('OGLAS_PASME').insert(normalisedAddBreedForDb);
       return id;
     } catch (err) {
       trx.rollback();
     }
   });
-  
   if (!addId) return res.status(400).json({ message: 'error' });
   else return res.status(200).json({ message: 'add added' });
 };
@@ -74,11 +71,6 @@ const canAddNew = async (user) => {
       return false;
     }
   }
-};
-
-const getAdById = async (AdId) => {
-  const ad = await dbInstance('OGLAS').where('ID_oglas', AdId);
-  return ad[0];
 };
 
 const checkIfUsersAd = async (AdId, userId) => {
@@ -140,40 +132,6 @@ const deleteAdAction = async (req, res) => {
   }
 };
 
-const updateAd = async (ad) => {
-  try {
-    await dbInstance('OGLAS').where('ID_oglas', ad.ID_oglas).update(ad);
-  } catch (e) {
-    console.log(e);
-    throw new Error();
-  }
-};
-
-const updateAdAction = async (req, res) => {
-  const userId = res.locals.userId;
-  const { oglasId, startDate, endDate, location } = req.body;
-  try {
-    const isRightOwner = await checkIfUsersAd(oglasId, userId);
-    if (!isRightOwner) {
-      return res
-        .status(400)
-        .json({ message: 'You can only delete Ads you own!' });
-    }
-    const ad = await getAdById(oglasId);
-    const updatedAd = {
-      ...ad,
-      Lokacija: location,
-      CasZacetka: changeFormat(startDate),
-      CasKonca: changeFormat(endDate),
-    };
-    await updateAd(updatedAd);
-    res.status(200).json({ message: 'Ad updated succesfully' });
-  } catch (e) {
-    console.log(e);
-    return res.status(400).json({ message: 'Error when deleting Ad' });
-  }
-};
-
 function changeFormat(time) {
   var datetime = time.split('T');
   var date = datetime[0];
@@ -187,5 +145,4 @@ module.exports = {
   addAdd,
   myAdsAction,
   deleteAdAction,
-  updateAdAction,
 };

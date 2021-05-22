@@ -28,9 +28,9 @@ export const ObjavaOglasa: React.FC<addAdProps> = ({ refetch }) => {
     const payload = { lokacija, startDate, endDate, pasma };
     if (lokacija === '') {
       errorToast('You must enter a location. Try again!');
-      return setOpen(false);
+      setOpen(false);
+      return;
     }
-
     try {
       const authRequest = getAuthRequest();
       const response = await authRequest.post('/addAdd', payload);
@@ -39,14 +39,14 @@ export const ObjavaOglasa: React.FC<addAdProps> = ({ refetch }) => {
         updateAdds();
 
         if (refetch) {
-          refetch(); // update users ad list
+          refetch();
         }
 
-        return setOpen(false);
+        setOpen(false);
       }
     } catch (e) {
       errorToast(e.response.data.message + '🚦');
-      console.error(e);
+      console.error();
     }
     setLoading(false);
   };
