@@ -4,6 +4,7 @@ import { getAuthRequest } from '../../shared/http';
 import { errorToast, successToast } from '../../shared/Toast';
 import React, { useContext, useState } from 'react';
 import styles from './Iskalnik.module.css';
+import { SendWalkRequestModal } from '../../components/modals/SendWalkRequestModal'
 
 interface IOglas {
   username?: string;
@@ -17,8 +18,6 @@ interface IOglas {
   IDoglas: number
 }
 
-
-
 const Oglas = ({
   username,
   startTime,
@@ -30,22 +29,6 @@ const Oglas = ({
   asOwner,
   IDoglas,
 }: IOglas) => {
-const [requestModalOpen, setRequestModalOpen] = useState(false);
-
-const sendWalkRequest = async () => {
-  try {
-    const authRequest = getAuthRequest();
-    const response = await authRequest.post('/sendWalkRequest', {IDoglasa: IDoglas});
-    if (response.status === 200) {
-      successToast();
-      return setRequestModalOpen(false);
-    }
-  } catch (e) {
-    errorToast(e.response.data.message + '🚦');
-    return setRequestModalOpen(false);
-  }
-  return setRequestModalOpen(false);
-}
 return (
   <Card color="blue" className={styles.card_hover_effect} raised>
     <Label color="blue" ribbon size="large">
@@ -96,23 +79,7 @@ return (
     </Card.Content>
     {asOwner && (
       <Card.Content extra>
-        <Button 
-        fluid positive
-        onClick={() => setRequestModalOpen(true)}
-        >
-          I'm interested
-        </Button>
-        <Confirm
-        header={"Walk request"}
-        content={'Are you sure you want to send a walk request for this Ad?'}
-        open={requestModalOpen}
-        onCancel={() => setRequestModalOpen(false)}
-        onConfirm={sendWalkRequest}
-        cancelButton="No, take me back."
-        confirmButton="Yes"
-        closeOnEscape
-        size="large"
-      />
+        <SendWalkRequestModal oglasID={ IDoglas }/>
       </Card.Content>
     )}
   </Card>

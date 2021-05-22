@@ -19,6 +19,7 @@ const {
   deleteDogAction,
   updateProfileAction,
   updatePasswordAction,
+  getDogsAction
 } = require('./controller/ProfileController');
 const dotenv = require('dotenv');
 const { testConnection } = require('./DB/BazaTransakcij');
@@ -112,6 +113,9 @@ app.post(
 );
 app.post('/api/dogs/delete', validateUser, (req, res) =>
   deleteDogAction(req, res)
+);
+app.get('/api/dogs/list', validateUser, (req, res) =>
+  getDogsAction(req, res)
 );
 
 // Oglas routes

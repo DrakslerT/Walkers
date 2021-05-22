@@ -387,6 +387,13 @@ const getUserType = async (userId) => {
   return user.length ? user[0] : false;
 };
 
+const getDogsAction = async (req, res) => {
+  var idLastnika = res.locals.userId;
+  const dogs = await dbInstance('PES')
+    .where('ID_uporabnik', idLastnika);
+
+    return res.status(200).json(dogs);
+}
 
 module.exports = {
   checkPassword,
@@ -404,5 +411,6 @@ module.exports = {
   updatePasswordAction,
   calculateResponseTime,
   getUserType,
-  updateProfileAfterWalkRequestResposne
+  updateProfileAfterWalkRequestResposne,
+  getDogsAction
 };

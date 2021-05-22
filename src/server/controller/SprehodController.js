@@ -7,6 +7,7 @@ const {
 const sendWalkRequest = async (req, res) => {
   const body = { ...req.body };
   var idOglasa = body.IDoglasa;
+  var idPsa = body.dogId;
   var idLastnika = res.locals.userId;
 
   if ((await requestSentAlready(idOglasa, idLastnika)) == 1) {
@@ -14,13 +15,11 @@ const sendWalkRequest = async (req, res) => {
   }
 
   var idSprehajalca = await getIDsprehajalca(idOglasa);
-  var idPsa = await getIDpsa(idLastnika);
   var tipSprehajalca = await getTipSprehajalca(idSprehajalca);
   var tipLastnika = await getTipLastnika(idLastnika);
 
   if (
     idSprehajalca == -1 ||
-    idPsa == -1 ||
     tipSprehajalca == -1 ||
     tipLastnika == -1
   ) {
@@ -210,19 +209,6 @@ async function getIDsprehajalca(idOglasa) {
       .where('OGLAS.ID_oglas', idOglasa);
 
     return idSprehajalca[0].ID_uporabnik;
-  } catch (error) {
-    return -1;
-  }
-}
-
-async function getIDpsa(idLastnika) {
-  try {
-    const idPsa = await dbInstance
-      .select('PES.ID_pes')
-      .from('PES')
-      .where('PES.ID_uporabnik', idLastnika);
-
-    return idPsa[0].ID_pes;
   } catch (error) {
     return -1;
   }
