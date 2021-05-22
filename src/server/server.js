@@ -112,8 +112,10 @@ app.get('/api/oglas/getOglasi', validateUser, (req, res) =>
 );
 
 app.get('/api/oglas/me', validateUser, (req, res) => myAdsAction(req, res));
-app.post('/api/oglas/delete', validateUser, (req, res) =>
-  deleteAdAction(req, res)
+app.post('/api/oglas/delete', validateUser, (req, res) => {
+  console.log("VLEZE v Server");
+  deleteAdAction(req, res);
+}
 );
 app.put('/api/oglas/edit', validateUser, (req, res) =>
   updateAdAction(req, res)
@@ -126,6 +128,7 @@ app.get('/api/pasme/getPasme', validateUser, (req, res) =>
   getPasme(req, res)
 );
 
+//Delete Ad
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server is listening at ${PORT}`);

@@ -186,7 +186,7 @@ const checkIfRightOwner = async (userID, dogID) => {
       ID_uporabnik: userID,
     })
     .select('ID_pes');
-  return dog.length ?? false;
+  return dog.length != 0;
 };
 
 const getDogById = async (dogID) => {
