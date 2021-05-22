@@ -41,12 +41,15 @@ const addAdd = async (req, res) => {
         ID_pasma: Math.floor(Math.random() * 100),
       };
 
-      await trx('OGLAS_PASME').insert(normalisedAddBreedForDb);
+      const a = await trx('OGLAS_PASME').insert(normalisedAddBreedForDb);
+      //trx.commit();
+
       return id;
     } catch (err) {
       trx.rollback();
     }
   });
+  
   if (!addId) return res.status(400).json({ message: 'error' });
   else return res.status(200).json({ message: 'add added', nasid: addId });
 };

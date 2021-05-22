@@ -1,5 +1,4 @@
 const { dbInstance } = require('../DB/BazaTransakcij');
-const { getUserById } = require('./ProfileController');
 
 const getOglasiWhere = async (user, filter) => {
   try {
@@ -66,61 +65,65 @@ const getPriljubljeniUporabniki = async (user) => {
     .where('PES.ID_uporabnik', user.ID_uporabnik);
   return favourites.length ? favourites[0] : false;
 };
+
 const getOglasi = async (req, res) => {
   try {
     const filters = { ...req.query };
-    const user = await getUserById(res.locals.userId);
-    if (!user) {
-      res.status(400).json({ message: 'User not found' });
-    }
+    const userId = res.locals.userId;
+    const AdsQuery = dbInstance
+      .select(
+        'Ad.ID_oglas',
+        'Ad.CasKonca',
+        'Ad.CasZacetka',
+        'Ad.ID_oglas',
+        'Ad.Lokacija',
+        'u.Ime_uporabnik',
+        'spr.OdzivniCas',
+        'spr.PovprecnaOcena',
+        'spr.StSprehodov'
+      )
+      .from('OGLAS as Ad')
+      .innerJoin('UPORABNIK as u', 'u.ID_uporabnik', 'Ad.ID_uporabnik')
+      .innerJoin('SPREHAJALEC as spr', 'spr.ID_uporabnik', 'Ad.ID_uporabnik')
+      .innerJoin('OGLAS_PASME as Ad_PASME', 'Ad_PASME.ID_oglas', 'Ad.ID_oglas')
+      .where('Ad.CasZacetka', '>=', new Date())
+      .orderBy([{ column: 'spr.Index', order: 'desc' }, {column: 'Ad.CasZacetka'}]);
 
-    var wheres = [];
-    for (filter in filters) {
-      if (filters[filter] && typeof filters[filter].type != 'undefined') {
-        wheres[filter] = await getOglasiWhere(user, filters[filter]);
+    if (Object.keys(req.query).length !== 0) {
+      if (filters.name !== '') {
+        AdsQuery.where('u.Ime_uporabnik', 'like', `%${filters.name}%`);
+      }
+
+      if (filters.breed !== '') {
+        const breedSubQuery = dbInstance('OGLAS_PASME')
+          .select('ID_oglas')
+          .where('ID_pasma', filters.breed);
+        AdsQuery.whereIn('Ad.ID_oglas', breedSubQuery);
+      }
+
+      if (filters.location !== '') {
+        AdsQuery.where('Ad.Lokacija', 'like', `%${filters.location}%`);
+      }
+
+      if (filters.rating !== '') {
+        AdsQuery.where('spr.PovprecnaOcena', '>=', filters.rating);
+      }
+
+      if (filters.favourites !== '') {
+        const favouritesSubQuery = dbInstance('SPREHOD')
+          .select('ID_sprehajalec')
+          .where('ID_lastnik', userId)
+          .andWhere('Priljubljen', 1);
+        AdsQuery.whereIn('u.ID_uporabnik', favouritesSubQuery);
+      }
+
+      if (filters.experienced !== '') {
+        AdsQuery.where('u.Tip', '=', 4); // Where expirienced
       }
     }
 
-    const oglasi = await dbInstance
-      .select('OGLAS.*', 'SPREHAJALEC.*', 'UPORABNIK.Ime_uporabnik')
-      .distinct()
-      .from('OGLAS')
-      .innerJoin(
-        'SPREHAJALEC',
-        'SPREHAJALEC.ID_uporabnik',
-        'OGLAS.ID_uporabnik'
-      )
-      .innerJoin(
-        'UPORABNIK',
-        'UPORABNIK.ID_uporabnik',
-        'SPREHAJALEC.ID_uporabnik'
-      )
-      .innerJoin('OGLAS_PASME', 'OGLAS_PASME.ID_oglas', 'OGLAS.ID_oglas')
-      .where(async (qb) => {
-        for (where in wheres) {
-          if (wheres[where].query != '') {
-            qb.whereRaw(wheres[where].query, wheres[where].value);
-          }
-        }
-
-        if (user.Tip <= 1) {
-          qb.whereRaw('OGLAS.ID_uporabnik = ?', user.ID_uporabnik);
-        } else {
-          console.log(new Date().toISOString().slice(0, 19).replace('T', ' '));
-          qb.whereRaw(
-            'OGLAS.CasZacetka < ?',
-            new Date().toISOString().slice(0, 19).replace('T', ' ')
-          );
-          qb.whereRaw(
-            'OGLAS.CasKonca > ?',
-            new Date().toISOString().slice(0, 19).replace('T', ' ')
-          );
-        }
-      })
-      .orderBy('SPREHAJALEC.OdzivniCas', 'asc')
-      .orderBy('SPREHAJALEC.PovprecnaOcena', 'desc')
-      .orderBy('OGLAS.CasZacetka', 'desc');
-    res.status(200).json({ oglasi: oglasi });
+    const ads = await AdsQuery;
+    res.status(200).json({ oglasi: ads });
   } catch (err) {
     console.log(err);
     return res.status(400).json({ message: err });

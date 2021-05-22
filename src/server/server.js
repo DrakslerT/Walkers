@@ -19,6 +19,7 @@ const {
   deleteDogAction,
   updateProfileAction,
   updatePasswordAction,
+  getDogsAction
 } = require('./controller/ProfileController');
 const dotenv = require('dotenv');
 const { testConnection } = require('./DB/BazaTransakcij');
@@ -35,8 +36,16 @@ const {
   addAdd,
   myAdsAction,
   deleteAdAction,
-  updateAdAction
+  updateAdAction,
 } = require('./controller/AddController');
+const {} = require('./controller/SprehodController');
+const {
+  acceptWalkRequest,
+  getWalksAction,
+  sendWalkRequest,
+  walkResponse,
+  walkNotifications,
+} = require('./controller/SprehodController');
 
 const app = express();
 app.set('trust proxy', 1);
@@ -105,6 +114,9 @@ app.post(
 app.post('/api/dogs/delete', validateUser, (req, res) =>
   deleteDogAction(req, res)
 );
+app.get('/api/dogs/list', validateUser, (req, res) =>
+  getDogsAction(req, res)
+);
 
 // Oglas routes
 app.get('/api/oglas/getOglasi', validateUser, (req, res) =>
@@ -124,8 +136,18 @@ app.put('/api/oglas/edit', validateUser, (req, res) =>
 app.post('/api/addAdd', validateUser, (req, res) => addAdd(req, res));
 
 // Pasme routes
-app.get('/api/pasme/getPasme', validateUser, (req, res) =>
-  getPasme(req, res)
+app.get('/api/pasme/getPasme', validateUser, (req, res) => getPasme(req, res));
+
+//sprehod routes
+app.get('/api/walks', validateUser, (req, res) => getWalksAction(req, res));
+app.post('/api/sendWalkRequest', validateUser, (req, res) =>
+  sendWalkRequest(req, res)
+);
+app.post('/api/walkResponse', validateUser, (req, res) =>
+  walkResponse(req, res)
+);
+app.post('/api/walkNotifications', validateUser, (req, res) =>
+  walkNotifications(req, res)
 );
 
 //Delete Ad

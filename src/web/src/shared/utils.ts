@@ -9,7 +9,7 @@ export const handleDate = (x: string) => {
   const h = date.getHours();
   const min = date.getMinutes();
 
-  return `${h}:${min < 10 ? '0' : ''}${min} ${d}-${m}-${y}`;
+  return `${h}:${min < 10 ? '0' : ''}${min} ${d}.${m}.${y}`;
 };
 
 export const handleResponseTime = (t: number) => {

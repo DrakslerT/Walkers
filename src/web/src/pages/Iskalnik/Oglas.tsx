@@ -1,6 +1,10 @@
-import { Card, Icon, Header, Label, Rating, Button } from 'semantic-ui-react';
+import { Card, Icon, Header, Label, Rating, Button, Confirm } from 'semantic-ui-react';
 import { handleResponseTime } from '../../shared/utils';
+import { getAuthRequest } from '../../shared/http';
+import { errorToast, successToast } from '../../shared/Toast';
+import React, { useContext, useState } from 'react';
 import styles from './Iskalnik.module.css';
+import { SendWalkRequestModal } from '../../components/modals/SendWalkRequestModal'
 
 interface IOglas {
   username?: string;
@@ -11,6 +15,7 @@ interface IOglas {
   responseTime: number;
   numOfWalks: number;
   asOwner: boolean;
+  IDoglas: number
 }
 
 const Oglas = ({
@@ -22,7 +27,9 @@ const Oglas = ({
   responseTime,
   numOfWalks,
   asOwner,
-}: IOglas) => (
+  IDoglas,
+}: IOglas) => {
+return (
   <Card color="blue" className={styles.card_hover_effect} raised>
     <Label color="blue" ribbon size="large">
       <Icon name="map marker alternate" />
@@ -72,12 +79,11 @@ const Oglas = ({
     </Card.Content>
     {asOwner && (
       <Card.Content extra>
-        <Button fluid positive>
-          I'm interested
-        </Button>
+        <SendWalkRequestModal oglasID={ IDoglas }/>
       </Card.Content>
     )}
   </Card>
 );
+    }
 
 export default Oglas;
