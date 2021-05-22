@@ -1,5 +1,5 @@
 const { dbInstance } = require('../DB/BazaTransakcij');
-const { getUserById } = require('./ProfileController');
+const { getUserType } = require('./ProfileController');
 
 const sendWalkRequest = async (req, res) => {
   const body = { ...req.body };
@@ -34,9 +34,9 @@ const sendWalkRequest = async (req, res) => {
     ID_Oglas: idOglasa,
     Tip_sprehajalec: tipSprehajalca,
     Tip_lastnik: tipLastnika,
-    Status: '0',
     DatumKreiranja: datum,
-    novaSprememba: '1',
+    novaSpremembaSprehajalec: '1',
+    novaSpremembaLastnik: '1',
     Priljubljen: '0',
   };
 
@@ -47,6 +47,136 @@ const sendWalkRequest = async (req, res) => {
     return res.status(400).json({ message: err });
   }
 };
+
+const walkResponse = async (req, res) => {
+  const body = { ...req.body };
+  //const userId = res.locals.userId;
+  const userId = 71;
+  var idSprehoda = body.ID_sprehod;
+  var response = body.response;
+
+  var datum = new Date();
+  datum = changeFormat(datum.toISOString());
+
+  const isRightOwner = await checkIfUsersWalk(idSprehoda, userId);
+  if (!isRightOwner) {
+    return res
+      .status(400)
+      .json({ message: 'You can only respond to walk requests sent to you!' });
+  }
+
+  //user accpeted walk request
+  if (response) {
+    return acceptWalkRequest(idSprehoda, datum, res);
+  }
+  //user declined walk request
+  else {
+    return declineWalkRequest(idSprehoda, datum, res);
+  }
+};
+
+const walkNotifications = async (req, res) => {
+  const userId = res.locals.userId;
+  const tip = await getUserType(userId);
+
+  try {
+    const walks = await dbInstance('SPREHOD')
+      .where('ID_sprehajalec', userId)
+      .orWhere('ID_lastnik', userId);
+
+    for (walk of walks) {
+      console.log(walk);
+      if (tip.Tip == 1) {
+        const updatedWalk = {
+          ...walk,
+          novaSpremembaSprehajalec: 0,
+        };
+        await updateWalk(updatedWalk);
+      } else {
+        const updatedWalk = {
+          ...walk,
+          novaSpremembaLastnik: 0,
+        };
+        await updateWalk(updatedWalk);
+      }
+    }
+    return res.status(200).json({ message: 'Success' });
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ message: 'Error' });
+  }
+};
+
+async function acceptWalkRequest(idSprehoda, datum, res) {
+  try {
+    const walk = await getWalkByID(idSprehoda);
+
+    const updatedWalk = {
+      ...walk,
+      Status: 1,
+      novaSpremembaLastnik: '1',
+      CasOdziva: datum,
+    };
+
+    await updateWalk(updatedWalk);
+    res.status(200).json({ message: 'Walk request accepted!' });
+  } catch (e) {
+    console.log(e);
+    return res
+      .status(400)
+      .json({ message: 'Error when accepting walk request' });
+  }
+}
+
+async function declineWalkRequest(idSprehoda, datum, res) {
+  try {
+    const walk = await getWalkByID(idSprehoda);
+
+    const updatedWalk = {
+      ...walk,
+      Status: 0,
+      novaSpremembaLastnik: '1',
+      CasOdziva: datum,
+    };
+
+    await updateWalk(updatedWalk);
+    res.status(200).json({ message: 'Walk request declined!' });
+  } catch (e) {
+    console.log(e);
+    return res
+      .status(400)
+      .json({ message: 'Error when declining walk request' });
+  }
+}
+
+async function updateWalk(walk) {
+  try {
+    await dbInstance('SPREHOD')
+      .where('ID_sprehod', walk.ID_sprehod)
+      .update(walk);
+  } catch (e) {
+    console.log(e);
+    throw new Error();
+  }
+}
+
+async function getWalkByID(id) {
+  try {
+    const walk = await dbInstance('SPREHOD').where('ID_sprehod', id);
+
+    return walk[0];
+  } catch (error) {
+    return -1;
+  }
+}
+
+async function checkIfUsersWalk(walkId, userId) {
+  const walk = await dbInstance('SPREHOD')
+    .where({ ID_sprehajalec: userId, ID_sprehod: walkId })
+    .select('ID_sprehod');
+
+  return walk.length ?? false;
+}
 
 const acceptWalkRequest = async (req, res) => {};
 
@@ -140,14 +270,18 @@ const getUsersWalks = async (userId) => {
       'spreh.GSM as spreh_GSM',
       'sprehStats.StSprehodov',
       'sprehStats.OdzivniCas',
-      'sprehStats.PovprecnaOcena',
+      'sprehStats.PovprecnaOcena'
     )
     .from('SPREHOD as spr')
     .leftJoin('OGLAS as ogl', 'ogl.ID_oglas', 'spr.ID_oglas')
     .leftJoin('PES as pes', 'pes.ID_pes', 'spr.ID_pes')
     .leftJoin('UPORABNIK as last', 'last.ID_uporabnik', 'spr.ID_lastnik')
     .leftJoin('UPORABNIK as spreh', 'spreh.ID_uporabnik', 'spr.ID_sprehajalec')
-    .leftJoin('SPREHAJALEC as sprehStats', 'sprehStats.ID_uporabnik', 'spr.ID_sprehajalec')
+    .leftJoin(
+      'SPREHAJALEC as sprehStats',
+      'sprehStats.ID_uporabnik',
+      'spr.ID_sprehajalec'
+    )
     .where('spr.ID_sprehajalec', userId)
     .orWhere('spr.ID_lastnik', userId);
   return walks;
@@ -177,4 +311,7 @@ module.exports = {
   sendWalkRequest,
   acceptWalkRequest,
   getWalksAction,
+  sendWalkRequest,
+  walkResponse,
+  walkNotifications,
 };

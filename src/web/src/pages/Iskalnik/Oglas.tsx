@@ -1,4 +1,4 @@
-import { Card, Icon, Header, Label, Rating, Button } from 'semantic-ui-react';
+import { Card, Icon, Header, Label, Rating, Button, Confirm } from 'semantic-ui-react';
 import { handleResponseTime } from '../../shared/utils';
 import { getAuthRequest } from '../../shared/http';
 import { errorToast, successToast } from '../../shared/Toast';
@@ -30,17 +30,21 @@ const Oglas = ({
   asOwner,
   IDoglas,
 }: IOglas) => {
+const [requestModalOpen, setRequestModalOpen] = useState(false);
+
 const sendWalkRequest = async () => {
   try {
     const authRequest = getAuthRequest();
     const response = await authRequest.post('/sendWalkRequest', {IDoglasa: IDoglas});
     if (response.status === 200) {
       successToast();
+      return setRequestModalOpen(false);
     }
   } catch (e) {
     errorToast(e.response.data.message + '🚦');
-    console.error();
+    return setRequestModalOpen(false);
   }
+  return setRequestModalOpen(false);
 }
 return (
   <Card color="blue" className={styles.card_hover_effect} raised>
@@ -94,10 +98,21 @@ return (
       <Card.Content extra>
         <Button 
         fluid positive
-        onClick={sendWalkRequest}
+        onClick={() => setRequestModalOpen(true)}
         >
           I'm interested
         </Button>
+        <Confirm
+        header={"Walk request"}
+        content={'Are you sure you want to send a walk request for this Ad?'}
+        open={requestModalOpen}
+        onCancel={() => setRequestModalOpen(false)}
+        onConfirm={sendWalkRequest}
+        cancelButton="No, take me back."
+        confirmButton="Yes"
+        closeOnEscape
+        size="large"
+      />
       </Card.Content>
     )}
   </Card>

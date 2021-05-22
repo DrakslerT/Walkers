@@ -35,9 +35,16 @@ const {
   addAdd,
   myAdsAction,
   deleteAdAction,
-  updateAdAction
+  updateAdAction,
 } = require('./controller/AddController');
-const { sendWalkRequest, acceptWalkRequest, getWalksAction } = require('./controller/SprehodController');
+const {} = require('./controller/SprehodController');
+const {
+  acceptWalkRequest,
+  getWalksAction,
+  sendWalkRequest,
+  walkResponse,
+  walkNotifications,
+} = require('./controller/SprehodController');
 
 const app = express();
 app.set('trust proxy', 1);
@@ -123,13 +130,19 @@ app.put('/api/oglas/edit', validateUser, (req, res) =>
 app.post('/api/addAdd', validateUser, (req, res) => addAdd(req, res));
 
 // Pasme routes
-app.get('/api/pasme/getPasme', validateUser, (req, res) =>
-  getPasme(req, res)
-);
+app.get('/api/pasme/getPasme', validateUser, (req, res) => getPasme(req, res));
+
 //sprehod routes
-app.get('/api/walks', validateUser, (req ,res) => getWalksAction(req,res))
-app.post('/api/sendWalkRequest', validateUser, (req, res) => sendWalkRequest(req, res));
-app.post('/api/acceptWalkRequest', (req, res) => acceptWalkRequest(req, res));
+app.get('/api/walks', validateUser, (req, res) => getWalksAction(req, res));
+app.post('/api/sendWalkRequest', validateUser, (req, res) =>
+  sendWalkRequest(req, res)
+);
+app.post('/api/walkResponse', validateUser, (req, res) =>
+  walkResponse(req, res)
+);
+app.post('/api/walkNotifications', validateUser, (req, res) =>
+  walkNotifications(req, res)
+);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
