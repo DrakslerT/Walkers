@@ -37,7 +37,6 @@ const {
   deleteAdAction,
   updateAdAction
 } = require('./controller/AddController');
-const { addAdd } = require('./controller/AddController');
 const { sendWalkRequest, acceptWalkRequest } = require('./controller/SprehodController');
 
 const app = express();
