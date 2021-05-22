@@ -178,8 +178,6 @@ async function checkIfUsersWalk(walkId, userId) {
   return walk.length ?? false;
 }
 
-const acceptWalkRequest = async (req, res) => {};
-
 async function requestSentAlready(idOglasa, idLastnika) {
   try {
     const exists = await dbInstance('SPREHOD')
