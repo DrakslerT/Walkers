@@ -11,7 +11,8 @@ export type IWalk = {
   ID_sprehod: number;
   Status: number;
   DatumKreiranja: string;
-  novaSprememba: number;
+  novaSpremembaLastnik: number;
+  novaSpremembaSprehajalec: number;
   Priljubljen: number;
   Lokacija: string;
   CasZacetka: string;
@@ -35,11 +36,21 @@ export const MyWalks: React.FC<MyWalksProps> = ({}) => {
   const [loading, setLoading] = useState(false);
   const [walks, setWalks] = useState<IWalk[] | undefined>(undefined);
   const user = getUser();
+  const authRequest = getAuthRequest();
+
+  const clearNotifications = async () => {
+    try {
+      await authRequest.post('walkNotifications');
+      // Do nothing
+    } catch (e) {
+      console.error(e);
+      errorToast();
+    }
+  };
 
   const fetchWalks = async () => {
     setLoading(true);
     try {
-      const authRequest = getAuthRequest();
       const response = await authRequest.get('walks');
       setWalks(response.data);
     } catch (e) {
@@ -50,6 +61,7 @@ export const MyWalks: React.FC<MyWalksProps> = ({}) => {
   };
   useEffect(() => {
     fetchWalks();
+    clearNotifications();
   }, []);
 
   if (loading || !walks) {
@@ -71,7 +83,9 @@ export const MyWalks: React.FC<MyWalksProps> = ({}) => {
           <Divider />
           <Item.Group divided>
             {walks.map((walk) => {
-              return <Walk key={walk.ID_sprehod} walk={walk} />;
+              return (
+                <Walk key={walk.ID_sprehod} walk={walk} refetch={fetchWalks} />
+              );
             })}
           </Item.Group>
         </Container>

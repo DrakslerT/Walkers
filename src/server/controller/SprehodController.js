@@ -1,3 +1,4 @@
+const { body } = require('express-validator');
 const { dbInstance } = require('../DB/BazaTransakcij');
 const { 
   getUserType, 
@@ -51,10 +52,8 @@ const sendWalkRequest = async (req, res) => {
 };
 
 const walkResponse = async (req, res) => {
-  const body = { ...req.body };
+  const { idSprehoda, response } = req.body;
   const userId = res.locals.userId;
-  var idSprehoda = body.ID_sprehod;
-  var response = body.response;
 
   var datum = new Date();
   datum = changeFormat(datum.toISOString());
@@ -85,7 +84,6 @@ const walkNotifications = async (req, res) => {
       .orWhere('ID_lastnik', userId);
 
     for (walk of walks) {
-      console.log(walk);
       if (tip.Tip == 1) {
         const updatedWalk = {
           ...walk,
@@ -275,7 +273,11 @@ const getUsersWalks = async (userId) => {
       'spr.ID_sprehajalec'
     )
     .where('spr.ID_sprehajalec', userId)
-    .orWhere('spr.ID_lastnik', userId);
+    .orWhere('spr.ID_lastnik', userId)
+    .orderBy([
+      { column: 'spr.Status' },
+      { column: 'ogl.CasZacetka', order: 'desc' },
+    ]);
   return walks;
 };
 
@@ -288,6 +290,24 @@ const getWalksAction = async (req, res) => {
     console.log(e);
     return res.status(400).json({ message: 'Error fetching ads' });
   }
+};
+
+const getNotifications = async (userId) => {
+  const userType = await getUserType(userId);
+  let notifications;
+  if (userType === 1 || userType === 4) {
+    notifications = await dbInstance('SPREHOD')
+      .countDistinct('ID_sprehod as notifications')
+      .where('ID_sprehajalec', userId)
+      .andWhere('novaSpremembaSprehajalec', 1);
+  } else {
+    notifications = await dbInstance('SPREHOD')
+      .countDistinct('ID_sprehod as notifications')
+      .where('ID_lastnik', userId)
+      .andWhere('novaSpremembaLastnik', 1);
+  }
+  // Return count if exists else 0
+  return notifications.length ? notifications[0]['notifications'] : 0;
 };
 
 function changeFormat(time) {
@@ -306,4 +326,5 @@ module.exports = {
   sendWalkRequest,
   walkResponse,
   walkNotifications,
+  getNotifications,
 };
