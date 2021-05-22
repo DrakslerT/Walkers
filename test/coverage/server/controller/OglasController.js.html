@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">10.77% </span>
+                <span class="strong">29.23% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/65</span>
+                <span class='fraction'>19/65</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">22.73% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/22</span>
+                <span class='fraction'>5/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">40% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>2/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">11.11% </span>
+                <span class="strong">30.16% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/63</span>
+                <span class='fraction'>19/63</span>
             </div>
         
             
@@ -264,24 +264,21 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -294,20 +291,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -317,7 +317,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -401,22 +401,22 @@ const getPriljubljeniUporabniki = <span class="fstat-no" title="function not cov
     .where('PES.ID_uporabnik', user.ID_uporabnik);
 <span class="cstat-no" title="statement not covered" >  return favourites.length ? favourites[0] : false;</span>
 };
-const getOglasi = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const filters = <span class="cstat-no" title="statement not covered" >{ ...req.query };</span>
-    const user = <span class="cstat-no" title="statement not covered" >await getUserById(res.locals.userId);</span>
-<span class="cstat-no" title="statement not covered" >    if (!user) {</span>
+const getOglasi = async (req, res) =&gt; {
+  try {
+    const filters = { ...req.query };
+    const user = await getUserById(res.locals.userId);
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!user) {
 <span class="cstat-no" title="statement not covered" >      res.status(400).json({ message: 'User not found' });</span>
     }
 &nbsp;
-    var wheres = <span class="cstat-no" title="statement not covered" >[];</span>
-<span class="cstat-no" title="statement not covered" >    for (filter in filters) {</span>
-<span class="cstat-no" title="statement not covered" >      if (filters[filter] &amp;&amp; typeof filters[filter].type != 'undefined') {</span>
+    var wheres = [];
+    for (filter in filters) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (filters[filter] &amp;&amp; typeof filters[filter].type != 'undefined') {
 <span class="cstat-no" title="statement not covered" >        wheres[filter] = await getOglasiWhere(user, filters[filter]);</span>
       }
     }
 &nbsp;
-    const oglasi = <span class="cstat-no" title="statement not covered" >await dbInstance</span>
+    const oglasi = await dbInstance
       .select('OGLAS.*', 'SPREHAJALEC.*', 'UPORABNIK.Ime_uporabnik')
       .distinct()
       .from('OGLAS')
@@ -431,15 +431,15 @@ const getOglasi = <span class="fstat-no" title="function not covered" >as</span>
         'SPREHAJALEC.ID_uporabnik'
       )
       .innerJoin('OGLAS_PASME', 'OGLAS_PASME.ID_oglas', 'OGLAS.ID_oglas')
-      .where(<span class="fstat-no" title="function not covered" >as</span>ync (qb) =&gt; {
-<span class="cstat-no" title="statement not covered" >        for (where in wheres) {</span>
+      .where(async (qb) =&gt; {
+        for (where in wheres) {
 <span class="cstat-no" title="statement not covered" >          if (wheres[where].query != '') {</span>
 <span class="cstat-no" title="statement not covered" >            qb.whereRaw(wheres[where].query, wheres[where].value);</span>
           }
         }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        if (user.Tip &lt;= 1) {</span>
-<span class="cstat-no" title="statement not covered" >          qb.whereRaw('OGLAS.ID_uporabnik = ?', user.ID_uporabnik);</span>
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (user.Tip &lt;= 1) {
+          qb.whereRaw('OGLAS.ID_uporabnik = ?', user.ID_uporabnik);
         } else {
 <span class="cstat-no" title="statement not covered" >          console.log(new Date().toISOString().slice(0, 19).replace('T', ' '));</span>
 <span class="cstat-no" title="statement not covered" >          qb.whereRaw(</span>
@@ -455,7 +455,7 @@ const getOglasi = <span class="fstat-no" title="function not covered" >as</span>
       .orderBy('SPREHAJALEC.OdzivniCas', 'asc')
       .orderBy('SPREHAJALEC.PovprecnaOcena', 'desc')
       .orderBy('OGLAS.CasZacetka', 'desc');
-<span class="cstat-no" title="statement not covered" >    res.status(200).json({ oglasi: oglasi });</span>
+    res.status(200).json({ oglasi: oglasi });
   } catch (err) {
 <span class="cstat-no" title="statement not covered" >    console.log(err);</span>
 <span class="cstat-no" title="statement not covered" >    return res.status(400).json({ message: err });</span>
@@ -478,7 +478,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed May 12 2021 11:19:02 GMT+0200 (Central European Summer Time)
+                at Sat May 22 2021 19:32:53 GMT+0200 (Central European Summer Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>

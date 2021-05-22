@@ -17,7 +17,7 @@ export const Ad: React.FC<AdProps> = ({ ad, refetch }) => {
 
   const handleDelete = async () => {
     try {
-      const response = await authRequest.post('oglas/delete', {
+      const response = await authRequest.post('/oglas/delete', {
         AdId: ad.ID_oglas,
       });
       if (response.status === 200) {

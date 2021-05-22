@@ -69,6 +69,7 @@ describe("#AuthTest - walker", () => {
           return done(err);
         }
         token = res.body.accessToken;
+        //console.log("VLEZEE->" + token);
         randomUser = { ...randomUser, token };
         return done();
       });
@@ -88,7 +89,7 @@ describe("#AuthTest - walker", () => {
         return done();
       });
   });
-
+  
   it(`Activate user ${randomUser.email}`, (done) => {
     const acCode = createActivationCode(randomUser.name, new Date());
     supertestRequest(app)
@@ -197,6 +198,8 @@ describe("#AuthTest - owner", () => {
   });
 
   it("login", (done) => {
+    //console.log("TEST");
+    //console.log(done);
     supertestRequest(app)
       .post("/api/login")
       .send({ email: randomUser.email, password: randomUser.password })
@@ -232,22 +235,23 @@ describe("#AuthTest - owner", () => {
         return done();
       });
   });
+  /*
+   it("Succesfully create an add", (done) => {
+     supertestRequest(app)
+       .post("/api/addAdd")
+       .send(add)
+       .set("Authorization", `Bearer ${randomUser.token}`)
+       .expect(200)
+       .end(function (err, res) {
+         if (err) {
+           console.error(res.body);
+           return done(err);
+         }
 
-  // it("Succesfully create an add", (done) => {
-  //   supertestRequest(app)
-  //     .post("/api/addAdd")
-  //     .send(add)
-  //     .set("Authorization", `Bearer ${randomUser.token}`)
-  //     .expect(200)
-  //     .end(function (err, res) {
-  //       if (err) {
-  //         console.error(res.body);
-  //         return done(err);
-  //       }
-
-  //       return done();
-  //     });
-  // });
+         return done();
+       });
+   });
+   */
 });
 
 describe("#AuthTest - other role eg. admin", () => {
@@ -275,9 +279,42 @@ describe("#AuthTest - other role eg. admin", () => {
 
 describe("Create add test", () => {
 
+  let add1 = {
+    lokacija: "Ljubljana",
+    startDate: "2021-05-09T17:35:36.123",
+    startEnd: "2021-05-09T17:55:36.412",
+    breed: 1
+  };
+  
   let user = {
-    email: "",
-    password: "12345",
+    email: "ilija.tavcioski@gmail.com",
+    password: "123456789",
+  };
+  let userWalkerWithMaxAd = {
+    email: "ile.tavcioski@gmail.com",
+    password: "987654321",
   };
 
+  let userWalkerWithoutMaxAd = {
+    email: "it8816@student.uni-lj.si",
+    password: "1987654321",
+  };
+
+  it(`User login ${user.email}`, (done) => {
+    supertestRequest(app)
+      .post("/api/login")
+      .send(user)
+      .expect(200)
+      .end(function(err, res) {
+        if (err) {
+          console.log("SOME ERROR");
+          return done(err);
+        }
+        return done();
+      }
+
+      );
+  });
+
+  
 });
