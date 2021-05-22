@@ -86,7 +86,8 @@ const getOglasi = async (req, res) => {
       .innerJoin('UPORABNIK as u', 'u.ID_uporabnik', 'Ad.ID_uporabnik')
       .innerJoin('SPREHAJALEC as spr', 'spr.ID_uporabnik', 'Ad.ID_uporabnik')
       .innerJoin('OGLAS_PASME as Ad_PASME', 'Ad_PASME.ID_oglas', 'Ad.ID_oglas')
-      .orderBy('spr.Index');
+      .where('Ad.CasZacetka', '>=', new Date())
+      .orderBy([{ column: 'spr.Index', order: 'desc' }, {column: 'Ad.CasZacetka'}]);
 
     if (Object.keys(req.query).length !== 0) {
       if (filters.name !== '') {

@@ -1,3 +1,4 @@
+const { body } = require('express-validator');
 const { dbInstance } = require('../DB/BazaTransakcij');
 const { getUserType } = require('./ProfileController');
 
@@ -49,10 +50,8 @@ const sendWalkRequest = async (req, res) => {
 };
 
 const walkResponse = async (req, res) => {
-  const body = { ...req.body };
+  const { idSprehoda, response } = req.body;
   const userId = res.locals.userId;
-  var idSprehoda = body.ID_sprehod;
-  var response = body.response;
 
   var datum = new Date();
   datum = changeFormat(datum.toISOString());
@@ -84,7 +83,6 @@ const walkNotifications = async (req, res) => {
       .orWhere('ID_lastnik', userId);
 
     for (walk of walks) {
-      console.log(walk);
       if (tip.Tip == 1) {
         const updatedWalk = {
           ...walk,
@@ -281,7 +279,8 @@ const getUsersWalks = async (userId) => {
       'spr.ID_sprehajalec'
     )
     .where('spr.ID_sprehajalec', userId)
-    .orWhere('spr.ID_lastnik', userId);
+    .orWhere('spr.ID_lastnik', userId)
+    .orderBy([{column: 'spr.Status'}, {column: 'ogl.CasZacetka', order: 'desc'}]);
   return walks;
 };
 
