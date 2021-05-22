@@ -18,22 +18,29 @@ const Filter = () => {
   const { updateAdds } = useContext(AddsContext);
   const formik = useFormik({
     initialValues: {
-      0: '', // name
-      1: '', // pasma
-      2: 1, // odzivniCas
-      3: '', // lokacija
-      4: '', // ocena
-      5: false, // priljubljeni
-      6: false, // izkušeni
+      name: '', // name
+      breed: '', // pasma
+      responseTime: 0, // odzivniCas
+      location: '', // lokacija
+      rating: '', // ocena
+      favourites: false, // priljubljeni
+      experienced: false, // izkušeni
     },
     onSubmit: async (values) => {
-      let queryString = `?0=${values[0]}&1=${values[1]}&2=${values[2]}&3=${values[3]}&4=${values[4]}`;
-      if (values[5]) {
-        queryString += `&5=${formik.values[5] ?? 'true'}`;
+      if (!formik.dirty){
+        return updateAdds()
       }
-      if (values[6]) {
-        queryString += `&6=${formik.values[6] ?? 'true'}`;
-      }
+      const query = new URLSearchParams()
+      query.append('name', values.name)
+      query.append('breed', values.breed)
+      query.append('responseTime', values.responseTime.toString())
+      query.append('location', values.location)
+      query.append('rating', values.rating)
+      query.append('favourites', values.favourites ? '1' : '')
+      query.append('experienced', values.experienced ? '1' : '')
+      
+      const queryString = `?${query.toString()}`;
+
       updateAdds(queryString);
     },
   });
@@ -57,7 +64,7 @@ const Filter = () => {
             type="text"
             fluid
             placeholder="John"
-            name="0"
+            name="name"
             onChange={formik.handleChange}
           />
         </Form.Field>
@@ -67,7 +74,7 @@ const Filter = () => {
             type="text"
             fluid
             placeholder="eg. Ljubljana"
-            name="3"
+            name="location"
             onChange={formik.handleChange}
           />
         </Form.Field>
@@ -77,7 +84,7 @@ const Filter = () => {
             type="number"
             fluid
             placeholder="0-5"
-            name="4"
+            name="rating"
             min="0"
             max="5"
             onChange={formik.handleChange}
@@ -88,7 +95,7 @@ const Filter = () => {
           name="5"
           onChange={(e, data) => {
             if (typeof data.checked === 'boolean') {
-              formik.values[5] = data.checked;
+              formik.values.favourites = data.checked;
             }
           }}
         />
@@ -97,7 +104,7 @@ const Filter = () => {
           name="6"
           onChange={(e, data) => {
             if (typeof data.checked === 'boolean') {
-              formik.values[6] = data.checked;
+              formik.values.experienced = data.checked;
             }
           }}
         />
@@ -107,7 +114,7 @@ const Filter = () => {
           placeholder="eg. Daily"
           onChange={(e, data) => {
             if (typeof data.value === 'number') {
-              formik.values[2] = data.value;
+              formik.values.responseTime = data.value;
             }
           }}
         />
@@ -130,6 +137,7 @@ const Filter = () => {
           labelPosition="left"
           fluid
           secondary
+          onClick={() => formik.resetForm()}
         >
           Reset
           <Icon name="repeat" />
