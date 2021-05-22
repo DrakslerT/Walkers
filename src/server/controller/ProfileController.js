@@ -301,6 +301,50 @@ const updatePasswordAction = async (req, res) => {
   }
 };
 
+const convertToDaysDifference = async (times) => {
+  var diffArr = 0;
+  var count = 0;
+  for (i in times) {
+    var date1 = new Date(times[i][0]);
+    var date2 = new Date(times[i][1]);
+    var diff = date2.getTime() - date1.getTime();
+    diff = diff / (1000 * 60 * 60 * 24);
+    diffArr += diff;
+    count++;
+  }
+  diffArr = diffArr / count;
+
+  if (diffArr < 1) {
+    diffArr = 7;
+  } else if (diffArr < 3) {
+    diffArr = 5;
+  } else if (diffArr < 7) {
+    diffArr = 3;
+  } else {
+    diffArr = 1;
+  }
+  return diffArr;
+}
+
+const calculateResponseTime = async (ID_sprehajalec) => {
+  if (!ID_sprehajalec) {
+    return false;
+  }
+  const times = await dbInstance
+    .select('SPREHOD.DatumKreiranja', 'SPREHOD.CasOdziva')
+    .from('SPREHOD')
+    .whereRaw('SPREHOD.ID_sprehajalec = ?', ID_sprehajalec)
+    .whereRaw('SPREHOD.Status = ?', 1)
+    .havingNotNull('SPREHOD.CasOdziva');
+
+  if (!times) {
+    return false;
+  }
+
+  const ret = await convertToDaysDifference(times);
+  return ret ? ret : false;
+}
+
 module.exports = {
   checkPassword,
   hashPassword,
@@ -315,4 +359,5 @@ module.exports = {
   deleteDogAction,
   updateProfileAction,
   updatePasswordAction,
+  calculateResponseTime
 };
