@@ -35,6 +35,7 @@ const {
   addAdd,
   myAdsAction,
   deleteAdAction,
+  updateAdAction
 } = require('./controller/AddController');
 
 const app = express();
@@ -114,6 +115,10 @@ app.get('/api/oglas/me', validateUser, (req, res) => myAdsAction(req, res));
 app.post('/api/oglas/delete', validateUser, (req, res) =>
   deleteAdAction(req, res)
 );
+app.put('/api/oglas/edit', validateUser, (req, res) =>
+  updateAdAction(req, res)
+);
+
 app.post('/api/addAdd', validateUser, (req, res) => addAdd(req, res));
 
 // Pasme routes
