@@ -69,8 +69,7 @@ const walkResponse = async (req, res) => {
 }
 
 const walkNotifications = async (req, res) => {
-  //const userId = res.locals.userId;
-  const userId = 93;
+  const userId = res.locals.userId;
   const tip = await getUserType(userId)
 
   try {

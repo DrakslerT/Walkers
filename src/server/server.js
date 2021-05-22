@@ -130,10 +130,11 @@ app.post('/api/addAdd', validateUser, (req, res) => addAdd(req, res));
 app.get('/api/pasme/getPasme', validateUser, (req, res) =>
   getPasme(req, res)
 );
+
 //sprehod routes
 app.post('/api/sendWalkRequest', validateUser, (req, res) => sendWalkRequest(req, res));
-app.post('/api/walkResponse', (req, res) => walkResponse(req, res));
-app.post('/api/walkNotifications', (req, res) => walkNotifications(req, res));
+app.post('/api/walkResponse', validateUser, (req, res) => walkResponse(req, res));
+app.post('/api/walkNotifications', validateUser, (req, res) => walkNotifications(req, res));
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
