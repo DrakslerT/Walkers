@@ -301,12 +301,48 @@ const updatePasswordAction = async (req, res) => {
   }
 };
 
+const updateProfileAfterWalkRequestResposne = async (idSprehajalec, countBoolean) => {
+  const newResponseTime = await calculateResponseTime(idSprehajalec);
+  const user = await dbInstance('SPREHAJALEC')
+    .where('ID_uporabnik', idSprehajalec)
+
+  var index = user[0].Index;
+  if(user[0].PovprecnaOcena != 0)
+    index = await calculateIndex(user[0].PovprecnaOcena, newResponseTime);
+  
+  var countWalks = user[0].StSprehodov;
+  if(countBoolean){
+    countWalks++;
+  }
+
+  const updatedUser = {
+    ...user[0],
+    OdzivniCas: newResponseTime,
+    Index: index,
+    StSprehodov: countWalks
+  };
+
+  try {
+    await dbInstance('SPREHAJALEC')
+      .where('ID_uporabnik', idSprehajalec)
+      .update(updatedUser);
+    return true
+  } catch (e) {
+    console.log(e);
+    return false
+  }
+}
+
+const calculateIndex = async (ocena, odzivniCas) => {
+  return ocena * odzivniCas;
+}
+
 const convertToDaysDifference = async (times) => {
   var diffArr = 0;
   var count = 0;
   for (i in times) {
-    var date1 = new Date(times[i][0]);
-    var date2 = new Date(times[i][1]);
+    var date1 = new Date(times[i].DatumKreiranja);
+    var date2 = new Date(times[i].CasOdziva);
     var diff = date2.getTime() - date1.getTime();
     diff = diff / (1000 * 60 * 60 * 24);
     diffArr += diff;
@@ -334,13 +370,11 @@ const calculateResponseTime = async (ID_sprehajalec) => {
     .select('SPREHOD.DatumKreiranja', 'SPREHOD.CasOdziva')
     .from('SPREHOD')
     .whereRaw('SPREHOD.ID_sprehajalec = ?', ID_sprehajalec)
-    .whereRaw('SPREHOD.Status = ?', 1)
     .havingNotNull('SPREHOD.CasOdziva');
 
   if (!times) {
     return false;
   }
-
   const ret = await convertToDaysDifference(times);
   return ret ? ret : false;
 }
@@ -369,5 +403,6 @@ module.exports = {
   updateProfileAction,
   updatePasswordAction,
   calculateResponseTime,
-  getUserType
+  getUserType,
+  updateProfileAfterWalkRequestResposne
 };

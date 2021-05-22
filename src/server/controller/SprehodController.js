@@ -1,5 +1,8 @@
 const { dbInstance } = require('../DB/BazaTransakcij');
-const { getUserType } = require('./ProfileController');
+const { 
+  getUserType, 
+  updateProfileAfterWalkRequestResposne
+ } = require('./ProfileController');
 
 const sendWalkRequest = async (req, res) => {
   const body = { ...req.body };
@@ -56,7 +59,6 @@ const walkResponse = async (req, res) => {
 
   var datum = new Date();
   datum = changeFormat(datum.toISOString());
-
   const isRightOwner = await checkIfUsersWalk(idSprehoda, userId);
   if (!isRightOwner) {
     return res
@@ -118,12 +120,15 @@ async function acceptWalkRequest(idSprehoda, datum, res) {
     };
 
     await updateWalk(updatedWalk);
-    res.status(200).json({ message: 'Walk request accepted!' });
-  } catch (e) {
+    var success = await updateProfileAfterWalkRequestResposne(updatedWalk.ID_sprehajalec, true)
+    if(success)
+      res.status(200).json({ message: 'Walk request accepted!' });
+    else
+      res.status(400).json({ message: 'Error when accepting walk request' });
+  } 
+  catch (e) {
     console.log(e);
-    return res
-      .status(400)
-      .json({ message: 'Error when accepting walk request' });
+    return res.status(400).json({ message: 'Error when accepting walk request' });
   }
 }
 
@@ -139,12 +144,16 @@ async function declineWalkRequest(idSprehoda, datum, res) {
     };
 
     await updateWalk(updatedWalk);
-    res.status(200).json({ message: 'Walk request declined!' });
+    var success = await updateProfileAfterWalkRequestResposne(updatedWalk.ID_sprehajalec, false)
+    var success = await updateProfileAfterWalkRequestResposne(updatedWalk.ID_sprehajalec, true)
+    if(success)
+      res.status(200).json({ message: 'Walk request declined!' });
+    else
+      res.status(400).json({ message: 'Error when declining walk request' });
+    
   } catch (e) {
     console.log(e);
-    return res
-      .status(400)
-      .json({ message: 'Error when declining walk request' });
+    return res.status(400).json({ message: 'Error when declining walk request' });
   }
 }
 
