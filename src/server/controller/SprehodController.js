@@ -50,8 +50,7 @@ const sendWalkRequest = async (req, res) => {
 
 const walkResponse = async (req, res) => {
   const body = { ...req.body };
-  //const userId = res.locals.userId;
-  const userId = 71;
+  const userId = res.locals.userId;
   var idSprehoda = body.ID_sprehod;
   var response = body.response;
 
@@ -253,7 +252,8 @@ const getUsersWalks = async (userId) => {
       'spr.ID_sprehod',
       'spr.Status',
       'spr.DatumKreiranja',
-      'spr.novaSprememba',
+      'spr.novaSpremembaLastnik',
+      'spr.novaSpremembaSprehajalec',
       'spr.Priljubljen',
       'ogl.Lokacija',
       'ogl.CasZacetka',
