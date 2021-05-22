@@ -13,12 +13,6 @@ const MenuItems = [
     userID: -1,
   },
   {
-    name: 'My dogs',
-    url: '#',
-    icon: 'link large clone outline icon',
-    userID: 2,
-  },
-  {
     name: 'My ads',
     url: '/ads',
     icon: 'link large clone outline icon',
