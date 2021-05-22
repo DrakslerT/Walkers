@@ -134,19 +134,19 @@ const getDogsCountByProfile = async (req, res) => {
 };
 
 const getOwnerDogs = async (userId) => {
-  const dogs = await dbInstance('PES')
-    .join('PASMA', 'PES.ID_pasma', '=', 'PASMA.ID_pasma')
-    .select(
-      'PES.ID_pes',
-      'PES.Ime_pes',
-      'PES.Spol',
-      'PES.Opis_pes',
-      'PASMA.Pasma_ime',
+  /**
+   * TODO @Luka
+   *  'PASMA.Pasma_ime',
       'PASMA.Temperament',
       'PASMA.WikiPasmeUrl',
       'PASMA.Visina',
       'PASMA.Teza'
-    )
+
+      If possible save it as same attribute values
+   */
+
+  const dogs = await dbInstance('PES')
+    .select('PES.ID_pes', 'PES.Ime_pes', 'PES.Spol', 'PES.Opis_pes')
     .where('PES.ID_uporabnik', userId)
     .andWhere('PES.JeIzbrisan', 0); // Only get not deleted dogs
   return dogs;
@@ -181,6 +181,7 @@ const getProfileAction = async (req, res) => {
 
     return res.status(200).json(profile);
   } catch (e) {
+    console.log(e);
     return res.status(400).json({ message: 'Error when fetching profile' });
   }
 };

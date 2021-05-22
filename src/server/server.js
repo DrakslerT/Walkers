@@ -35,7 +35,12 @@ const {
   addAdd,
   myAdsAction,
   deleteAdAction,
+  updateAdAction
 } = require('./controller/AddController');
+const { 
+  sendWalkRequest, 
+  walkResponse 
+} = require('./controller/SprehodController');
 
 const app = express();
 app.set('trust proxy', 1);
@@ -114,12 +119,19 @@ app.get('/api/oglas/me', validateUser, (req, res) => myAdsAction(req, res));
 app.post('/api/oglas/delete', validateUser, (req, res) =>
   deleteAdAction(req, res)
 );
+app.put('/api/oglas/edit', validateUser, (req, res) =>
+  updateAdAction(req, res)
+);
+
 app.post('/api/addAdd', validateUser, (req, res) => addAdd(req, res));
 
 // Pasme routes
 app.get('/api/pasme/getPasme', validateUser, (req, res) =>
   getPasme(req, res)
 );
+//sprehod routes
+app.post('/api/sendWalkRequest', validateUser, (req, res) => sendWalkRequest(req, res));
+app.post('/api/walkResponse', validateUser, (req, res) => walkResponse(req, res));
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
