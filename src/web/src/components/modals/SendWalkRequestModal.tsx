@@ -90,10 +90,10 @@ export const SendWalkRequestModal: React.FC<RequestModalProps> = ({ oglasID }) =
     >
       <Modal.Header>
         <Icon name="paw" />
-        We are sad to see your friend go 😢
+        Send walk request
       </Modal.Header>
       <Modal.Content>
-        <Header>Choose a dog you want to remove</Header>
+        <Header>Are sure you want to send a walk request for this Ad?</Header>
         <Dropdown
           placeholder="Select dog"
           fluid
@@ -108,7 +108,7 @@ export const SendWalkRequestModal: React.FC<RequestModalProps> = ({ oglasID }) =
       </Modal.Content>
       <Modal.Actions>
         <Button
-          content="Confirm deletion"
+          content="Confirm"
           labelPosition="right"
           icon="delete"
           onClick={sendWalkRequest}
