@@ -145,7 +145,6 @@ async function declineWalkRequest(idSprehoda, datum, res) {
 
     await updateWalk(updatedWalk);
     var success = await updateProfileAfterWalkRequestResposne(updatedWalk.ID_sprehajalec, false)
-    var success = await updateProfileAfterWalkRequestResposne(updatedWalk.ID_sprehajalec, true)
     if(success)
       res.status(200).json({ message: 'Walk request declined!' });
     else
