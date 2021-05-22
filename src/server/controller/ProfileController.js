@@ -345,6 +345,15 @@ const calculateResponseTime = async (ID_sprehajalec) => {
   return ret ? ret : false;
 }
 
+const getUserType = async (userId) => {
+  const user = await dbInstance
+    .select('UPORABNIK.Tip')
+    .from('UPORABNIK')
+    .where('ID_uporabnik', userId);
+  return user.length ? user[0] : false;
+};
+
+
 module.exports = {
   checkPassword,
   hashPassword,
@@ -359,5 +368,6 @@ module.exports = {
   deleteDogAction,
   updateProfileAction,
   updatePasswordAction,
-  calculateResponseTime
+  calculateResponseTime,
+  getUserType
 };

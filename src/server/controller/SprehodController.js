@@ -1,5 +1,5 @@
 const { dbInstance } = require('../DB/BazaTransakcij');
-const { getUserById } = require('./ProfileController');
+const { getUserType } = require('./ProfileController');
 
 const sendWalkRequest = async (req, res) => {
   const body = { ...req.body };
@@ -30,7 +30,8 @@ const sendWalkRequest = async (req, res) => {
     Tip_sprehajalec: tipSprehajalca,
     Tip_lastnik: tipLastnika,
     DatumKreiranja: datum,
-    novaSprememba: '1',
+    novaSpremembaSprehajalec: '1',
+    novaSpremembaLastnik: '1',
     Priljubljen: '0'
   };
 
@@ -44,7 +45,8 @@ const sendWalkRequest = async (req, res) => {
 
 const walkResponse = async (req, res) => {
   const body = { ...req.body };
-  const userId = res.locals.userId;
+  //const userId = res.locals.userId;
+  const userId = 71;
   var idSprehoda = body.ID_sprehod;
   var response = body.response;
   
@@ -66,6 +68,38 @@ const walkResponse = async (req, res) => {
   }
 }
 
+const walkNotifications = async (req, res) => {
+  //const userId = res.locals.userId;
+  const userId = 93;
+  const tip = await getUserType(userId)
+
+  try {
+    const walks = await dbInstance('SPREHOD').where('ID_sprehajalec', userId).orWhere('ID_lastnik', userId);
+    
+    for(walk of walks) {
+      console.log(walk)
+      if(tip.Tip == 1){
+        const updatedWalk = {
+          ...walk,
+          novaSpremembaSprehajalec: 0,
+        }
+        await updateWalk(updatedWalk);
+      }
+      else {
+        const updatedWalk = {
+          ...walk,
+          novaSpremembaLastnik: 0,
+        }
+        await updateWalk(updatedWalk);
+      }
+    }
+    return res.status(200).json({ message: 'Success' });
+  } catch (e) {
+    console.log(e)
+    return res.status(400).json({ message: 'Error' });
+  }
+}
+
 async function acceptWalkRequest(idSprehoda, datum, res){
   try {
     const walk = await getWalkByID(idSprehoda)
@@ -73,6 +107,7 @@ async function acceptWalkRequest(idSprehoda, datum, res){
     const updatedWalk = {
       ...walk,
       Status: 1,
+      novaSpremembaLastnik: '1',
       CasOdziva: datum 
     }
 
@@ -91,6 +126,7 @@ async function declineWalkRequest(idSprehoda, datum, res){
     const updatedWalk = {
       ...walk,
       Status: 0,
+      novaSpremembaLastnik: '1',
       CasOdziva: datum 
     }
 
@@ -213,6 +249,7 @@ function changeFormat(time) {
 
 module.exports = {
     sendWalkRequest,
-    walkResponse
+    walkResponse,
+    walkNotifications
   };
   
