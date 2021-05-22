@@ -135,16 +135,6 @@ const getDogsCountByProfile = async (req, res) => {
 };
 
 const getOwnerDogs = async (userId) => {
-  /**
-   * TODO @Luka
-   *  'PASMA.Pasma_ime',
-      'PASMA.Temperament',
-      'PASMA.WikiPasmeUrl',
-      'PASMA.Visina',
-      'PASMA.Teza'
-
-      If possible save it as same attribute values
-   */
 
   const dogs = await dbInstance('PES')
     .select('PES.ID_pes', 'PES.Ime_pes', 'PES.Spol', 'PES.Opis_pes', 'PES.ID_pasma')
