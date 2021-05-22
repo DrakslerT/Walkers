@@ -1,4 +1,5 @@
 const { dbInstance } = require('../DB/BazaTransakcij');
+const { addPasmaToDog } = require('./PasmeFasada');
 const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
@@ -146,10 +147,12 @@ const getOwnerDogs = async (userId) => {
    */
 
   const dogs = await dbInstance('PES')
-    .select('PES.ID_pes', 'PES.Ime_pes', 'PES.Spol', 'PES.Opis_pes')
+    .select('PES.ID_pes', 'PES.Ime_pes', 'PES.Spol', 'PES.Opis_pes', 'PES.ID_pasma')
     .where('PES.ID_uporabnik', userId)
     .andWhere('PES.JeIzbrisan', 0); // Only get not deleted dogs
-  return dogs;
+
+  const dogPasme = await addPasmaToDog(dogs);
+  return dogPasme;
 };
 
 const getWalkerStats = async (userId) => {

@@ -44,6 +44,55 @@ const getPasme = async (req, res) => {
   }
 };
 
+const getPasmaByID = async (ID_pasma) => {
+  try {
+    var breeds = await getPasmeCache();
+    if (!breeds) {
+      breeds = await getPasmeFromAPI();
+    }
+
+    if (!breeds) {
+      return false;
+    }
+    setPasmeCache(breeds);
+    var breed;
+
+    if (breeds[ID_pasma].ID_pasma == ID_pasma) {
+      breed = breeds[ID_pasma];
+    } else {
+      for (i in breeds) {
+        if (breeds[i].ID_pasma == ID_pasma) {
+          breed = breeds[i];
+          break;
+        }
+      }
+    }
+    return breed;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+const addPasmaToDog = async (dogs) => {
+  try {
+    for (i in dogs) {
+      const breed = await getPasmaByID(dogs[0].ID_pasma);
+      
+      dogs[i].Pasma_ime = breed.Pasma_ime;
+      dogs[i].Temperament = breed.Temperament;
+      dogs[i].Visina = breed.Visina;
+      dogs[i].Teza = breed.Teza;
+    }
+    return dogs;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 module.exports = {
   getPasme,
+  getPasmaByID,
+  addPasmaToDog
 };
