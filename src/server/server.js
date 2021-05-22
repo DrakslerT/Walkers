@@ -37,7 +37,10 @@ const {
   deleteAdAction,
   updateAdAction
 } = require('./controller/AddController');
-const { sendWalkRequest, acceptWalkRequest } = require('./controller/SprehodController');
+const { 
+  sendWalkRequest, 
+  walkResponse 
+} = require('./controller/SprehodController');
 
 const app = express();
 app.set('trust proxy', 1);
@@ -128,7 +131,7 @@ app.get('/api/pasme/getPasme', validateUser, (req, res) =>
 );
 //sprehod routes
 app.post('/api/sendWalkRequest', validateUser, (req, res) => sendWalkRequest(req, res));
-app.post('/api/acceptWalkRequest', (req, res) => acceptWalkRequest(req, res));
+app.post('/api/walkResponse', validateUser, (req, res) => walkResponse(req, res));
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

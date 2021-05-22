@@ -29,7 +29,6 @@ const sendWalkRequest = async (req, res) => {
     ID_Oglas: idOglasa,
     Tip_sprehajalec: tipSprehajalca,
     Tip_lastnik: tipLastnika,
-    Status: '0',
     DatumKreiranja: datum,
     novaSprememba: '1',
     Priljubljen: '0'
@@ -43,12 +42,93 @@ const sendWalkRequest = async (req, res) => {
   }
 }
 
-const acceptWalkRequest = async (req, res) => {
+const walkResponse = async (req, res) => {
+  const body = { ...req.body };
+  const userId = res.locals.userId;
+  var idSprehoda = body.ID_sprehod;
+  var response = body.response;
+  
+  var datum = new Date()
+  datum = changeFormat(datum.toISOString())
 
+  const isRightOwner = await checkIfUsersWalk(idSprehoda, userId);
+  if(!isRightOwner){
+    return res.status(400).json({ message: 'You can only respond to walk requests sent to you!' });
+  }
+
+  //user accpeted walk request
+  if(response){
+    return acceptWalkRequest(idSprehoda, datum, res);
+  }
+  //user declined walk request
+  else {
+    return declineWalkRequest(idSprehoda, datum, res);
+  }
 }
 
+async function acceptWalkRequest(idSprehoda, datum, res){
+  try {
+    const walk = await getWalkByID(idSprehoda)
+  
+    const updatedWalk = {
+      ...walk,
+      Status: 1,
+      CasOdziva: datum 
+    }
 
+    await updateWalk(updatedWalk)
+    res.status(200).json({ message: 'Walk request accepted!' });
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ message: 'Error when accepting walk request' });
+  }
+}
 
+async function declineWalkRequest(idSprehoda, datum, res){
+  try {
+    const walk = await getWalkByID(idSprehoda)
+  
+    const updatedWalk = {
+      ...walk,
+      Status: 0,
+      CasOdziva: datum 
+    }
+
+    await updateWalk(updatedWalk)
+    res.status(200).json({ message: 'Walk request declined!' });
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ message: 'Error when declining walk request' });
+  }
+}
+
+async function updateWalk(walk){
+  try {
+    await dbInstance('SPREHOD').where('ID_sprehod', walk.ID_sprehod).update(walk);
+  }
+  catch(e) {
+    console.log(e);
+    throw new Error();
+  }
+}
+
+async function getWalkByID(id) {
+  try {
+    const walk = await dbInstance('SPREHOD').where('ID_sprehod', id);
+
+    return walk[0];
+  } catch (error) {
+    return -1;
+  }
+}
+
+async function checkIfUsersWalk(walkId, userId) {
+  const walk = await dbInstance('SPREHOD')
+    .where({ ID_sprehajalec: userId, ID_sprehod: walkId })
+    .select('ID_sprehod');
+
+  return walk.length ?? false;
+};
 
 
 async function requestSentAlready(idOglasa, idLastnika) {
@@ -133,6 +213,6 @@ function changeFormat(time) {
 
 module.exports = {
     sendWalkRequest,
-    acceptWalkRequest
+    walkResponse
   };
   
