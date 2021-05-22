@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Divider, Header, Item } from 'semantic-ui-react';
+import { Container, Divider, Header, Icon, Item } from 'semantic-ui-react';
 import { Loader } from '../../components/Loader';
 import { ObjavaOglasa } from '../../components/modals/addAdd';
 import Navbar from '../../components/navbar/Navbar';
@@ -56,14 +56,22 @@ export const MyAds: React.FC = () => {
       <Navbar />
       <main>
         <Container>
-          <Header
-            as="h1"
-            content="My Ads"
-            size="huge"
-            subheader={`${user.username} here you can view your Ads and edit or delete them!`}
-          />
+          <Header as="h1" icon textAlign="center">
+            <Icon name="clone" circular />
+            <Header.Content>📝 My Ads 📝</Header.Content>
+            <Header.Subheader>
+              {user.username} here you can view your Ads and edit or delete
+              them!
+            </Header.Subheader>
+          </Header>
           <Divider />
-          {overflow ? <Header as="h2" textAlign="center" >🏞️ You have max number of ads 🏞️</Header> : <ObjavaOglasa refetch={fetchAdds} />}
+          {overflow ? (
+            <Header as="h2" textAlign="center">
+              🏞️ You have max number of ads 🏞️
+            </Header>
+          ) : (
+            <ObjavaOglasa refetch={fetchAdds} />
+          )}
           <>
             {ads.map((ad) => (
               <Ad key={ad.ID_oglas} ad={ad} refetch={fetchAdds} />

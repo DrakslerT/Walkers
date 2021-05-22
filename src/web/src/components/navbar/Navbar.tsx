@@ -20,7 +20,7 @@ const MenuItems = [
   },
   {
     name: 'My walks',
-    url: '#',
+    url: '/walks',
     icon: 'link large map outline icon',
     userID: -1,
   },
