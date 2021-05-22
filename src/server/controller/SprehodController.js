@@ -122,6 +122,7 @@ async function getTipLastnika(idLastnika) {
 const getUsersWalks = async (userId) => {
   const walks = await dbInstance
     .select(
+      'spr.ID_sprehod',
       'spr.Status',
       'spr.DatumKreiranja',
       'spr.novaSprememba',
@@ -131,27 +132,25 @@ const getUsersWalks = async (userId) => {
       'ogl.CasKonca',
       'pes.Ime_pes',
       'pes.ID_pasma',
-      'last.Ime_uporabnik',
-      'spreh.Ime_uporabnik'
+      'last.Ime_uporabnik as lastnik',
+      'last.Email as last_email',
+      'last.GSM as last_GSM',
+      'spreh.Ime_uporabnik as sprehajalec',
+      'spreh.Email as spreh_email',
+      'spreh.GSM as spreh_GSM',
+      'sprehStats.StSprehodov',
+      'sprehStats.OdzivniCas',
+      'sprehStats.PovprecnaOcena',
     )
     .from('SPREHOD as spr')
     .leftJoin('OGLAS as ogl', 'ogl.ID_oglas', 'spr.ID_oglas')
     .leftJoin('PES as pes', 'pes.ID_pes', 'spr.ID_pes')
     .leftJoin('UPORABNIK as last', 'last.ID_uporabnik', 'spr.ID_lastnik')
-    .leftJoin('UPORABNIK as spreh', 'spreh.ID_uporabnik', 'spr.ID_lastnik')
+    .leftJoin('UPORABNIK as spreh', 'spreh.ID_uporabnik', 'spr.ID_sprehajalec')
+    .leftJoin('SPREHAJALEC as sprehStats', 'sprehStats.ID_uporabnik', 'spr.ID_sprehajalec')
     .where('spr.ID_sprehajalec', userId)
     .orWhere('spr.ID_lastnik', userId);
   return walks;
-  /**
-   * ('SPREHOD')
-  .fullOuterJoin('PES', 'PES.ID_pes', 'SPREHOD.ID_pes')
-  .fullOuterJoin('OGLAS', 'OGLAS.')
-   * 
-   * 
-   * knex('users')
-  .join('contacts', 'users.id', '=', 'contacts.user_id')
-  .select('users.id', 'contacts.phone')
-   */
 };
 
 const getWalksAction = async (req, res) => {
