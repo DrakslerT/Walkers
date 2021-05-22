@@ -9,6 +9,7 @@ const {
   hashPassword,
   checkPassword
 } = require('./ProfileController');
+const { getNotifications } = require('./SprehodController');
 
 
 
@@ -80,10 +81,12 @@ const AuthResponse = async (res, user_id) => {
   });
 
   const user = await getUserById(user_id);
+  const notifications = await getNotifications(user_id)
   const userModel = {
     username: user.Ime_uporabnik,
     activated: user.Aktiviran,
     userType: user.Tip,
+    notifications
   };
 
   return res.status(200).json({ user: userModel, accessToken });

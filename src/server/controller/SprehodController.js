@@ -280,7 +280,10 @@ const getUsersWalks = async (userId) => {
     )
     .where('spr.ID_sprehajalec', userId)
     .orWhere('spr.ID_lastnik', userId)
-    .orderBy([{column: 'spr.Status'}, {column: 'ogl.CasZacetka', order: 'desc'}]);
+    .orderBy([
+      { column: 'spr.Status' },
+      { column: 'ogl.CasZacetka', order: 'desc' },
+    ]);
   return walks;
 };
 
@@ -293,6 +296,24 @@ const getWalksAction = async (req, res) => {
     console.log(e);
     return res.status(400).json({ message: 'Error fetching ads' });
   }
+};
+
+const getNotifications = async (userId) => {
+  const userType = await getUserType(userId);
+  let notifications;
+  if (userType === 1 || userType === 4) {
+    notifications = await dbInstance('SPREHOD')
+      .countDistinct('ID_sprehod as notifications')
+      .where('ID_sprehajalec', userId)
+      .andWhere('novaSpremembaSprehajalec', 1);
+  } else {
+    notifications = await dbInstance('SPREHOD')
+      .countDistinct('ID_sprehod as notifications')
+      .where('ID_lastnik', userId)
+      .andWhere('novaSpremembaLastnik', 1);
+  }
+  // Return count if exists else 0
+  return notifications.length ? notifications[0]['notifications'] : 0;
 };
 
 function changeFormat(time) {
@@ -311,4 +332,5 @@ module.exports = {
   sendWalkRequest,
   walkResponse,
   walkNotifications,
+  getNotifications,
 };
