@@ -315,6 +315,27 @@ const getNotifications = async (userId) => {
   return notifications.length ? notifications[0]['notifications'] : 0;
 };
 
+const addFavourite = async(req, res) => {
+  const body = { ...req.body };
+  idSprehoda = body.ID_sprehod;
+
+  const walk = dbInstance('SPREHOD').where('ID_sprehod', idSprehoda)
+
+  const updatedWalk = {
+    ...walk[0],
+    Priljubljen: 1
+  }
+
+  try {
+    await dbInstance('SPREHOD').where('ID_sprehod', idSprehoda).update(updatedWalk)
+    return res.status(200).json({ message: 'Added to favourites.'})
+  } catch (error) {
+    console.log(error);
+    return res.status(200).json({ message: 'Error when adding to favourites.' })
+  }
+  
+}
+
 function changeFormat(time) {
   var datetime = time.split('T');
   var date = datetime[0];
@@ -332,4 +353,5 @@ module.exports = {
   walkResponse,
   walkNotifications,
   getNotifications,
+  addFavourite
 };

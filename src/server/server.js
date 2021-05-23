@@ -43,6 +43,7 @@ const {
   sendWalkRequest,
   walkResponse,
   walkNotifications,
+  addFavourite
 } = require('./controller/SprehodController');
 const { setGrade } = require('./controller/OceneController')
 
@@ -146,6 +147,9 @@ app.post('/api/walkResponse', validateUser, (req, res) =>
 );
 app.post('/api/walkNotifications', validateUser, (req, res) =>
   walkNotifications(req, res)
+);
+app.post('/api/addFavourite', (req, res) =>
+  addFavourite(req, res)
 );
 
 //ocene routes
