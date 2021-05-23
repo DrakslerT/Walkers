@@ -60,6 +60,7 @@ const {
             return done();
         });
     });
+    
     it(`Get walks 1.5`,(done) => {
         supertestRequest(app)
         .post('/api/walkNotifications')
@@ -87,7 +88,7 @@ const {
             return done();
         });
     });
-
+/*
     it(`Get Send walks 1`,(done) => {
         supertestRequest(app)
         .post('/api/sendWalkRequest')
@@ -102,8 +103,8 @@ const {
             return done();
         });
     });
-
-    it(`Get Send walks 2`,(done) => {
+*/
+    /*it(`Get Send walks 2`,(done) => {
         supertestRequest(app)
         .post('/api/sendWalkRequest')
         .send({ IDoglasa: 40, dogId: 26 })
@@ -117,6 +118,7 @@ const {
             return done();
         });
     });
+    */
 
     
   });

@@ -9,6 +9,7 @@ const {
 
 const sendWalkRequest = async (req, res) => {
   const body = { ...req.body };
+  //console.log(req.body);
   var idOglasa = body.IDoglasa;
   var idPsa = body.dogId;
   var idLastnika = res.locals.userId;
@@ -41,16 +42,18 @@ const sendWalkRequest = async (req, res) => {
     novaSpremembaLastnik: '1',
     Priljubljen: '0',
   };
-
+  //console.log(normalisedSprehodForDb);
   try {
-    await dbInstance('SPREHOD').insert(normalisedSprehodForDb);
-    return res.status(200).json({ message: 'Request sent' });
+    const rez = await dbInstance('SPREHOD').insert(normalisedSprehodForDb);
+    //console.log("DOBIJAM->"+rez);
+    return res.status(200).json({ message: 'Request sent', sprehodid: rez, sprehajalecid: idSprehajalca });
   } catch (err) {
     return res.status(400).json({ message: err });
   }
 };
 
 const walkResponse = async (req, res) => {
+  //console.log(req.body);
   const { idSprehoda, response } = req.body;
   const userId = res.locals.userId;
 
