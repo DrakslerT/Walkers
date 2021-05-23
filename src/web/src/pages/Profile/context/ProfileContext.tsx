@@ -20,28 +20,32 @@ export type IProfile = {
   ID_uporabnik: number;
   Ime_uporabnik: string;
   Tip: number;
-  stats: {
-    OdzivniCas: number;
-    PovprecnaOcena: number;
-    StSprehodov: number;
-  };
+  stats: IStats;
   dogs: IDog[];
 };
 
-export type IDog = {
+export interface IDog {
   ID_pes: number;
   Ime_pes: string;
-  Opis_pes?: string;
+  Spol: number;
+  Opis_pes?: number;
+  ID_pasma: number;
+  breed: IBreed;
+}
+
+export interface IStats {
+  OdzivniCas: number;
+  PovprecnaOcena: number;
+  StSprehodov: number;
+}
+
+export interface IBreed {
+  ID_pasma: number;
   Pasma_ime: string;
-  Spol?: {
-    data: number;
-    type: string;
-  };
   Temperament: string;
-  Teza: string;
   Visina: string;
-  WikiPasmeUrl?: string;
-};
+  Teza: string;
+}
 
 export type ProfileContextType = {
   profile: IProfile | undefined;
@@ -79,7 +83,7 @@ export const ProfileContextProvider = ({
     () => ({
       profile,
       isFetching,
-      updateProfile
+      updateProfile,
     }),
     [profile, isFetching, updateProfile]
   );

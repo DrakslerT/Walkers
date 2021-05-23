@@ -5,6 +5,7 @@ import Navbar from '../../components/navbar/Navbar';
 import { getAuthRequest } from '../../shared/http';
 import { errorToast } from '../../shared/Toast';
 import { getUser } from '../../shared/UserInformation';
+import { IBreed } from '../Profile/context/ProfileContext';
 import { Walk } from './Walk';
 
 export type IWalk = {
@@ -28,6 +29,7 @@ export type IWalk = {
   StSprehodov: number;
   OdzivniCas: number;
   PovprecnaOcena: number;
+  breed: IBreed;
 };
 
 interface MyWalksProps {}
@@ -53,6 +55,7 @@ export const MyWalks: React.FC<MyWalksProps> = ({}) => {
     try {
       const response = await authRequest.get('walks');
       setWalks(response.data);
+      console.log(response.data);
     } catch (e) {
       console.error(e);
       errorToast();

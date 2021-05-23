@@ -1,5 +1,6 @@
 import React from 'react';
 import { Divider, Header, Icon, Table } from 'semantic-ui-react';
+import { Loader } from '../../components/Loader';
 import { AddDogModal } from '../../components/modals/AddDogModal';
 import { RemoveDogModal } from '../../components/modals/RemoveDogModal';
 import { IDog, IProfile } from './context/ProfileContext';
@@ -10,11 +11,10 @@ interface DogInfoProps {
 
 export const DogInfo: React.FC<DogInfoProps> = ({ profile }) => {
   if (!profile) {
-    return <div>...</div>;
+    return <Loader />;
   }
 
   const showDeleteDogBtn = profile.dogs.length > 1;
-
   return (
     <>
       <Divider horizontal>
@@ -32,20 +32,34 @@ export const DogInfo: React.FC<DogInfoProps> = ({ profile }) => {
                 <Table.Cell>{dog.Ime_pes}</Table.Cell>
               </Table.Row>
               <Table.Row>
+                <Table.Cell width={4}>Dog gender</Table.Cell>
+                <Table.Cell>
+                  {dog.Spol === 0 ? (
+                    <>
+                      <Icon name="mars" /> Male
+                    </>
+                  ) : (
+                    <>
+                      <Icon name="venus" /> Female
+                    </>
+                  )}
+                </Table.Cell>
+              </Table.Row>
+              <Table.Row>
                 <Table.Cell>Breed</Table.Cell>
-                <Table.Cell>{dog.Pasma_ime}</Table.Cell>
+                <Table.Cell>{dog.breed.Pasma_ime}</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Temperament</Table.Cell>
-                <Table.Cell>{dog.Temperament}</Table.Cell>
+                <Table.Cell>{dog.breed.Temperament}</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Height (in cm)</Table.Cell>
-                <Table.Cell>{dog.Visina}</Table.Cell>
+                <Table.Cell>{dog.breed.Visina}</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Weight (in kg)</Table.Cell>
-                <Table.Cell>{dog.Teza}</Table.Cell>
+                <Table.Cell>{dog.breed.Teza}</Table.Cell>
               </Table.Row>
             </Table.Body>
           </Table>

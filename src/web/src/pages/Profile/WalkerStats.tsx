@@ -1,5 +1,6 @@
 import React from 'react';
 import { Divider, Header, Icon, Rating, Statistic } from 'semantic-ui-react';
+import { Loader } from '../../components/Loader';
 import { useWindowSize } from '../../shared/useWindow';
 import { handleResponseTime } from '../../shared/utils';
 import { IProfile } from './context/ProfileContext';
@@ -12,7 +13,7 @@ export const WalkerStats: React.FC<WalkerStatsProps> = ({ profile }) => {
   const { width } = useWindowSize();
 
   if (!profile || !width) {
-    return <div>...</div>;
+    return <Loader />;
   }
 
   return (

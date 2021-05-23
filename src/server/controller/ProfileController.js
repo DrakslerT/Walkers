@@ -140,7 +140,6 @@ const getOwnerDogs = async (userId) => {
     .select('PES.ID_pes', 'PES.Ime_pes', 'PES.Spol', 'PES.Opis_pes', 'PES.ID_pasma')
     .where('PES.ID_uporabnik', userId)
     .andWhere('PES.JeIzbrisan', 0); // Only get not deleted dogs
-
   const dogPasme = await addPasmaToDog(dogs);
   return dogPasme;
 };

@@ -12,9 +12,15 @@ export const MoreDogInfo: React.FC<MoreDogInfoProps> = ({ walk }) => {
       trigger={
         <span style={{ textDecoration: 'underline' }}>{walk.Ime_pes}</span>
       }
-      header={`Information about ${walk.Ime_pes}`}
-      content={`He is of breed Samoyed for which is typical <Temperament>, weight(kg) <w> and height(cm) <h>. ${walk.Ime_pes} is owned by ${walk.lastnik}`}
       basic
-    />
+    >
+      <Popup.Header>Information about {walk.Ime_pes} 🐕</Popup.Header>
+      <Popup.Content>
+        Is of breed <b>{walk.breed.Pasma_ime}</b> for which is typical{' '}
+        <b>{walk.breed.Temperament}</b>, weight <b>{walk.breed.Teza}kg</b> and
+        height <b>{walk.breed.Visina}cm</b>. {walk.Ime_pes} is owned by{' '}
+        <b>{walk.lastnik}</b>.
+      </Popup.Content>
+    </Popup>
   );
 };

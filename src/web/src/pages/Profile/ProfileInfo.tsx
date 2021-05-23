@@ -1,5 +1,6 @@
 import React from 'react';
 import { Divider, Header, Icon, Table } from 'semantic-ui-react';
+import { Loader } from '../../components/Loader';
 import { EditProfileModal } from '../../components/modals/EditProfileModal';
 import { handleDate } from '../../shared/utils';
 import { IProfile } from './context/ProfileContext';
@@ -21,7 +22,7 @@ export const ProfileInfo: React.FC<ProfileInfoProps> = ({ profile }) => {
   };
 
   if (!profile) {
-    return <div>...</div>;
+    return <Loader />;
   }
 
   return (

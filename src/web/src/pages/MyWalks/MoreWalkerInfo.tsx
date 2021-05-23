@@ -16,7 +16,7 @@ export const MoreWalkerInfo: React.FC<MoreWalkerInfoProps> = ({ walk }) => {
       basic
     >
       <Popup.Header>
-        {walk.sprehajalec} stats after {walk.StSprehodov} walks
+      {walk.sprehajalec} stats after {walk.StSprehodov} walks 🐕🚶
       </Popup.Header>
       <Popup.Content>
         <Rating

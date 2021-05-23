@@ -1,9 +1,10 @@
 const { body } = require('express-validator');
 const { dbInstance } = require('../DB/BazaTransakcij');
-const { 
-  getUserType, 
-  updateProfileAfterWalkRequestResposne
- } = require('./ProfileController');
+const { getPasmaByID, addPasmaToDog } = require('./PasmeFasada');
+const {
+  getUserType,
+  updateProfileAfterWalkRequestResposne,
+} = require('./ProfileController');
 
 const sendWalkRequest = async (req, res) => {
   const body = { ...req.body };
@@ -19,11 +20,7 @@ const sendWalkRequest = async (req, res) => {
   var tipSprehajalca = await getTipSprehajalca(idSprehajalca);
   var tipLastnika = await getTipLastnika(idLastnika);
 
-  if (
-    idSprehajalca == -1 ||
-    tipSprehajalca == -1 ||
-    tipLastnika == -1
-  ) {
+  if (idSprehajalca == -1 || tipSprehajalca == -1 || tipLastnika == -1) {
     return res.status(400).json({ message: 'Something went wrong...' });
   }
 
@@ -117,15 +114,17 @@ async function acceptWalkRequest(idSprehoda, datum, res) {
     };
 
     await updateWalk(updatedWalk);
-    var success = await updateProfileAfterWalkRequestResposne(updatedWalk.ID_sprehajalec, true)
-    if(success)
-      res.status(200).json({ message: 'Walk request accepted!' });
-    else
-      res.status(400).json({ message: 'Error when accepting walk request' });
-  } 
-  catch (e) {
+    var success = await updateProfileAfterWalkRequestResposne(
+      updatedWalk.ID_sprehajalec,
+      true
+    );
+    if (success) res.status(200).json({ message: 'Walk request accepted!' });
+    else res.status(400).json({ message: 'Error when accepting walk request' });
+  } catch (e) {
     console.log(e);
-    return res.status(400).json({ message: 'Error when accepting walk request' });
+    return res
+      .status(400)
+      .json({ message: 'Error when accepting walk request' });
   }
 }
 
@@ -141,15 +140,17 @@ async function declineWalkRequest(idSprehoda, datum, res) {
     };
 
     await updateWalk(updatedWalk);
-    var success = await updateProfileAfterWalkRequestResposne(updatedWalk.ID_sprehajalec, false)
-    if(success)
-      res.status(200).json({ message: 'Walk request declined!' });
-    else
-      res.status(400).json({ message: 'Error when declining walk request' });
-    
+    var success = await updateProfileAfterWalkRequestResposne(
+      updatedWalk.ID_sprehajalec,
+      false
+    );
+    if (success) res.status(200).json({ message: 'Walk request declined!' });
+    else res.status(400).json({ message: 'Error when declining walk request' });
   } catch (e) {
     console.log(e);
-    return res.status(400).json({ message: 'Error when declining walk request' });
+    return res
+      .status(400)
+      .json({ message: 'Error when declining walk request' });
   }
 }
 
@@ -278,7 +279,9 @@ const getUsersWalks = async (userId) => {
       { column: 'spr.Status' },
       { column: 'ogl.CasZacetka', order: 'desc' },
     ]);
-  return walks;
+
+  const walkList = await addPasmaToDog(walks);
+  return walkList;
 };
 
 const getWalksAction = async (req, res) => {
@@ -288,7 +291,7 @@ const getWalksAction = async (req, res) => {
     return res.status(200).json(walks);
   } catch (e) {
     console.log(e);
-    return res.status(400).json({ message: 'Error fetching ads' });
+    return res.status(400).json({ message: 'Error fetching walks' });
   }
 };
 
