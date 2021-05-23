@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Header, Icon, Item, Label, Segment } from 'semantic-ui-react';
 import { MoreDogInfo } from './MoreDogInfo';
 import { MoreWalkerInfo } from './MoreWalkerInfo';
@@ -19,7 +19,7 @@ export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
   const authRequest = getAuthRequest();
   /** Can rate if walk is over, is accepted, user is owner and walk has not been rated */
   const canRate =
-    new Date() > new Date(walk.CasKonca) &&
+    new Date() > new Date(walk.CasKonca) && // Comment this out for testing
     walk.Status === 1 &&
     user.userType === 2 &&
     walk.rated === 0;
@@ -116,7 +116,7 @@ export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
               Waiting for response...
             </div>
           )}
-          {walk.Status === 2 && (
+          {walk.Status === 0 && (
             <Header color="red" size="large">
               This walk was declined
             </Header>

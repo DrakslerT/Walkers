@@ -149,7 +149,7 @@ app.post('/api/walkNotifications', validateUser, (req, res) =>
 );
 
 //ocene routes
-app.post('/api/setGrade', validateUser, (req, res) =>
+app.post('/api/setRating', validateUser, (req, res) =>
   setGrade(req, res)
 );
 
