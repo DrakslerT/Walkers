@@ -19,7 +19,8 @@ const {
   deleteDogAction,
   updateProfileAction,
   updatePasswordAction,
-  getDogsAction
+  getDogsAction,
+  getPasmeAction
 } = require('./controller/ProfileController');
 const dotenv = require('dotenv');
 const { testConnection } = require('./DB/BazaTransakcij');
@@ -38,7 +39,6 @@ const {
   deleteAdAction,
   updateAdAction,
 } = require('./controller/AddController');
-const {} = require('./controller/SprehodController');
 const {
   acceptWalkRequest,
   getWalksAction,
@@ -118,6 +118,8 @@ app.get('/api/dogs/list', validateUser, (req, res) =>
   getDogsAction(req, res)
 );
 
+app.get('breeds/all', validateUser, (req,res) => getPasmeAction(req, res))
+
 // Oglas routes
 app.get('/api/oglas/getOglasi', validateUser, (req, res) =>
   getOglasi(req, res)
@@ -125,7 +127,6 @@ app.get('/api/oglas/getOglasi', validateUser, (req, res) =>
 
 app.get('/api/oglas/me', validateUser, (req, res) => myAdsAction(req, res));
 app.post('/api/oglas/delete', validateUser, (req, res) => {
-  //console.log("VLEZE v Server");
   deleteAdAction(req, res);
 }
 );
