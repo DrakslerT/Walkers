@@ -61,21 +61,9 @@ const {
         });
     });
 
-    it(`get oglasi 2`, (done) => {
-        supertestRequest(app)
-        .get('/api/oglas/getOglasi?0=test&1=&2=7&3=Ljubljana&4=7')
-        .set("Authorization", `Bearer ${userWalkerWithMaxAd.token}`)
-        .expect(200)
-        .end(function (err, res) {
-          if (err) {
-            console.error(err);
-            return done(err);
-          } 
-          return done();
-        });
-    });
     
-    let filter1 = { '0': 'test', '1': '', '2': '7', '3': 'Ljubljana', '4': '0' };
+    
+    /*let filter1 = { '0': 'test', '1': '', '2': '7', '3': 'Ljubljana', '4': '0' };
     it(`get oglasi 4`, (done) => {
       supertestRequest(app)
       .get('/api/oglas/getOglasi')
@@ -90,7 +78,8 @@ const {
         return done();
       });
   });
-  let filter2 = { '0': 'test', '1': '2', '2': '7', '3': 'Ljubljana', '4': '0', '5':'true','6':'true' };
+  */
+  let filter2 = { name: 'test', breed: '2', location: 'Ljubljana', rating: '0', favourites:'true',experienced:'true' };
   it(`get oglasi 5`, (done) => {
     supertestRequest(app)
     .get('/api/oglas/getOglasi')

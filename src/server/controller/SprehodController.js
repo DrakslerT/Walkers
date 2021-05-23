@@ -180,7 +180,7 @@ async function checkIfUsersWalk(walkId, userId) {
     .where({ ID_sprehajalec: userId, ID_sprehod: walkId })
     .select('ID_sprehod');
 
-  return walk.length ?? false;
+  return walk.length > false;
 }
 
 async function requestSentAlready(idOglasa, idLastnika) {

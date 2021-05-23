@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.58% </span>
+                <span class="strong">85.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>62/76</span>
+                <span class='fraction'>64/75</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.67% </span>
+                <span class="strong">54.17% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>10/24</span>
+                <span class='fraction'>13/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.96% </span>
+                <span class="strong">89.71% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>60/69</span>
+                <span class='fraction'>61/68</span>
             </div>
         
             
@@ -306,14 +306,14 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
@@ -330,27 +330,27 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -368,7 +368,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -474,8 +474,8 @@ app.post('/api/login', loginValidationRules(), validateInputs, (req, res) =&gt;
 app.post('/api/logout', <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; <span class="cstat-no" title="statement not covered" >logout(req, res))</span>;
 &nbsp;
 // Profile routes
-app.get('/api/dogs/count', validateUser, <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt;
-<span class="cstat-no" title="statement not covered" >  getDogsCountByProfile(req, res)</span>
+app.get('/api/dogs/count', validateUser, (req, res) =&gt;
+  getDogsCountByProfile(req, res)
 );
 &nbsp;
 app.get('/api/profile', validateUser, (req, res) =&gt; getProfileAction(req, res));
@@ -506,9 +506,9 @@ app.get('/api/oglas/getOglasi', validateUser, (req, res) =&gt;
   getOglasi(req, res)
 );
 &nbsp;
-app.get('/api/oglas/me', validateUser, <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; <span class="cstat-no" title="statement not covered" >myAdsAction(req, res))</span>;
+app.get('/api/oglas/me', validateUser, (req, res) =&gt; myAdsAction(req, res));
 app.post('/api/oglas/delete', validateUser, (req, res) =&gt; {
-  console.log("VLEZE v Server");
+  //console.log("VLEZE v Server");
   deleteAdAction(req, res);
 }
 );
@@ -529,8 +529,8 @@ app.post('/api/sendWalkRequest', validateUser, <span class="fstat-no" title="fun
 app.post('/api/walkResponse', validateUser, <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt;
 <span class="cstat-no" title="statement not covered" >  walkResponse(req, res)</span>
 );
-app.post('/api/walkNotifications', validateUser, <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt;
-<span class="cstat-no" title="statement not covered" >  walkNotifications(req, res)</span>
+app.post('/api/walkNotifications', validateUser, (req, res) =&gt;
+  walkNotifications(req, res)
 );
 &nbsp;
 //Delete Ad
@@ -550,7 +550,7 @@ module.exports = app;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sun May 23 2021 10:35:04 GMT+0200 (Central European Summer Time)
+                at Sun May 23 2021 10:56:26 GMT+0200 (Central European Summer Time)
             </div>
         </div>
         <script src="../prettify.js"></script>

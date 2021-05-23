@@ -145,4 +145,31 @@ describe("Get profile owner", () => {
       return done();
     });
 });
+it(`get profile 4`, (done) => {
+  supertestRequest(app)
+  .get('/api/dogs/count')
+  .set("Authorization", `Bearer ${user.token}`)
+  .expect(200)
+  .end(function (err, res) {
+    if (err) {
+      console.error(err);
+      return done(err);
+    } 
+    return done();
+  });
+});
+
+it(`get profile 5`, (done) => {
+  supertestRequest(app)
+  .put('/api/dogs/list')
+  .set("Authorization", `Bearer ${user.token}`)
+  .expect(200)
+  .end(function (err, res) {
+    if (err) {
+      console.error(err);
+      return done(err);
+    } 
+    return done();
+  });
+});
 });
