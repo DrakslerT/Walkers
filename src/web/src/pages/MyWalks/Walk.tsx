@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Button, Header, Icon, Item, Label, Segment } from 'semantic-ui-react';
+import React, { useEffect, useState } from 'react';
+import { Button, Modal, Header, Icon, Item, Form, Label, Segment } from 'semantic-ui-react';
 import { MoreDogInfo } from './MoreDogInfo';
 import { MoreWalkerInfo } from './MoreWalkerInfo';
 import { IWalk } from './index';
@@ -16,6 +16,10 @@ interface WalkProps {
 export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
   const user = getUser();
   const authRequest = getAuthRequest();
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [description, setDescription] = useState('');
+
 
   const changesForMe = () => {
     if (user.userType === 1 && walk.novaSpremembaSprehajalec) {
@@ -41,6 +45,30 @@ export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
       errorToast();
     }
   };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    const payload = { description, walkId: walk.ID_sprehod }; // dodaj payload
+    if (description === '') {
+      errorToast('You must enter a description. Try again!');
+      return setOpen(false);
+    }
+
+    try {
+      const authRequest = getAuthRequest();
+      const response = await authRequest.post('/addReport', payload);
+      if (response.status === 200) {
+        successToast();
+        setDescription("");
+      }
+      return setOpen(false);
+    } catch (e) {
+      errorToast(e.response.data.message + '🚦');
+      console.error(e);
+    }
+    setLoading(false);
+    setDescription("");
+  }
 
   return (
     <Item>
@@ -115,6 +143,7 @@ export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
             </Header>
           )}
         </Item.Extra>
+
       </Item.Content>
     </Item>
   );

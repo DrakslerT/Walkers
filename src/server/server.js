@@ -42,6 +42,7 @@ const {
   getWalksAction,
   sendWalkRequest,
   walkResponse,
+  addReport,
   walkNotifications,
 } = require('./controller/SprehodController');
 
@@ -145,6 +146,9 @@ app.post('/api/walkResponse', validateUser, (req, res) =>
 );
 app.post('/api/walkNotifications', validateUser, (req, res) =>
   walkNotifications(req, res)
+);
+app.post('/api/addReport', validateUser, (req, res) => 
+  addReport(req, res)
 );
 
 //Delete Ad
