@@ -44,7 +44,13 @@ const sendWalkRequest = async (req, res) => {
   try {
     const rez = await dbInstance('SPREHOD').insert(normalisedSprehodForDb);
     //console.log("DOBIJAM->"+rez);
-    return res.status(200).json({ message: 'Request sent', sprehodid: rez, sprehajalecid: idSprehajalca });
+    return res
+      .status(200)
+      .json({
+        message: 'Request sent',
+        sprehodid: rez,
+        sprehajalecid: idSprehajalca,
+      });
   } catch (err) {
     return res.status(400).json({ message: err });
   }
@@ -171,9 +177,9 @@ async function updateWalk(walk) {
 async function getUserByWalkID(id) {
   try {
     const walk = await dbInstance('SPREHOD').where('ID_sprehod', id);
-    return walk.length ? walk[0].ID_sprehajalec: false;
+    return walk.length ? walk[0].ID_sprehajalec : false;
   } catch (error) {
-    console.error(error)
+    console.error(error);
     return false;
   }
 }
@@ -328,8 +334,6 @@ const addFavourite = async (req, res) => {
     Priljubljen: response,
   };
 
-  console.log(updatedWalk)
-
   try {
     await dbInstance('SPREHOD')
       .where('ID_sprehod', idSprehoda)
@@ -368,7 +372,7 @@ const addReport = async (req, res) => {
     Vsebina: body.description,
   };
 
-  const reportId =  await dbInstance.transaction(async (trx) => {
+  const reportId = await dbInstance.transaction(async (trx) => {
     try {
       const reportId = await trx('KRSITEV').insert(normalisedAddForDb);
       const id = reportId[0];
@@ -379,7 +383,7 @@ const addReport = async (req, res) => {
   });
 
   if (!reportId) return res.status(400).json({ message: 'error' });
-  else return res.status(200).json({ message: 'Report added'});
+  else return res.status(200).json({ message: 'Report added' });
 };
 
 module.exports = {
