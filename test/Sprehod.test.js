@@ -1,8 +1,6 @@
 const {
     app,
     supertestRequest,
-    faker,
-    createActivationCode,
   } = require("../src/server/test.exports.js");
 
   describe("Create Sprehod", () => {

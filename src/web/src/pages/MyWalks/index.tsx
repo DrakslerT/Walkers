@@ -55,7 +55,6 @@ export const MyWalks: React.FC<MyWalksProps> = ({}) => {
     try {
       const response = await authRequest.get('walks');
       setWalks(response.data);
-      console.log(response.data);
     } catch (e) {
       console.error(e);
       errorToast();
