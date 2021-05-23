@@ -160,9 +160,9 @@ it(`get profile 4`, (done) => {
 
 it(`get profile 5`, (done) => {
   supertestRequest(app)
-  .put('/api/dogs/list')
+  .get('/api/pasme/getPasme')
   .set("Authorization", `Bearer ${user.token}`)
-  .expect(404)
+  .expect(200)
   .end(function (err, res) {
     if (err) {
       console.error(err);
