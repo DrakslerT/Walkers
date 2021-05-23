@@ -1,9 +1,7 @@
-const { confirmEmailValidationRules } = require("../src/server/middleware/validationInputs.js");
 const {
     app,
     supertestRequest,
     faker,
-    createActivationCode,
   } = require("../src/server/test.exports.js");
 
   describe("Logged in user add Ad", () => {

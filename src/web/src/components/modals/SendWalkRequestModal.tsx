@@ -38,7 +38,6 @@ export const SendWalkRequestModal: React.FC<RequestModalProps> = ({ oglasID }) =
           return d.push(Dog);
         });
         setDogList(d);
-
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -49,20 +48,19 @@ export const SendWalkRequestModal: React.FC<RequestModalProps> = ({ oglasID }) =
 
   async function handleOpenModal() {
     setOpen(true);
-    if(dogList === []) {
-      //await fetchDogs();
+    if(dogList.length === 0) {
+      await fetchDogs();
     }
   }
 
-  if(dogList === [] || loading) {
+  if(loading) {
     return <Loader/>
   }
 
   const sendWalkRequest = async () => {
     try {
-      console.log(oglasID);
       const authRequest = getAuthRequest();
-      const response = await authRequest.post('/sendWalkRequest', {IDoglasa: oglasID, dogId: 1});
+      const response = await authRequest.post('/sendWalkRequest', {IDoglasa: oglasID, dogId});
       if (response.status === 200) {
         successToast();
         setOpen(false);
@@ -78,7 +76,7 @@ export const SendWalkRequestModal: React.FC<RequestModalProps> = ({ oglasID }) =
       closeIcon
       closeOnEscape
       onClose={() => setOpen(false)}
-      onOpen={handleOpenModal}
+      onOpen={() => setOpen(true)}
       open={open}
       trigger={
         <Button 

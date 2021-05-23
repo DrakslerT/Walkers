@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import { getAuthRequest } from '../../shared/http';
 import { errorToast, successToast } from '../../shared/Toast';
+import { BreedDropdown } from './BreedDropdown';
 import styles from './forms.module.css';
 
 interface Pasma {
@@ -17,17 +18,18 @@ interface DogFormProps {
 
 export const DogForm: React.FC<DogFormProps> = ({ nextStep }) => {
   const [loading, setLoading] = useState(false);
+  const [breed, setBreed] = useState<number | undefined>(undefined);
   const formik = useFormik({
     initialValues: {
       name: '',
       gender: 'male',
-      breed: 0,
     },
     onSubmit: async (values) => {
       setLoading(true);
       try {
         const authRequest = getAuthRequest();
-        const response = await authRequest.post('/dogs/add', values);
+        const payload = { ...values, breed };
+        const response = await authRequest.post('/dogs/add', payload);
         if (response.status === 200) {
           successToast();
           nextStep();
@@ -39,16 +41,6 @@ export const DogForm: React.FC<DogFormProps> = ({ nextStep }) => {
       setLoading(false);
     },
   });
-
-  let pasme: Pasma[] = [
-    { value: 1, text: 'Samoyed', key: 'S' },
-    { value: 2, text: 'German sheppard', key: 'G' },
-    { value: 3, text: 'Terier', key: 'T' },
-  ];
-
-  // TODO Fetch pasme on load
-  // useEffect(() => {
-  // }, [])
 
   return (
     <Form
@@ -97,15 +89,7 @@ export const DogForm: React.FC<DogFormProps> = ({ nextStep }) => {
       </Form.Field>
       <Form.Field>
         <label>Breed</label>
-        <Form.Select
-          options={pasme}
-          name="pasma"
-          onChange={(e, data) => {
-            if (typeof data.value === 'number') {
-              formik.values.breed = data.value;
-            }
-          }}
-        />
+        <BreedDropdown emitBreed={setBreed} />
       </Form.Field>
       <Button type="submit" size="huge" primary>
         Add dog
