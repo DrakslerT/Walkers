@@ -1,0 +1,8 @@
+/* Styles for Profile settings page */
+
+.align_container {
+    margin-top: 10rem;
+    display: flexbox;
+    justify-content: center;
+    align-items: center;
+}

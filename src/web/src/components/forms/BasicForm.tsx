@@ -37,7 +37,7 @@ export const BasicForm: React.FC<BasicFormProps> = ({ userType, nextStep }) => {
         }
       } catch (e) {
         console.error(e.response.data);
-        errorToast('Error when inserting register form. 🙅‍♂️');
+        errorToast('Error when submiting register form. 🙅‍♂️');
       }
       setLoading(false);
     },

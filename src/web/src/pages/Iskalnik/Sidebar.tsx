@@ -4,7 +4,6 @@ import { getUser } from '../../shared/UserInformation';
 import Filter from './Filter';
 import styles from './Iskalnik.module.css';
 
-// TODO Style and adjust it
 const Sidebar = () => {
   const user = getUser();
   return (

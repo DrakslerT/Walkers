@@ -69,6 +69,7 @@ describe("#AuthTest - walker", () => {
           return done(err);
         }
         token = res.body.accessToken;
+        //console.log("VLEZEE->" + token);
         randomUser = { ...randomUser, token };
         return done();
       });
@@ -88,7 +89,7 @@ describe("#AuthTest - walker", () => {
         return done();
       });
   });
-
+  
   it(`Activate user ${randomUser.email}`, (done) => {
     const acCode = createActivationCode(randomUser.name, new Date());
     supertestRequest(app)
@@ -109,6 +110,25 @@ describe("#AuthTest - walker", () => {
     supertestRequest(app)
       .post("/api/register")
       .send(randomUser)
+      .expect(400)
+      .end(function (err, res) {
+        if (err) {
+          console.error(res.body);
+          return done(err);
+        }
+        return done();
+      });
+  });
+  let randomDog = {
+    name: faker.name.firstName(),
+    gender: faker.random.arrayElement(["male", "female"]),
+    breed: faker.datatype.number({ min: 1, max: 105 }),
+  };
+  it("Walker to add a dog", (done) => {
+    supertestRequest(app)
+      .post("/api/dogs/add")
+      .send(randomDog)
+      .set("Authorization", `Bearer ${randomUser.token}`)
       .expect(400)
       .end(function (err, res) {
         if (err) {
@@ -165,6 +185,24 @@ describe("#AuthTest - owner", () => {
         return done();
       });
   });
+ let randomDog1 = {
+  name: faker.name.firstName(),
+  gender: faker.random.arrayElement(["male", "female"]),
+ };
+  it(`Add onther dog ${randomDog1.name} to ${randomUser.email}`, (done) => {
+    supertestRequest(app)
+      .post("/api/dogs/add")
+      .send(randomDog1)
+      .set("Authorization", `Bearer ${randomUser.token}`)
+      .expect(400)
+      .end(function (err, res) {
+        if (err) {
+          console.error(res.body);
+          return done(err);
+        }
+        return done();
+      });
+  });
 
   it(`Error with token`, (done) => {
     supertestRequest(app)
@@ -195,6 +233,62 @@ describe("#AuthTest - owner", () => {
         return done();
       });
   });
+
+  it("login", (done) => {
+    //console.log("TEST");
+    //console.log(done);
+    supertestRequest(app)
+      .post("/api/login")
+      .send({ email: randomUser.email, password: randomUser.password })
+      .expect(200)
+      .end(function (err, res) {
+        if (err) {
+          console.error(res.body);
+          return done(err);
+        }
+        token = res.body.accessToken;
+        randomUser = { ...randomUser, token };
+        return done();
+      });
+  });
+
+  let add = {
+    lokacija: "Ljubljana",
+    startDate: "2021-05-09T17:35:36.123",
+    startEnd: "2021-05-09T17:55:36.412",
+    breed: 1
+  };
+
+  it("Create an add with no token", (done) => {
+    supertestRequest(app)
+      .post("/api/addAdd")
+      .send(add)
+      .expect(401)
+      .end(function (err, res) {
+        if (err) {
+          console.error(res.body);
+          return done(err);
+        }
+        return done();
+      });
+  });
+  /*
+   it("Succesfully create an add", (done) => {
+     supertestRequest(app)
+       .post("/api/addAdd")
+       .send(add)
+       .set("Authorization", `Bearer ${randomUser.token}`)
+       .expect(200)
+       .end(function (err, res) {
+         if (err) {
+           console.error(res.body);
+           return done(err);
+         }
+
+         return done();
+       });
+   });
+   */
 });
 
 describe("#AuthTest - other role eg. admin", () => {
@@ -221,62 +315,92 @@ describe("#AuthTest - other role eg. admin", () => {
 });
 
 describe("Create add test", () => {
-  let add = {
+
+  it(`User login 3`, (done) => {
+    supertestRequest(app)
+      .post("/api/refresh_token")
+      .expect(401)
+      .end(function(err, res) {
+        if (err) {
+          console.log("SOME ERROR");
+          return done(err);
+        }
+        return done();
+      }
+
+      );
+  });
+
+  let add1 = {
     lokacija: "Ljubljana",
     startDate: "2021-05-09T17:35:36.123",
     startEnd: "2021-05-09T17:55:36.412",
+    breed: 1
   };
-
+  
   let user = {
-    email: "covag82250@httptuan.com",
-    password: "12345",
+    email: "ilija.tavcioski@gmail.com",
+    password: "123456789",
+  };
+  let userWalkerWithMaxAd = {
+    email: "ile.tavcioski@gmail.com",
+    password: "987654321",
   };
 
-  it("login", (done) => {
+  let userWalkerWithoutMaxAd = {
+    email: "it8816@student.uni-lj.si",
+    password: "1987654321",
+  };
+
+  it(`User login ${user.email}`, (done) => {
     supertestRequest(app)
       .post("/api/login")
-      .send({ email: user.email, password: user.password })
+      .send(user)
       .expect(200)
-      .end(function (err, res) {
+      .end(function(err, res) {
         if (err) {
-          console.error(res.body);
+          console.log("SOME ERROR");
           return done(err);
         }
         token = res.body.accessToken;
-        user = { ...user, token };
+        user = {...user, token};
         return done();
-      });
+      }
+
+      );
   });
 
-  // it("Succesfully create an add", (done) => {
-  //   console.log(add);
-  //   console.log(user);
-  //   supertestRequest(app)
-  //     .post("/api/addAdd")
-  //     .send(add)
-  //     .set("Authorization", `Bearer ${user.token}`)
-  //     .expect(200)
-  //     .end(function (err, res) {
-  //       if (err) {
-  //         console.error(res.body);
-  //         return done(err);
-  //       }
-
-  //       return done();
-  //     });
-  // });
-
-  it("Create an add with no token", (done) => {
+  
+  it(`User login 2 ${user.email}`, (done) => {
     supertestRequest(app)
-      .post("/api/addAdd")
-      .send(add)
+      .post("/api/refresh_token")
+      .send(user)
       .expect(401)
-      .end(function (err, res) {
+      .end(function(err, res) {
         if (err) {
-          console.error(res.body);
+          console.log("SOME ERROR");
           return done(err);
         }
         return done();
-      });
+      }
+
+      );
   });
+
+  it(`Logout `,(done) => {
+    supertestRequest(app)
+    .post("/api/logout")
+    .expect(200)
+    .end(function(err, res) {
+      if (err) {
+        console.error(err);
+        return done(err);
+      }
+      return done();
+    });
+  });
+  
+  
+
+  
 });

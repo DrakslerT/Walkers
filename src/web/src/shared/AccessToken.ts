@@ -9,3 +9,7 @@ export const setAccessToken = (s: string) => {
 export const isAuth = () => {
   return AccessToken !== '' ? true : false;
 };
+
+export const removeToken = () => {
+  setAccessToken('')
+}

@@ -11,7 +11,11 @@ interface Pasma {
   key: string;
 }
 
-export const ObjavaOglasa: React.FC = () => {
+type addAdProps = {
+  refetch?: () => Promise<void>;
+};
+
+export const ObjavaOglasa: React.FC<addAdProps> = ({ refetch }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [lokacija, setLokacija] = useState('');
@@ -22,17 +26,27 @@ export const ObjavaOglasa: React.FC = () => {
   const handleSubmit = async () => {
     setLoading(true);
     const payload = { lokacija, startDate, endDate, pasma };
+    if (lokacija === '') {
+      errorToast('You must enter a location. Try again!');
+      return setOpen(false);
+    }
+
     try {
       const authRequest = getAuthRequest();
       const response = await authRequest.post('/addAdd', payload);
       if (response.status === 200) {
         successToast();
         updateAdds();
-        setOpen(false);
+
+        if (refetch) {
+          refetch(); // update users ad list
+        }
+
+        return setOpen(false);
       }
     } catch (e) {
       errorToast(e.response.data.message + '🚦');
-      console.error();
+      console.error(e);
     }
     setLoading(false);
   };
