@@ -17,7 +17,6 @@ const setGrade = async (req, res) => {
 
     const normalisedGradeForm = {
       ID_uporabnik: walkerId,
-      Tip: tip.Tip,
       Vrednost: rating,
     };
     await dbInstance('OCENA').insert(normalisedGradeForm);

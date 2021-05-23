@@ -78,7 +78,7 @@ const {
       });
   });
   */
-  let filter2 = { name: 'test', breed: '2', location: 'Ljubljana', rating: '0', favourites:'true',experienced:'true' };
+  let filter2 = { name: 'test', breed: '2', location: 'Ljubljana', responseTime: 1, rating: '0', favourites:'true',experienced:'true' };
   it(`get oglasi 5`, (done) => {
     supertestRequest(app)
     .get('/api/oglas/getOglasi')

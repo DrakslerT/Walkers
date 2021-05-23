@@ -51,7 +51,6 @@ const createProfile = async (user) => {
         /**  Add walker specific information to user */
         const normalisedWalkerForDb = {
           ID_uporabnik: id,
-          Tip: 1,
           odzivniCas: 7,
           PovprecnaOcena: 0,
           Index: 0,
@@ -104,14 +103,15 @@ const addDog = async (req, res) => {
   const user = await getUserById(res.locals.userId);
 
   if (!user) {
-    res.status(400).json({ message: 'User not found' });
+    return res.status(400).json({ message: 'User not found' });
   }
 
   const { ID_uporabnik, Tip } = user;
 
+  if (Tip <= 1) return res.status(400).json({ message: "Cannot add dog to a walker!" });
+
   const normalisedDogForDb = {
     ID_uporabnik,
-    Tip,
     Ime_pes: dog.name,
     Opis_pes: null,
     Spol: dog.gender,

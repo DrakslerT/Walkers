@@ -3,6 +3,7 @@ const { dbInstance } = require('../DB/BazaTransakcij');
 const getOglasi = async (req, res) => {
   try {
     const filters = { ...req.query };
+    //console.log("VLEZEEE");
     const userId = res.locals.userId;
     const AdsQuery = dbInstance
       .select(

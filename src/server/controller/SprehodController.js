@@ -4,10 +4,12 @@ const { getPasmaByID, addPasmaToDog } = require('./PasmeFasada');
 const {
   getUserType,
   updateProfileAfterWalkRequestResposne,
+  getUserById,
 } = require('./ProfileController');
 
 const sendWalkRequest = async (req, res) => {
   const body = { ...req.body };
+  //console.log(req.body);
   var idOglasa = body.IDoglasa;
   var idPsa = body.dogId;
   var idLastnika = res.locals.userId;
@@ -33,23 +35,23 @@ const sendWalkRequest = async (req, res) => {
     ID_sprehajalec: idSprehajalca,
     ID_lastnik: idLastnika,
     ID_Oglas: idOglasa,
-    Tip_sprehajalec: tipSprehajalca,
-    Tip_lastnik: tipLastnika,
     DatumKreiranja: datum,
     novaSpremembaSprehajalec: '1',
     novaSpremembaLastnik: '1',
     Priljubljen: '0',
   };
-
+  //console.log(normalisedSprehodForDb);
   try {
-    await dbInstance('SPREHOD').insert(normalisedSprehodForDb);
-    return res.status(200).json({ message: 'Request sent' });
+    const rez = await dbInstance('SPREHOD').insert(normalisedSprehodForDb);
+    //console.log("DOBIJAM->"+rez);
+    return res.status(200).json({ message: 'Request sent', sprehodid: rez, sprehajalecid: idSprehajalca });
   } catch (err) {
     return res.status(400).json({ message: err });
   }
 };
 
 const walkResponse = async (req, res) => {
+  //console.log(req.body);
   const { idSprehoda, response } = req.body;
   const userId = res.locals.userId;
 
@@ -166,13 +168,13 @@ async function updateWalk(walk) {
   }
 }
 
-async function getWalkByID(id) {
+async function getUserByWalkID(id) {
   try {
     const walk = await dbInstance('SPREHOD').where('ID_sprehod', id);
-
-    return walk[0];
+    return walk.length ? walk[0].ID_sprehajalec: false;
   } catch (error) {
-    return -1;
+    console.error(error)
+    return false;
   }
 }
 
@@ -350,6 +352,36 @@ function changeFormat(time) {
   return date + ' ' + time;
 }
 
+const addReport = async (req, res) => {
+  const body = req.body;
+  const userID = await getUserByWalkID(body.walkId);
+  if (!userID) {
+    return res.status(400).json({ message: 'UserID not found' });
+  }
+  const user = await getUserById(userID);
+  if (!user) {
+    return res.status(400).json({ message: 'User not found' });
+  }
+  const { ID_uporabnik, Tip } = user;
+  const normalisedAddForDb = {
+    ID_uporabnik,
+    Vsebina: body.description,
+  };
+
+  const reportId =  await dbInstance.transaction(async (trx) => {
+    try {
+      const reportId = await trx('KRSITEV').insert(normalisedAddForDb);
+      const id = reportId[0];
+      return id;
+    } catch (err) {
+      trx.rollback();
+    }
+  });
+
+  if (!reportId) return res.status(400).json({ message: 'error' });
+  else return res.status(200).json({ message: 'Report added'});
+};
+
 module.exports = {
   sendWalkRequest,
   acceptWalkRequest,
@@ -359,4 +391,6 @@ module.exports = {
   walkNotifications,
   getNotifications,
   addFavourite,
+  getUserByWalkID,
+  addReport,
 };

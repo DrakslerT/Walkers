@@ -42,6 +42,7 @@ const {
   getWalksAction,
   sendWalkRequest,
   walkResponse,
+  addReport,
   walkNotifications,
   addFavourite,
 } = require('./controller/SprehodController');
@@ -85,9 +86,11 @@ app.post(
   validateUser,
   (req, res) => activateUser(req, res)
 );
+
 app.get('/api/resend_activation', validateUser, (req, res) =>
   resendActivationCode(req, res)
 );
+
 app.post('/api/login', loginValidationRules(), validateInputs, (req, res) =>
   loginUser(req, res)
 );
@@ -149,7 +152,12 @@ app.post('/api/walkResponse', validateUser, (req, res) =>
 app.post('/api/walkNotifications', validateUser, (req, res) =>
   walkNotifications(req, res)
 );
-app.post('/api/addFavourite', (req, res) => addFavourite(req, res));
+app.post('/api/addFavourite', (req, res) =>
+  addFavourite(req, res)
+);
+app.post('/api/addReport', validateUser, (req, res) => 
+  addReport(req, res)
+);
 
 //ocene routes
 app.post('/api/setRating', validateUser, (req, res) => setGrade(req, res));

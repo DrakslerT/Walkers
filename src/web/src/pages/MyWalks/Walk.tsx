@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Header, Icon, Item, Label, Segment } from 'semantic-ui-react';
+import { Button, Modal, Header, Icon, Item, Form, Label, Segment } from 'semantic-ui-react';
 import { MoreDogInfo } from './MoreDogInfo';
 import { MoreWalkerInfo } from './MoreWalkerInfo';
 import { IWalk } from './index';
@@ -17,6 +17,9 @@ interface WalkProps {
 export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
   const user = getUser();
   const authRequest = getAuthRequest();
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [description, setDescription] = useState('');
   const [favourite, setFavourite] = useState(walk.Priljubljen === 1);
   const [disableFavBtn, setDisable] = useState(false);
 
@@ -66,6 +69,30 @@ export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
       errorToast();
     }
   };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    const payload = { description, walkId: walk.ID_sprehod }; // dodaj payload
+    if (description === '') {
+      errorToast('You must enter a description. Try again!');
+      return setOpen(false);
+    }
+
+    try {
+      const authRequest = getAuthRequest();
+      const response = await authRequest.post('/addReport', payload);
+      if (response.status === 200) {
+        successToast();
+        setDescription("");
+      }
+      return setOpen(false);
+    } catch (e) {
+      errorToast(e.response.data.message + '🚦');
+      console.error(e);
+    }
+    setLoading(false);
+    setDescription("");
+  }
 
   return (
     <Item>
@@ -156,6 +183,44 @@ export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
             ></Button>
           )}
         </Item.Extra>
+        
+        <Modal
+          onClose={() => setOpen(false)}
+          onOpen={() => setOpen(true)}
+          open={open}
+          trigger={
+            <Button icon labelPosition="left" color="red" floated='right'>
+              Report
+              <Icon name="exclamation circle" />
+            </Button>
+          }
+        >
+          <Modal.Header>Report user</Modal.Header>
+          <Modal.Content>
+            <label>Describe the violation</label>
+            <Form.Input
+              placeholder="Enter a description..."
+              name="description"
+              type="text"
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+            <br />
+          </Modal.Content>
+          <Modal.Actions>
+            <Button color="black" onClick={() => setOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              content="Report"
+              labelPosition="right"
+              icon="checkmark"
+              onClick={handleSubmit}
+              positive
+            />
+          </Modal.Actions>
+        </Modal>
       </Item.Content>
     </Item>
   );
