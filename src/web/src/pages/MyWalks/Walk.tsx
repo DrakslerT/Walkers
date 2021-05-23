@@ -7,6 +7,7 @@ import { handleDate } from '../../shared/utils';
 import { getUser } from '../../shared/UserInformation';
 import { getAuthRequest } from '../../shared/http';
 import { errorToast, successToast } from '../../shared/Toast';
+import { AddRatingModal } from '../../components/modals/AddRatingModal';
 
 interface WalkProps {
   walk: IWalk;
@@ -16,6 +17,12 @@ interface WalkProps {
 export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
   const user = getUser();
   const authRequest = getAuthRequest();
+  /** Can rate if walk is over, is accepted, user is owner and walk has not been rated */
+  const canRate =
+    new Date() > new Date(walk.CasKonca) &&
+    walk.Status === 1 &&
+    user.userType === 2 &&
+    walk.rated === 0;
 
   const changesForMe = () => {
     if (user.userType === 1 && walk.novaSpremembaSprehajalec) {
@@ -114,6 +121,7 @@ export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
               This walk was declined
             </Header>
           )}
+          {canRate && <AddRatingModal refetch={refetch} walk={walk} />}
         </Item.Extra>
       </Item.Content>
     </Item>

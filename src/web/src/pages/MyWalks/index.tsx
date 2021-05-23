@@ -14,6 +14,7 @@ export type IWalk = {
   DatumKreiranja: string;
   novaSpremembaLastnik: number;
   novaSpremembaSprehajalec: number;
+  rated: number;
   Priljubljen: number;
   Lokacija: string;
   CasZacetka: string;
@@ -26,6 +27,7 @@ export type IWalk = {
   sprehajalec: string;
   spreh_email: string;
   spreh_GSM?: number | null;
+  spreh_id: number;
   StSprehodov: number;
   OdzivniCas: number;
   PovprecnaOcena: number;

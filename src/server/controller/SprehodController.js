@@ -248,6 +248,7 @@ const getUsersWalks = async (userId) => {
       'spr.novaSpremembaLastnik',
       'spr.novaSpremembaSprehajalec',
       'spr.Priljubljen',
+      'spr.rated',
       'ogl.Lokacija',
       'ogl.CasZacetka',
       'ogl.CasKonca',
@@ -259,6 +260,7 @@ const getUsersWalks = async (userId) => {
       'spreh.Ime_uporabnik as sprehajalec',
       'spreh.Email as spreh_email',
       'spreh.GSM as spreh_GSM',
+      'spreh.ID_uporabnik as spreh_id',
       'sprehStats.StSprehodov',
       'sprehStats.OdzivniCas',
       'sprehStats.PovprecnaOcena'
