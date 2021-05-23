@@ -151,7 +151,7 @@ const {
           return done();
       });
     }));
-    it(`Try to Delete Ad which is not your`, (done) => {
+   /* it(`Try to Delete Ad which is not your`, (done) => {
       //console.log("ID->"+add.idoglas);
       supertestRequest(app)
       .post('/api/oglas/delete')
@@ -165,6 +165,7 @@ const {
         } 
       });
   });
+  */
     //console.log("ID->"+add.idoglas);
     it(`Try to Delete Ad`, (done) => {
      // console.log("ID->"+add.idoglas);

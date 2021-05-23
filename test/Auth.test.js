@@ -119,6 +119,25 @@ describe("#AuthTest - walker", () => {
         return done();
       });
   });
+  let randomDog = {
+    name: faker.name.firstName(),
+    gender: faker.random.arrayElement(["male", "female"]),
+    breed: faker.datatype.number({ min: 1, max: 105 }),
+  };
+  it("Walker to add a dog", (done) => {
+    supertestRequest(app)
+      .post("/api/dogs/add")
+      .send(randomDog)
+      .set("Authorization", `Bearer ${randomUser.token}`)
+      .expect(400)
+      .end(function (err, res) {
+        if (err) {
+          console.error(res.body);
+          return done(err);
+        }
+        return done();
+      });
+  });
 });
 
 describe("#AuthTest - owner", () => {
@@ -158,6 +177,24 @@ describe("#AuthTest - owner", () => {
       .send(randomDog)
       .set("Authorization", `Bearer ${randomUser.token}`)
       .expect(200)
+      .end(function (err, res) {
+        if (err) {
+          console.error(res.body);
+          return done(err);
+        }
+        return done();
+      });
+  });
+ let randomDog1 = {
+  name: faker.name.firstName(),
+  gender: faker.random.arrayElement(["male", "female"]),
+ };
+  it(`Add onther dog ${randomDog1.name} to ${randomUser.email}`, (done) => {
+    supertestRequest(app)
+      .post("/api/dogs/add")
+      .send(randomDog1)
+      .set("Authorization", `Bearer ${randomUser.token}`)
+      .expect(400)
       .end(function (err, res) {
         if (err) {
           console.error(res.body);

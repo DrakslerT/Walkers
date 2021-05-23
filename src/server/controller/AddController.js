@@ -6,7 +6,7 @@ const addAdd = async (req, res) => {
   const user = await getUserById(res.locals.userId);
   var casZacetka = changeFormat(add.startDate);
   var casKonca = changeFormat(add.endDate);
-  console.log(add);
+  //console.log(add);
   if (!user) {
     res.status(400).json({ message: 'User not found' });
   }
@@ -85,7 +85,7 @@ const checkIfUsersAd = async (AdId, userId) => {
   const ad = await dbInstance('OGLAS')
     .where({ ID_uporabnik: userId, ID_oglas: AdId })
     .select('ID_oglas');
-  console.log(ad.length);
+  //console.log(ad.length);
   return (ad.length > 0);
 };
 
@@ -126,9 +126,9 @@ const deleteAdAction = async (req, res) => {
   //console.log(AdId);
   try {
     const isRightOwner = await checkIfUsersAd(AdId, userId);
-    console.log(isRightOwner);
+    //console.log(isRightOwner);
     if (!isRightOwner) {
-      console.log("VLEZEEEE");
+      //console.log("VLEZEEEE");
       return res.status(400).json({ message: 'You can only delete Ads you own!' });
     }
 

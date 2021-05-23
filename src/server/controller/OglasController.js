@@ -1,6 +1,6 @@
 const { dbInstance } = require('../DB/BazaTransakcij');
 
-const getOglasiWhere = async (user, filter) => {
+/*const getOglasiWhere = async (user, filter) => {
   try {
     var ret = {
       query: '',
@@ -65,11 +65,13 @@ const getPriljubljeniUporabniki = async (user) => {
     .where('PES.ID_uporabnik', user.ID_uporabnik);
   return favourites.length ? favourites[0] : false;
 };
-
+*/
 const getOglasi = async (req, res) => {
   try {
     const filters = { ...req.query };
+    //console.log(filters);
     const userId = res.locals.userId;
+    //console.log(userId);
     const AdsQuery = dbInstance
       .select(
         'Ad.ID_oglas',

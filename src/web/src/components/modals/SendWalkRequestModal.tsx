@@ -60,6 +60,7 @@ export const SendWalkRequestModal: React.FC<RequestModalProps> = ({ oglasID }) =
 
   const sendWalkRequest = async () => {
     try {
+      console.log(oglasID);
       const authRequest = getAuthRequest();
       const response = await authRequest.post('/sendWalkRequest', {IDoglasa: oglasID, dogId: 1});
       if (response.status === 200) {

@@ -125,7 +125,7 @@ app.get('/api/oglas/getOglasi', validateUser, (req, res) =>
 
 app.get('/api/oglas/me', validateUser, (req, res) => myAdsAction(req, res));
 app.post('/api/oglas/delete', validateUser, (req, res) => {
-  console.log("VLEZE v Server");
+  //console.log("VLEZE v Server");
   deleteAdAction(req, res);
 }
 );
