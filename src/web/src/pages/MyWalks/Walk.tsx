@@ -143,7 +143,44 @@ export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
             </Header>
           )}
         </Item.Extra>
-
+        
+        <Modal
+          onClose={() => setOpen(false)}
+          onOpen={() => setOpen(true)}
+          open={open}
+          trigger={
+            <Button icon labelPosition="left" color="red" floated='right'>
+              Report
+              <Icon name="exclamation circle" />
+            </Button>
+          }
+        >
+          <Modal.Header>Report user</Modal.Header>
+          <Modal.Content>
+            <label>Describe the violation</label>
+            <Form.Input
+              placeholder="Enter a description..."
+              name="description"
+              type="text"
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+            <br />
+          </Modal.Content>
+          <Modal.Actions>
+            <Button color="black" onClick={() => setOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              content="Report"
+              labelPosition="right"
+              icon="checkmark"
+              onClick={handleSubmit}
+              positive
+            />
+          </Modal.Actions>
+        </Modal>
       </Item.Content>
     </Item>
   );
