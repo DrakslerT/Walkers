@@ -37,6 +37,10 @@ const {
   deleteAdAction,
   updateAdAction
 } = require('./controller/AddController');
+const {
+  calendarList,
+  confirmToken
+} = require('./controller/GoogleCalendarFasada');
 
 const app = express();
 app.set('trust proxy', 1);
@@ -125,6 +129,10 @@ app.post('/api/addAdd', validateUser, (req, res) => addAdd(req, res));
 app.get('/api/pasme/getPasme', validateUser, (req, res) =>
   getPasme(req, res)
 );
+
+// Calendar routes
+app.post('/api/calendar/addEvent', validateUser, (req, res) => calendarList(req, res));
+app.post('/api/calendar/confirm', validateUser, (req, res) => confirmToken(req, res));
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
