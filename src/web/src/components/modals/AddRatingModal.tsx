@@ -33,7 +33,7 @@ export const AddRatingModal: React.FC<AddRatingModalProps> = ({
         walkId: walk.ID_sprehod,
         rating,
       };
-      const response = await authRequest.post('rate', payload);
+      const response = await authRequest.post('setRating', payload);
       if (response.status === 200) {
         successToast(
           `Added rating ${rating} to walker. ${'⭐'.repeat(rating)}`
