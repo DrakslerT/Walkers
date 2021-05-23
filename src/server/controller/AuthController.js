@@ -7,11 +7,9 @@ const {
   updateProfile,
   getUserByEmail,
   hashPassword,
-  checkPassword
+  checkPassword,
 } = require('./ProfileController');
 const { getNotifications } = require('./SprehodController');
-
-
 
 const registerUser = async (req, res) => {
   const { name, email, password, gsm, userType } = req.body;
@@ -78,15 +76,17 @@ const AuthResponse = async (res, user_id) => {
 
   res.cookie('jid', refreshToken, {
     httpOnly: true,
+    sameSite: 'none',
+    secure: process.env.NODE_ENV === 'production',
   });
 
   const user = await getUserById(user_id);
-  const notifications = await getNotifications(user_id)
+  const notifications = await getNotifications(user_id);
   const userModel = {
     username: user.Ime_uporabnik,
     activated: user.Aktiviran,
     userType: user.Tip,
-    notifications
+    notifications,
   };
 
   return res.status(200).json({ user: userModel, accessToken });
