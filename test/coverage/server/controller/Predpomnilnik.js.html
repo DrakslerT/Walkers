@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70.83% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/24</span>
+                <span class='fraction'>18/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/8</span>
+                <span class='fraction'>4/8</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70.83% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/24</span>
+                <span class='fraction'>18/24</span>
             </div>
         
             
@@ -103,30 +103,30 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -146,12 +146,12 @@ var memClient = memjs.Client.create();
 const getPasmeCache = async() =&gt; {
     var promisedResult = new Promise((resolve, reject) =&gt; {
         memClient.get('pasme', function(err, val) {
-            <span class="missing-if-branch" title="else path not taken" >E</span>if (err) {
-                console.log(err);
-                resolve(false);
-            } else <span class="cstat-no" title="statement not covered" >if (val) {</span>
-                var retVal = <span class="cstat-no" title="statement not covered" >JSON.parse(val.toString()); </span>
-<span class="cstat-no" title="statement not covered" >                resolve(retVal);</span>
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
+<span class="cstat-no" title="statement not covered" >                console.log(err);</span>
+<span class="cstat-no" title="statement not covered" >                resolve(false);</span>
+            } else <span class="missing-if-branch" title="else path not taken" >E</span>if (val) {
+                var retVal = JSON.parse(val.toString()); 
+                resolve(retVal);
             } else {
 <span class="cstat-no" title="statement not covered" >                resolve(false);</span>
             }
@@ -163,11 +163,11 @@ const getPasmeCache = async() =&gt; {
 const setPasmeCache = async(breeds) =&gt; {
     var promisedResult = new Promise((resolve, reject) =&gt; {
         memClient.set('pasme', JSON.stringify(breeds), {expires:86400}, function(err, val) {
-            <span class="missing-if-branch" title="else path not taken" >E</span>if (err) {
-                console.log(err);
-                resolve(false);
-            } else <span class="cstat-no" title="statement not covered" >if (val) {</span>
-<span class="cstat-no" title="statement not covered" >                resolve(val);</span>
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
+<span class="cstat-no" title="statement not covered" >                console.log(err);</span>
+<span class="cstat-no" title="statement not covered" >                resolve(false);</span>
+            } else <span class="missing-if-branch" title="else path not taken" >E</span>if (val) {
+                resolve(val);
             } else {
 <span class="cstat-no" title="statement not covered" >                resolve(false);</span>
             }
@@ -187,7 +187,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sat May 22 2021 19:32:53 GMT+0200 (Central European Summer Time)
+                at Sun May 23 2021 10:35:04 GMT+0200 (Central European Summer Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>
