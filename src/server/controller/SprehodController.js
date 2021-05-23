@@ -249,6 +249,7 @@ const getUsersWalks = async (userId) => {
       'spr.novaSpremembaLastnik',
       'spr.novaSpremembaSprehajalec',
       'spr.Priljubljen',
+      'spr.rated',
       'ogl.Lokacija',
       'ogl.CasZacetka',
       'ogl.CasKonca',
@@ -260,6 +261,7 @@ const getUsersWalks = async (userId) => {
       'spreh.Ime_uporabnik as sprehajalec',
       'spreh.Email as spreh_email',
       'spreh.GSM as spreh_GSM',
+      'spreh.ID_uporabnik as spreh_id',
       'sprehStats.StSprehodov',
       'sprehStats.OdzivniCas',
       'sprehStats.PovprecnaOcena'
@@ -314,6 +316,31 @@ const getNotifications = async (userId) => {
   return notifications.length ? notifications[0]['notifications'] : 0;
 };
 
+const addFavourite = async (req, res) => {
+  const { idSprehoda, response } = req.body;
+
+  const walk = await dbInstance('SPREHOD').where('ID_sprehod', idSprehoda);
+
+  const updatedWalk = {
+    ...walk[0],
+    Priljubljen: response,
+  };
+
+  console.log(updatedWalk)
+
+  try {
+    await dbInstance('SPREHOD')
+      .where('ID_sprehod', idSprehoda)
+      .update(updatedWalk);
+    return res.status(200).json({ message: 'Added to favourites.' });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(200)
+      .json({ message: 'Error when adding to favourites.' });
+  }
+};
+
 function changeFormat(time) {
   var datetime = time.split('T');
   var date = datetime[0];
@@ -331,4 +358,5 @@ module.exports = {
   walkResponse,
   walkNotifications,
   getNotifications,
+  addFavourite,
 };

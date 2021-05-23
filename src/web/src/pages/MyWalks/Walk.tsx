@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button, Header, Icon, Item, Label, Segment } from 'semantic-ui-react';
 import { MoreDogInfo } from './MoreDogInfo';
 import { MoreWalkerInfo } from './MoreWalkerInfo';
@@ -7,6 +7,7 @@ import { handleDate } from '../../shared/utils';
 import { getUser } from '../../shared/UserInformation';
 import { getAuthRequest } from '../../shared/http';
 import { errorToast, successToast } from '../../shared/Toast';
+import { AddRatingModal } from '../../components/modals/AddRatingModal';
 
 interface WalkProps {
   walk: IWalk;
@@ -16,6 +17,30 @@ interface WalkProps {
 export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
   const user = getUser();
   const authRequest = getAuthRequest();
+  const [favourite, setFavourite] = useState(walk.Priljubljen === 1);
+  const [disableFavBtn, setDisable] = useState(false);
+
+  const handleSetFav = async () => {
+    try {
+      const payload = { idSprehoda: walk.ID_sprehod, response: !favourite };
+      const response = await authRequest.post('addFavourite', payload);
+      if (response.status === 200) {
+        successToast();
+      }
+      // toggle it after and disable it to prevent spamming
+      setFavourite(!favourite);
+      setDisable(true);
+    } catch (e) {
+      console.error(e);
+      errorToast();
+    }
+  };
+  /** Can rate if walk is over, is accepted, user is owner and walk has not been rated */
+  const canRate =
+    new Date() > new Date(walk.CasKonca) && // Comment this out for testing
+    walk.Status === 1 &&
+    user.userType === 2 &&
+    walk.rated === 0;
 
   const changesForMe = () => {
     if (user.userType === 1 && walk.novaSpremembaSprehajalec) {
@@ -109,10 +134,26 @@ export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
               Waiting for response...
             </div>
           )}
-          {walk.Status === 2 && (
+          {walk.Status === 0 && (
             <Header color="red" size="large">
               This walk was declined
             </Header>
+          )}
+          {canRate && <AddRatingModal refetch={refetch} walk={walk} />}
+          {walk.rated && user.userType === 2 && (
+            <Button
+              color="red"
+              labelPosition="right"
+              label={
+                favourite
+                  ? `${walk.sprehajalec} is one of my favourites`
+                  : `Set ${walk.sprehajalec} as favourite`
+              }
+              icon={favourite ? 'heart' : 'heart outline'}
+              floated="right"
+              onClick={handleSetFav}
+              disabled={disableFavBtn}
+            ></Button>
           )}
         </Item.Extra>
       </Item.Content>
@@ -142,7 +183,7 @@ const ContactInfo: React.FC<ContactInfoProps> = ({ walk, userType }) => {
           <Label
             basic
             icon="phone"
-            content="041221333"
+            content={walk.last_GSM}
             color="blue"
             size="huge"
           />

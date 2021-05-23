@@ -27,18 +27,18 @@ const Filter = () => {
       experienced: false, // izkušeni
     },
     onSubmit: async (values) => {
-      if (!formik.dirty){
-        return updateAdds()
+      if (!formik.dirty && !values.experienced && !values.favourites) {
+        return updateAdds();
       }
-      const query = new URLSearchParams()
-      query.append('name', values.name)
-      query.append('breed', values.breed)
-      query.append('responseTime', values.responseTime.toString())
-      query.append('location', values.location)
-      query.append('rating', values.rating)
-      query.append('favourites', values.favourites ? '1' : '')
-      query.append('experienced', values.experienced ? '1' : '')
-      
+      const query = new URLSearchParams();
+      query.append('name', values.name);
+      query.append('breed', values.breed);
+      query.append('responseTime', values.responseTime.toString());
+      query.append('location', values.location);
+      query.append('rating', values.rating);
+      query.append('favourites', values.favourites ? '1' : '');
+      query.append('experienced', values.experienced ? '1' : '');
+
       const queryString = `?${query.toString()}`;
 
       updateAdds(queryString);
@@ -137,7 +137,11 @@ const Filter = () => {
           labelPosition="left"
           fluid
           secondary
-          onClick={() => formik.resetForm()}
+          onClick={() => {
+            formik.resetForm();
+            formik.values.favourites = false;
+            formik.values.experienced = false;
+          }}
         >
           Reset
           <Icon name="repeat" />
