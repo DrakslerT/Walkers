@@ -44,6 +44,7 @@ const {
   walkResponse,
   walkNotifications,
 } = require('./controller/SprehodController');
+const { setGrade } = require('./controller/OceneController')
 
 const app = express();
 app.set('trust proxy', 1);
@@ -145,6 +146,11 @@ app.post('/api/walkResponse', validateUser, (req, res) =>
 );
 app.post('/api/walkNotifications', validateUser, (req, res) =>
   walkNotifications(req, res)
+);
+
+//ocene routes
+app.post('/api/setGrade', validateUser, (req, res) =>
+  setGrade(req, res)
 );
 
 //Delete Ad
