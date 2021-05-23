@@ -54,6 +54,8 @@ export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
           successToast();
           refetch();
         }
+      } else if (response.status === 201) {
+        successToast();
       }
     } catch (e) {
       console.error(e);
@@ -65,7 +67,7 @@ export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
     try {
       const payload = { code: code};
       const response = await authRequest.post('calendar/confirm', payload);
-      if (response.status === 200) {
+      if (response.status === 201) {
         successToast();
       }
     } catch (e) {

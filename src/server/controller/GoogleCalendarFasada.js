@@ -4,7 +4,7 @@ const {google} = require('googleapis');
 const { dbInstance } = require('../DB/BazaTransakcij');
 
 // If modifying these scopes, delete token.json.
-const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
+const SCOPES = ['https://www.googleapis.com/auth/calendar'];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
@@ -12,16 +12,17 @@ const TOKEN_PATH = 'token.json';
 
 // Load client secrets from a local file.
 const calendarList = async (req, res) => {
-    const ID_sprehod = { ...req.body };
+    const {ID_sprehod} = { ...req.body };
     fs.readFile('./GoogleSecret/credentials.json', async (err, content) => {
         if (err) return console.log('Error loading client secret file:', err);
         // Authorize a client with credentials, then call the Google Calendar API.
         const url = await authorize(JSON.parse(content), addEvent, ID_sprehod);
         if (url) {
-            res.status(200).json(url);
+            return res.status(200).json(url);
         }
-        res.status(200);
+        return res.sendStatus(201);
     });
+    //res.status(200);
 };
 
 /**
@@ -37,12 +38,10 @@ const authorize = async (credentials, callback, ID_sprehod) => {
     // Check if we have previously stored a token.
     try {
         const token = fs.readFileSync(TOKEN_PATH);
-        console.log("test2  " + token);
         oAuth2Client.setCredentials(JSON.parse(token));
         callback(oAuth2Client, ID_sprehod);
         return false;
     } catch (err) {
-        console.log("test  " + err);
         return getAccessToken(oAuth2Client);
     }
 }
@@ -62,24 +61,28 @@ const getAccessToken = async (oAuth2Client) => {
 }
 
 const confirmToken = async (req, res) => {
-    fs.readFile('./GoogleSecret/credentials.json', async (err, content) => {
-        const credentials = JSON.parse(content);
-        if (err) return console.log('Error loading client secret file:', err);
-            const {client_secret, client_id, redirect_uris} = credentials.web;
-            const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
-            const code = { ...req.body };
-            oAuth2Client.getToken(code, (err, token) => {
-                console.log(token);
-            if (err) return res.status(500).json('Error retrieving access token', err);
-            oAuth2Client.setCredentials(token);
-            // Store the token to disk for later program executions
-            fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
-                if (err) return console.error(err);
-                console.log('Token stored to', TOKEN_PATH);
-                res.status(200);
-            });
+    try {
+        fs.readFile('./GoogleSecret/credentials.json', async (err, content) => {
+            const credentials = JSON.parse(content);
+            if (err) return console.log('Error loading client secret file:', err);
+                const {client_secret, client_id, redirect_uris} = credentials.web;
+                const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
+                const code = { ...req.body };
+                oAuth2Client.getToken(code, (err, token) => {
+                    if (err) throw err;
+                    oAuth2Client.setCredentials(token);
+                    // Store the token to disk for later program executions
+                    fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
+                        if (err) return console.error(err);
+                        console.log('Token stored to', TOKEN_PATH);
+                        return res.sendStatus(201);
+                    });
+                });
         });
-    });
+        //return res.status(200);
+    } catch (err) {
+        return res.status(500).json('Error retrieving access token', err);
+    }
 }
 
 /**
@@ -99,34 +102,40 @@ const addEvent = async(auth, ID_sprehod) => {
 }
 
 const createEvent = async (ID_sprehod) => {
-    const data = await dbInstance
-        .select(OGLAS.Lokacija, SPREHOD.CasOdziva, UPORABNIK.Email, UPORABNIK.GSM, PES.Ime_pes)
-        .from('SPREHOD')
-        .innerJoin('OGLAS', 'OGLAS.ID_oglas', 'SPREHOD.ID_OGLAS')
-        .innerJoin('PES', 'PES.ID_pes', 'SPREHOD.ID_pes')
-        .innerJoin('UPORABNIK', 'UPORABNIK.ID_uporabnik', 'SPREHOD.ID_uporabnik')
-        .where('SPREHOD.ID_sprehod', ID_sprehod);
+    try {
+        const data = await dbInstance
+            .select('OGLAS.Lokacija', 'SPREHOD.CasOdziva', 'UPORABNIK.Email', 'UPORABNIK.GSM', 'PES.Ime_pes')
+            .from('SPREHOD')
+            .innerJoin('OGLAS', 'OGLAS.ID_oglas', 'SPREHOD.ID_OGLAS')
+            .innerJoin('PES', 'PES.ID_pes', 'SPREHOD.ID_pes')
+            .innerJoin('UPORABNIK', 'UPORABNIK.ID_uporabnik', 'SPREHOD.ID_lastnik')
+            .where('SPREHOD.ID_sprehod', ID_sprehod);
 
-    var start = new Date(data[0].CasOdziva);
-    start.setDate(start.getDate() + 1);
-    var end = new Date(data[0].CasOdziva);
-    end.setDate(end.getDate() + 2);
-    var event = {
-        'summary': 'Sprehod ' + ID_sprehod,
-        'location': data[0].Lokacija,
-        'description': 'Ime psa: ' + data[0].Ime_pes + '. Številka lastnika: ' + data[0].GSM + '.',
-        'start' : {
-            'dateTime': start
-        },
-        'end' : {
-            'dateTime': end
-        },
-        'attandees': [
-            { 'email': data[0].EMAIL }
-        ]
-    };
+        var start = new Date(data[0].CasOdziva);
+        start.setDate(start.getDate() + 1);
+        var end = new Date(data[0].CasOdziva);
+        end.setDate(end.getDate() + 2);
+        var event = {
+            'summary': 'Sprehod ' + ID_sprehod,
+            'location': data[0].Lokacija,
+            'description': 'Ime psa: ' + data[0].Ime_pes + '. Številka lastnika: ' + data[0].GSM + '.',
+            'start' : {
+                'dateTime': start
+            },
+            'end' : {
+                'dateTime': end
+            },
+            'attandees': [
+                { 'email': data[0].EMAIL }
+            ]
+        };
+        return event;
+    } catch (err) {
+        console.log(err);
+        return false;
+    }
 
-    return event;
+    
 }
 
 module.exports = {
