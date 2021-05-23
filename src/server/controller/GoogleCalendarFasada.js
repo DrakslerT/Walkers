@@ -20,6 +20,7 @@ const calendarList = async (req, res) => {
         if (url) {
             res.status(200).json(url);
         }
+        res.status(200);
     });
 };
 
@@ -61,17 +62,23 @@ const getAccessToken = async (oAuth2Client) => {
 }
 
 const confirmToken = async (req, res) => {
-    const {code, ID_sprehod} = { ...req.body };
-    oAuth2Client.getToken(code, (err, token) => {
-        console.log(token);
-      if (err) return console.error('Error retrieving access token', err);
-      oAuth2Client.setCredentials(token);
-      // Store the token to disk for later program executions
-      fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
-        if (err) return console.error(err);
-        console.log('Token stored to', TOKEN_PATH);
-      });
-      addEvent(oAuth2Client, ID_sprehod);
+    fs.readFile('./GoogleSecret/credentials.json', async (err, content) => {
+        const credentials = JSON.parse(content);
+        if (err) return console.log('Error loading client secret file:', err);
+            const {client_secret, client_id, redirect_uris} = credentials.web;
+            const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
+            const code = { ...req.body };
+            oAuth2Client.getToken(code, (err, token) => {
+                console.log(token);
+            if (err) return res.status(500).json('Error retrieving access token', err);
+            oAuth2Client.setCredentials(token);
+            // Store the token to disk for later program executions
+            fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
+                if (err) return console.error(err);
+                console.log('Token stored to', TOKEN_PATH);
+                res.status(200);
+            });
+        });
     });
 }
 

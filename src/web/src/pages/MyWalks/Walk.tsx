@@ -7,6 +7,7 @@ import { handleDate } from '../../shared/utils';
 import { getUser } from '../../shared/UserInformation';
 import { getAuthRequest } from '../../shared/http';
 import { errorToast, successToast } from '../../shared/Toast';
+import queryString from 'query-string';
 
 interface WalkProps {
   walk: IWalk;
@@ -41,6 +42,45 @@ export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
       errorToast();
     }
   };
+
+  const handleAddCalendar = async () => {
+    try {
+      const payload = { ID_sprehod: walk.ID_sprehod };
+      const response = await authRequest.post('calendar/addEvent', payload);
+      if (response.status === 200) {
+        if (response.data) {
+          window.location.href = response.data;
+        } else {
+          successToast();
+          refetch();
+        }
+      }
+    } catch (e) {
+      console.error(e);
+      errorToast();
+    }
+  };
+
+  const confirmToken = async (code: String) => {
+    try {
+      const payload = { code: code};
+      const response = await authRequest.post('calendar/confirm', payload);
+      if (response.status === 200) {
+        successToast();
+      }
+    } catch (e) {
+      console.error(e);
+      errorToast();
+    }
+  };
+
+  const windowUrl  = window.location.search;
+  const params = queryString.parse(windowUrl);
+  const code = params.code;
+
+  if (code) {
+    confirmToken(code+"");
+  }
 
   return (
     <Item>
@@ -80,6 +120,14 @@ export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
               <Header color="green" size="large">
                 This walk was accepted
               </Header>
+              <Button
+                color="blue"
+                floated="right"
+                onClick={() => handleAddCalendar()}
+                >
+                  <Icon name="calendar plus" />
+                  Add to calendar
+                </Button>
               <ContactInfo walk={walk} userType={user.userType} />
             </>
           )}
