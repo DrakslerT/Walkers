@@ -29,7 +29,6 @@ export const DogForm: React.FC<DogFormProps> = ({ nextStep }) => {
       try {
         const authRequest = getAuthRequest();
         const payload = { ...values, breed };
-        console.log(payload)
         const response = await authRequest.post('/dogs/add', payload);
         if (response.status === 200) {
           successToast();

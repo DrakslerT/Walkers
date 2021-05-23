@@ -78,9 +78,15 @@ const addPasmaToDog = async (dogs) => {
   try {
     const dogList = [];
     for (dog in dogs) {
-      const breed = await getPasmaByID(dogs[dog].ID_pasma);
-      const dogWithBreedInfo = { ...dogs[dog], breed };
-      dogList.push(dogWithBreedInfo);
+      if (dogs[dog].ID_pasma) {
+        const breed = await getPasmaByID(dogs[dog].ID_pasma);
+        const dogWithBreedInfo = { ...dogs[dog], breed };
+        dogList.push(dogWithBreedInfo);
+      } else {
+        const emptyBreed = {ID_pasma: 0, Pasma_ime: 'unknown',Temperament: 'unknown', Visina: '/', Teza: '/'}ž
+        const dogWithoutBreedInfo = {...dogs[dog], breed: emptyBreed}
+        dogList.push(dogWithoutBreedInfo);
+      }
     }
     return dogList;
   } catch (err) {
