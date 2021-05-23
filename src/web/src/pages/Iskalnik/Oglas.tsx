@@ -1,8 +1,5 @@
 import { Card, Icon, Header, Label, Rating, Button, Confirm } from 'semantic-ui-react';
 import { handleResponseTime } from '../../shared/utils';
-import { getAuthRequest } from '../../shared/http';
-import { errorToast, successToast } from '../../shared/Toast';
-import React, { useContext, useState } from 'react';
 import styles from './Iskalnik.module.css';
 import { SendWalkRequestModal } from '../../components/modals/SendWalkRequestModal'
 
@@ -30,7 +27,7 @@ const Oglas = ({
   IDoglas,
 }: IOglas) => {
 return (
-  <Card color="blue" className={styles.card_hover_effect} raised>
+  <Card color="blue" raised>
     <Label color="blue" ribbon size="large">
       <Icon name="map marker alternate" />
       {location}

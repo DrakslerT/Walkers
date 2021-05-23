@@ -6,7 +6,7 @@ import { DogInfo } from './DogInfo';
 import { ProfileInfo } from './ProfileInfo';
 import { WalkerStats } from './WalkerStats';
 
-export const Settings: React.FC = ({}) => {
+export const Settings: React.FC = () => {
   const user = getUser();
   const { profile, isFetching, updateProfile } = useContext(ProfileContext);
 

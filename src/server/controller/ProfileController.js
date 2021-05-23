@@ -387,6 +387,45 @@ const getDogsAction = async (req, res) => {
     return res.status(200).json(dogs);
 }
 
+const updateProfileAfterRating = async (idSprehajalec) => {
+  const newAvreageRating = await calculateAvreageRating(idSprehajalec);
+  
+  const user = await dbInstance('SPREHAJALEC').where('ID_uporabnik', idSprehajalec)
+
+  const index = await calculateIndex(user[0].PovprecnaOcena, newAvreageRating);
+
+  const updatedUser = {
+    ...user[0],
+    PovprecnaOcena: newAvreageRating,
+    Index: index,
+  };
+
+  try {
+    await dbInstance('SPREHAJALEC').where('ID_uporabnik', idSprehajalec).update(updatedUser);
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+}
+
+const calculateAvreageRating = async (idSprehajalec) => {
+  if (!idSprehajalec) {
+    return false;
+  }
+  const ratings = await dbInstance('OCENA')
+    .where('ID_uporabnik', idSprehajalec)
+    .select('Vrednost');
+
+  var sum = 0;
+  for(rating of ratings){
+    sum += rating.Vrednost;
+  }
+  var avreageRating = Math.round(sum / ratings.length);
+
+  return avreageRating;
+}
+
 module.exports = {
   checkPassword,
   hashPassword,
@@ -404,5 +443,6 @@ module.exports = {
   calculateResponseTime,
   getUserType,
   updateProfileAfterWalkRequestResposne,
-  getDogsAction
+  getDogsAction,
+  updateProfileAfterRating
 };
