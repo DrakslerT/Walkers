@@ -35,8 +35,6 @@ const sendWalkRequest = async (req, res) => {
     ID_sprehajalec: idSprehajalca,
     ID_lastnik: idLastnika,
     ID_Oglas: idOglasa,
-    Tip_sprehajalec: tipSprehajalca,
-    Tip_lastnik: tipLastnika,
     DatumKreiranja: datum,
     novaSpremembaSprehajalec: '1',
     novaSpremembaLastnik: '1',
@@ -367,7 +365,6 @@ const addReport = async (req, res) => {
   const { ID_uporabnik, Tip } = user;
   const normalisedAddForDb = {
     ID_uporabnik,
-    Tip,
     Vsebina: body.description,
   };
 

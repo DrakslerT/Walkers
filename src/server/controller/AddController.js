@@ -20,7 +20,6 @@ const addAdd = async (req, res) => {
 
   const normalisedAddForDb = {
     ID_uporabnik,
-    Tip,
     Lokacija_lat: '',
     casZacetka,
     casKonca,
@@ -37,7 +36,6 @@ const addAdd = async (req, res) => {
       const normalisedAddBreedForDb = {
         ID_oglas: id,
         ID_uporabnik,
-        Tip,
         ID_pasma: Math.floor(Math.random() * 100),
       };
 

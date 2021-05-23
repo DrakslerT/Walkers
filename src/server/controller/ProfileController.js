@@ -51,7 +51,6 @@ const createProfile = async (user) => {
         /**  Add walker specific information to user */
         const normalisedWalkerForDb = {
           ID_uporabnik: id,
-          Tip: 1,
           odzivniCas: 7,
           PovprecnaOcena: 0,
           Index: 0,
@@ -111,7 +110,6 @@ const addDog = async (req, res) => {
 
   const normalisedDogForDb = {
     ID_uporabnik,
-    Tip,
     Ime_pes: dog.name,
     Opis_pes: null,
     Spol: dog.gender,
