@@ -23,7 +23,10 @@ const getOglasi = async (req, res) => {
       .innerJoin('SPREHAJALEC as spr', 'spr.ID_uporabnik', 'Ad.ID_uporabnik')
       .innerJoin('OGLAS_PASME as Ad_PASME', 'Ad_PASME.ID_oglas', 'Ad.ID_oglas')
       .where('Ad.CasZacetka', '>=', new Date())
-      .orderBy([{ column: 'spr.Index', order: 'desc' }, {column: 'Ad.CasZacetka'}]);
+      .orderBy([
+        { column: 'spr.Index', order: 'desc' },
+        { column: 'Ad.CasZacetka' },
+      ]);
 
     if (Object.keys(req.query).length !== 0) {
       if (filters.name !== '') {
@@ -39,6 +42,10 @@ const getOglasi = async (req, res) => {
 
       if (filters.location !== '') {
         AdsQuery.where('Ad.Lokacija', 'like', `%${filters.location}%`);
+      }
+
+      if (filters.responseTime !== '') {
+        AdsQuery.where('spr.OdzivniCas', '>=', filters.responseTime);
       }
 
       if (filters.rating !== '') {

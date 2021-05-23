@@ -22,23 +22,17 @@ export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
 
   const handleSetFav = async () => {
     try {
-      if (!favourite) {
-        const response = await authRequest.post('setFav');
-        if (response.status === 200) {
-          successToast();
-        }
-      } else {
-        const response = await authRequest.post('clearFav');
-        if (response.status === 200) {
-          successToast();
-        }
+      const payload = { idSprehoda: walk.ID_sprehod, response: !favourite };
+      const response = await authRequest.post('addFavourite', payload);
+      if (response.status === 200) {
+        successToast();
       }
       // toggle it after and disable it to prevent spamming
       setFavourite(!favourite);
       setDisable(true);
     } catch (e) {
-      console.error(e)
-      errorToast()
+      console.error(e);
+      errorToast();
     }
   };
   /** Can rate if walk is over, is accepted, user is owner and walk has not been rated */
@@ -146,14 +140,14 @@ export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
             </Header>
           )}
           {canRate && <AddRatingModal refetch={refetch} walk={walk} />}
-          {walk.rated && (
+          {walk.rated && user.userType === 2 && (
             <Button
               color="red"
               labelPosition="right"
               label={
                 favourite
-                  ? 'This walker is one of my favourites'
-                  : 'Set walker as favourite'
+                  ? `${walk.sprehajalec} is one of my favourites`
+                  : `Set ${walk.sprehajalec} as favourite`
               }
               icon={favourite ? 'heart' : 'heart outline'}
               floated="right"
