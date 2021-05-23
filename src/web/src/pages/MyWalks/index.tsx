@@ -34,9 +34,7 @@ export type IWalk = {
   breed: IBreed;
 };
 
-interface MyWalksProps {}
-
-export const MyWalks: React.FC<MyWalksProps> = ({}) => {
+export const MyWalks: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [walks, setWalks] = useState<IWalk[] | undefined>(undefined);
   const user = getUser();
