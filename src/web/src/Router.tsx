@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { NotFoundPage } from './pages/404';
+import { AdminPage } from './pages/Admin';
 import { Iskalnik } from './pages/Iskalnik';
 import { Login } from './pages/Login';
 import { MyAds } from './pages/MyAds';
@@ -19,6 +20,12 @@ export const Routes: React.FC = () => {
         <ProtectedRoute exact path="/settings" component={ProfilePage} />
         <ProtectedRoute exact path="/ads" component={MyAds} />
         <ProtectedRoute exact path="/walks" component={MyWalks} />
+        <ProtectedRoute
+          exact
+          path="/admin"
+          admin={true}
+          component={AdminPage}
+        />
         <Route exact path="/register" component={Register} />
         <Route exact path="/register/walker" component={WalkerRegister} />
         <Route exact path="/register/owner" component={OwnerRegister} />

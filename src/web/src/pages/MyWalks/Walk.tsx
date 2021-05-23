@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Modal, Header, Icon, Item, Form, Label, Segment } from 'semantic-ui-react';
 import { MoreDogInfo } from './MoreDogInfo';
 import { MoreWalkerInfo } from './MoreWalkerInfo';
