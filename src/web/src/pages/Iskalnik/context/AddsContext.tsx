@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { createContext, useState } from 'react';
 import { getAuthRequest } from '../../../shared/http';
+import { errorToast } from '../../../shared/Toast';
 
 interface IAddsContextProvider {
   children: React.ReactElement[] | React.ReactElement;
@@ -13,7 +14,7 @@ export type IAdd = {
   ID_uporabnik: number;
   Ime_uporabnik: string;
   Index: number;
-  JeAktiven: { type: 'Buffer'; data: [49] };
+  JeAktiven: number;
   Lokacija: string;
   Lokacija_lat?: number;
   Lokacija_lng?: number;
@@ -55,6 +56,7 @@ export const AddsContextProvider = ({ children }: IAddsContextProvider) => {
     } catch (e) {
       console.error(e);
       setAdds([]);
+      errorToast()
     }
     setIsFetching(false);
   };
