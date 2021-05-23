@@ -70,8 +70,8 @@ const {
   describe("Another Logged in user add Ad", () => {
     let add = {
         lokacija: "Ljubljana",
-        startDate: "2021-05-09T17:35:36.123",
-        endDate: "2021-05-09T17:55:36.412",
+        startDate: "2021-06-09T17:35:36.123",
+        endDate: "2021-06-09T17:55:36.412",
         breed: 1
       };
       
@@ -132,10 +132,10 @@ const {
         });
     });
 
-    it(`Login anothe user`,(done => {
+    it(`Login anothe user`,(done) => {
       supertestRequest(app)
       .post('/api/login')
-      .send(userWalkerWithMaxAd)
+      .send(user)
       .expect(200)
       .end(function (err, res) {
           if (err) {
@@ -144,11 +144,26 @@ const {
           }
           token = res.body.accessToken;
          // console.log("TOKEN1->"+token);
-          userWalkerWithMaxAd = {...userWalkerWithMaxAd,  token};
+          user = {...user,  token};
           //console.log("TOKEN2->"+userWalkerWithoutMaxAd.token);
           return done();
       });
-    }));
+    });
+    
+    it(`Send walk request`,(done) => {
+      supertestRequest(app)
+      .post('/api/sendWalkRequest')
+      .set("Authorization", `Bearer ${user.token}`)
+      .send({ IDoglasa: add.idoglas, dogId: 25 })
+      .expect(200)
+      .end(function(err, res) {
+        if (err) {
+          console.error(res.body);
+          return done(err);
+        }
+        return done();
+      });
+    });
    /* it(`Try to Delete Ad which is not your`, (done) => {
       //console.log("ID->"+add.idoglas);
       supertestRequest(app)
@@ -165,11 +180,26 @@ const {
   });
   */
     //console.log("ID->"+add.idoglas);
+    it(`Login old user`, (done) => {
+      supertestRequest(app)
+      .post('/api/login')
+      .send(userWalkerWithoutMaxAd)
+      .expect(200)
+      .end(function(err, res) {
+        if (err) {
+          console.error(err);
+          return done(err);
+        }
+        token1 = res.body.accessToken;
+        userWalkerWithoutMaxAd = { ...userWalkerWithoutMaxAd, token1};
+        return done();
+      });
+    });
     it(`Try to Delete Ad`, (done) => {
      // console.log("ID->"+add.idoglas);
       supertestRequest(app)
       .post('/api/oglas/delete')
-      .set("Authorization", `Bearer ${userWalkerWithoutMaxAd.token}`)
+      .set("Authorization", `Bearer ${userWalkerWithoutMaxAd.token1}`)
       .send({AdId: add.idoglas})
       .expect(200)
       .end(function (err, res) {

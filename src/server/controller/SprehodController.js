@@ -11,7 +11,8 @@ const sendWalkRequest = async (req, res) => {
   var idOglasa = body.IDoglasa;
   var idPsa = body.dogId;
   var idLastnika = res.locals.userId;
-
+  console.log(idOglasa);
+  console.log(body);
   if ((await requestSentAlready(idOglasa, idLastnika)) == 1) {
     return res.status(400).json({ message: 'Request already sent to walker' });
   }

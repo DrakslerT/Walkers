@@ -50,7 +50,10 @@ const AddList = () => {
         <Loader msg="Fetching Ads" />
       ) : (
         <Card.Group itemsPerRow={width > 992 ? 3 : 1}>
-          {adds.map((add) => {
+          {
+           
+          adds.map((add) => {
+            //console.log(add);
             const startTime = handleDate(add.CasZacetka);
             const endTime = handleDate(add.CasKonca);
             return (

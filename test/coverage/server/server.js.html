@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88% </span>
+                <span class="strong">89.19% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>66/75</span>
+                <span class='fraction'>66/74</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">62.5% </span>
+                <span class="strong">66.67% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>15/24</span>
+                <span class='fraction'>16/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.71% </span>
+                <span class="strong">91.04% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>61/68</span>
+                <span class='fraction'>61/67</span>
             </div>
         
             
@@ -216,10 +216,7 @@
 <a name='L157'></a><a href='#L157'>157</a>
 <a name='L158'></a><a href='#L158'>158</a>
 <a name='L159'></a><a href='#L159'>159</a>
-<a name='L160'></a><a href='#L160'>160</a>
-<a name='L161'></a><a href='#L161'>161</a>
-<a name='L162'></a><a href='#L162'>162</a>
-<a name='L163'></a><a href='#L163'>163</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L160'></a><a href='#L160'>160</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -259,8 +256,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -306,7 +301,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -346,7 +341,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -362,13 +356,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -402,7 +396,7 @@ const {
   deleteDogAction,
   updateProfileAction,
   updatePasswordAction,
-  getDogsAction
+  getDogsAction,
 } = require('./controller/ProfileController');
 const dotenv = require('dotenv');
 const { testConnection } = require('./DB/BazaTransakcij');
@@ -421,9 +415,7 @@ const {
   deleteAdAction,
   updateAdAction,
 } = require('./controller/AddController');
-const {} = require('./controller/SprehodController');
 const {
-  acceptWalkRequest,
   getWalksAction,
   sendWalkRequest,
   walkResponse,
@@ -506,9 +498,8 @@ app.get('/api/oglas/getOglasi', validateUser, (req, res) =&gt;
   getOglasi(req, res)
 );
 &nbsp;
-app.get('/api/oglas/me', validateUser, (req, res) =&gt; myAdsAction(req, res));
+app.get('/api/oglas/me', validateUser, <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; <span class="cstat-no" title="statement not covered" >myAdsAction(req, res))</span>;
 app.post('/api/oglas/delete', validateUser, (req, res) =&gt; {
-  //console.log("VLEZE v Server");
   deleteAdAction(req, res);
 }
 );
@@ -522,9 +513,9 @@ app.post('/api/addAdd', validateUser, (req, res) =&gt; addAdd(req, res));
 app.get('/api/pasme/getPasme', validateUser, <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; <span class="cstat-no" title="statement not covered" >getPasme(req, res))</span>;
 &nbsp;
 //sprehod routes
-app.get('/api/walks', validateUser, <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; <span class="cstat-no" title="statement not covered" >getWalksAction(req, res))</span>;
-app.post('/api/sendWalkRequest', validateUser, <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt;
-<span class="cstat-no" title="statement not covered" >  sendWalkRequest(req, res)</span>
+app.get('/api/walks', validateUser, (req, res) =&gt; getWalksAction(req, res));
+app.post('/api/sendWalkRequest', validateUser, (req, res) =&gt;
+  sendWalkRequest(req, res)
 );
 app.post('/api/walkResponse', validateUser, <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt;
 <span class="cstat-no" title="statement not covered" >  walkResponse(req, res)</span>
@@ -550,7 +541,7 @@ module.exports = app;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sun May 23 2021 14:20:22 GMT+0200 (Central European Summer Time)
+                at Sun May 23 2021 15:08:45 GMT+0200 (Central European Summer Time)
             </div>
         </div>
         <script src="../prettify.js"></script>

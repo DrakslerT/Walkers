@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">67.78% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>61/90</span>
+                <span class='fraction'>54/90</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">44.44% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>9/18</span>
+                <span class='fraction'>8/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">58.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>9/12</span>
+                <span class='fraction'>7/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">68.54% </span>
+                <span class="strong">60.67% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>61/89</span>
+                <span class='fraction'>54/89</span>
             </div>
         
             
@@ -344,23 +344,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -369,7 +369,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -387,14 +387,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -538,8 +538,8 @@ const checkIfUsersAd = async (AdId, userId) =&gt; {
   return (ad.length &gt; 0);
 };
 &nbsp;
-const getUserAds = async (userId) =&gt; {
-  const ads = await dbInstance('OGLAS')
+const getUserAds = <span class="fstat-no" title="function not covered" >as</span>ync (userId) =&gt; {
+  const ads = <span class="cstat-no" title="statement not covered" >await dbInstance('OGLAS')</span>
     .select(
       'OGLAS.lokacija',
       'OGLAS.CasZacetka',
@@ -548,14 +548,14 @@ const getUserAds = async (userId) =&gt; {
     )
     .where('OGLAS.ID_uporabnik', userId)
     .andWhere('OGLAS.JeAktiven', 1);
-  return ads;
+<span class="cstat-no" title="statement not covered" >  return ads;</span>
 };
 &nbsp;
-const myAdsAction = async (req, res) =&gt; {
-  const userId = res.locals.userId;
-  try {
-    const ads = await getUserAds(userId);
-    return res.status(200).json(ads);
+const myAdsAction = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
+  const userId = <span class="cstat-no" title="statement not covered" >res.locals.userId;</span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const ads = <span class="cstat-no" title="statement not covered" >await getUserAds(userId);</span>
+<span class="cstat-no" title="statement not covered" >    return res.status(200).json(ads);</span>
   } catch (e) {
 <span class="cstat-no" title="statement not covered" >    return res.status(400).json({ message: 'Error when fetching ads' });</span>
   }
@@ -564,7 +564,7 @@ const myAdsAction = async (req, res) =&gt; {
 const deleteAd = async (AdId) =&gt; {
   await dbInstance('OGLAS_PASME').where('ID_oglas', AdId).del();
   const delRows = await dbInstance('OGLAS').where('ID_oglas', AdId).del();
-  return delRows;
+<span class="cstat-no" title="statement not covered" >  return delRows;</span>
 };
 &nbsp;
 const deleteAdAction = async (req, res) =&gt; {
@@ -582,14 +582,14 @@ const deleteAdAction = async (req, res) =&gt; {
     }
 &nbsp;
     const delRows = await deleteAd(AdId);
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (delRows &gt; 0) {
-      return res.status(200).json({ message: 'Succesfully deleted Ad' });
+<span class="cstat-no" title="statement not covered" >    if (delRows &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >      return res.status(200).json({ message: 'Succesfully deleted Ad' });</span>
     }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return res.status(204).json({ message: 'No Ads were deleted ??' });</span>
   } catch (e) {
-<span class="cstat-no" title="statement not covered" >    console.log(e);</span>
-<span class="cstat-no" title="statement not covered" >    return res.status(400).json({ message: 'Error when deleting Ad' });</span>
+    console.log(e);
+    return res.status(400).json({ message: 'Error when deleting Ad' });
   }
 };
 &nbsp;
@@ -649,7 +649,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sun May 23 2021 14:20:22 GMT+0200 (Central European Summer Time)
+                at Sun May 23 2021 15:08:45 GMT+0200 (Central European Summer Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>
