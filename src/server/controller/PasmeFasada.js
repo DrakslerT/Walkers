@@ -83,7 +83,7 @@ const addPasmaToDog = async (dogs) => {
         const dogWithBreedInfo = { ...dogs[dog], breed };
         dogList.push(dogWithBreedInfo);
       } else {
-        const emptyBreed = {ID_pasma: 0, Pasma_ime: 'unknown',Temperament: 'unknown', Visina: '/', Teza: '/'}ž
+        const emptyBreed = {ID_pasma: 0, Pasma_ime: 'unknown',Temperament: 'unknown', Visina: '/', Teza: '/'}
         const dogWithoutBreedInfo = {...dogs[dog], breed: emptyBreed}
         dogList.push(dogWithoutBreedInfo);
       }

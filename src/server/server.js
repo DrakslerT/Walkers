@@ -20,7 +20,6 @@ const {
   updateProfileAction,
   updatePasswordAction,
   getDogsAction,
-  getPasmeAction
 } = require('./controller/ProfileController');
 const dotenv = require('dotenv');
 const { testConnection } = require('./DB/BazaTransakcij');
@@ -40,7 +39,6 @@ const {
   updateAdAction,
 } = require('./controller/AddController');
 const {
-  acceptWalkRequest,
   getWalksAction,
   sendWalkRequest,
   walkResponse,
@@ -117,8 +115,6 @@ app.post('/api/dogs/delete', validateUser, (req, res) =>
 app.get('/api/dogs/list', validateUser, (req, res) =>
   getDogsAction(req, res)
 );
-
-app.get('breeds/all', validateUser, (req,res) => getPasmeAction(req, res))
 
 // Oglas routes
 app.get('/api/oglas/getOglasi', validateUser, (req, res) =>
