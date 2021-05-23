@@ -39,6 +39,10 @@ const {
   updateAdAction,
 } = require('./controller/AddController');
 const {
+  calendarList,
+  confirmToken
+} = require('./controller/GoogleCalendarFasada');
+const {
   getWalksAction,
   sendWalkRequest,
   walkResponse,
@@ -169,6 +173,10 @@ app.get('/api/admin/users', validateUser, (req, res) =>
 app.post('/api/admin/users/deactivate', validateUser, (req, res) =>
   AdminDeactivateAction(req, res)
 );
+// Calendar routes
+app.post('/api/calendar/addEvent', validateUser, (req, res) => calendarList(req, res));
+app.post('/api/calendar/confirm', validateUser, (req, res) => confirmToken(req, res));
+
 //Delete Ad
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

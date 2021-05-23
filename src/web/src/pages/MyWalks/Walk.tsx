@@ -1,5 +1,14 @@
-import React, { useState } from 'react';
-import { Button, Modal, Header, Icon, Item, Form, Label, Segment } from 'semantic-ui-react';
+import React, { useEffect, useState } from 'react';
+import {
+  Button,
+  Modal,
+  Header,
+  Icon,
+  Item,
+  Form,
+  Label,
+  Segment,
+} from 'semantic-ui-react';
 import { MoreDogInfo } from './MoreDogInfo';
 import { MoreWalkerInfo } from './MoreWalkerInfo';
 import { IWalk } from './index';
@@ -8,6 +17,7 @@ import { getUser } from '../../shared/UserInformation';
 import { getAuthRequest } from '../../shared/http';
 import { errorToast, successToast } from '../../shared/Toast';
 import { AddRatingModal } from '../../components/modals/AddRatingModal';
+import queryString from 'query-string';
 
 interface WalkProps {
   walk: IWalk;
@@ -83,7 +93,7 @@ export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
       const response = await authRequest.post('/addReport', payload);
       if (response.status === 200) {
         successToast();
-        setDescription("");
+        setDescription('');
       }
       return setOpen(false);
     } catch (e) {
@@ -91,8 +101,50 @@ export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
       console.error(e);
     }
     setLoading(false);
-    setDescription("");
-  }
+    setDescription('');
+  };
+  
+  const handleAddCalendar = async () => {
+    try {
+      const payload = { ID_sprehod: walk.ID_sprehod };
+      const response = await authRequest.post('calendar/addEvent', payload);
+      if (response.status === 200) {
+        if (response.data) {
+          window.location.href = response.data;
+        } else {
+          successToast();
+          refetch();
+        }
+      } else if (response.status === 201) {
+        successToast();
+      }
+    } catch (e) {
+      console.error(e);
+      errorToast();
+    }
+  };
+
+  const confirmToken = async (code: String) => {
+    try {
+      const payload = { code: code };
+      const response = await authRequest.post('calendar/confirm', payload);
+      if (response.status === 201) {
+        successToast();
+      }
+    } catch (e) {
+      console.error(e);
+      errorToast();
+    }
+  };
+
+  useEffect(() => {
+    const windowUrl = window.location.search;
+    const params = queryString.parse(windowUrl);
+    const code = params.code;
+    if (code) {
+      confirmToken(code + '');
+    }
+  }, []);
 
   return (
     <Item>
@@ -132,6 +184,14 @@ export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
               <Header color="green" size="large">
                 This walk was accepted
               </Header>
+              <Button
+                color="blue"
+                floated="right"
+                onClick={() => handleAddCalendar()}
+              >
+                <Icon name="calendar plus" />
+                Add to calendar
+              </Button>
               <ContactInfo walk={walk} userType={user.userType} />
             </>
           )}
@@ -183,13 +243,13 @@ export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
             ></Button>
           )}
         </Item.Extra>
-        
+
         <Modal
           onClose={() => setOpen(false)}
           onOpen={() => setOpen(true)}
           open={open}
           trigger={
-            <Button icon labelPosition="left" color="red" floated='right'>
+            <Button icon labelPosition="left" color="red" floated="right">
               Report
               <Icon name="exclamation circle" />
             </Button>
