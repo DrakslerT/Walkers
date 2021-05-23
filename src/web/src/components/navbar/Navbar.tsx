@@ -73,6 +73,17 @@ const Navbar = () => {
             );
           }
         })}
+        {/* Admin link */}
+        {user.userType === 3 && (
+          <li>
+            <NavLink exact className={styles.nav_links} to={'/admin'}>
+              <div className={styles.item_icon}>
+                <i aria-hidden="true" className="link large adn icon"></i>
+              </div>
+              <div className={styles.item_text}>{'Admin'}</div>
+            </NavLink>
+          </li>
+        )}
         {/* Logout link */}
         <li>
           <div className={styles.nav_links} onClick={handleLogout}>
