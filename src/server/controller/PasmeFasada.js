@@ -76,15 +76,19 @@ const getPasmaByID = async (ID_pasma) => {
 
 const addPasmaToDog = async (dogs) => {
   try {
-    for (i in dogs) {
-      const breed = await getPasmaByID(dogs[0].ID_pasma);
-      
-      dogs[i].Pasma_ime = breed.Pasma_ime;
-      dogs[i].Temperament = breed.Temperament;
-      dogs[i].Visina = breed.Visina;
-      dogs[i].Teza = breed.Teza;
+    const dogList = [];
+    for (dog in dogs) {
+      if (dogs[dog].ID_pasma) {
+        const breed = await getPasmaByID(dogs[dog].ID_pasma);
+        const dogWithBreedInfo = { ...dogs[dog], breed };
+        dogList.push(dogWithBreedInfo);
+      } else {
+        const emptyBreed = {ID_pasma: 0, Pasma_ime: 'unknown',Temperament: 'unknown', Visina: '/', Teza: '/'}
+        const dogWithoutBreedInfo = {...dogs[dog], breed: emptyBreed}
+        dogList.push(dogWithoutBreedInfo);
+      }
     }
-    return dogs;
+    return dogList;
   } catch (err) {
     console.log(err);
     return false;
@@ -94,5 +98,5 @@ const addPasmaToDog = async (dogs) => {
 module.exports = {
   getPasme,
   getPasmaByID,
-  addPasmaToDog
+  addPasmaToDog,
 };

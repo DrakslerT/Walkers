@@ -6,7 +6,7 @@ const addAdd = async (req, res) => {
   const user = await getUserById(res.locals.userId);
   var casZacetka = changeFormat(add.startDate);
   var casKonca = changeFormat(add.endDate);
-
+  //console.log(add);
   if (!user) {
     res.status(400).json({ message: 'User not found' });
   }
@@ -38,17 +38,20 @@ const addAdd = async (req, res) => {
         ID_oglas: id,
         ID_uporabnik,
         Tip,
-        ID_pasma: add.pasma,
+        ID_pasma: Math.floor(Math.random() * 100),
       };
 
-      await trx('OGLAS_PASME').insert(normalisedAddBreedForDb);
+      const a = await trx('OGLAS_PASME').insert(normalisedAddBreedForDb);
+      //trx.commit();
+
       return id;
     } catch (err) {
       trx.rollback();
     }
   });
+  
   if (!addId) return res.status(400).json({ message: 'error' });
-  else return res.status(200).json({ message: 'add added' });
+  else return res.status(200).json({ message: 'add added', nasid: addId });
 };
 
 const canAddNew = async (user) => {
@@ -82,7 +85,8 @@ const checkIfUsersAd = async (AdId, userId) => {
   const ad = await dbInstance('OGLAS')
     .where({ ID_uporabnik: userId, ID_oglas: AdId })
     .select('ID_oglas');
-  return ad.length ?? false;
+  //console.log(ad.length);
+  return (ad.length > 0);
 };
 
 const getUserAds = async (userId) => {
@@ -115,14 +119,17 @@ const deleteAd = async (AdId) => {
 };
 
 const deleteAdAction = async (req, res) => {
+  //console.log("VLEZE za delete");
   const userId = res.locals.userId;
   const { AdId } = req.body;
+  //console.log(userId);
+  //console.log(AdId);
   try {
     const isRightOwner = await checkIfUsersAd(AdId, userId);
+    //console.log(isRightOwner);
     if (!isRightOwner) {
-      return res
-        .status(400)
-        .json({ message: 'You can only delete Ads you own!' });
+      //console.log("VLEZEEEE");
+      return res.status(400).json({ message: 'You can only delete Ads you own!' });
     }
 
     const delRows = await deleteAd(AdId);

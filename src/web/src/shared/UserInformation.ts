@@ -3,6 +3,7 @@ type IUserInformation = {
   username: string;
   activated: number | undefined;
   userType: number | undefined;
+  notifications: number | undefined;
 };
 
 
@@ -10,6 +11,7 @@ const noUser: IUserInformation = {
   username: '',
   activated: undefined,
   userType: undefined,
+  notifications: undefined
 };
 
 let userInfo = noUser;

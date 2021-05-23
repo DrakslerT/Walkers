@@ -19,6 +19,7 @@ const {
   deleteDogAction,
   updateProfileAction,
   updatePasswordAction,
+  getDogsAction,
 } = require('./controller/ProfileController');
 const dotenv = require('dotenv');
 const { testConnection } = require('./DB/BazaTransakcij');
@@ -35,12 +36,18 @@ const {
   addAdd,
   myAdsAction,
   deleteAdAction,
-  updateAdAction
+  updateAdAction,
 } = require('./controller/AddController');
 const {
   calendarList,
   confirmToken
 } = require('./controller/GoogleCalendarFasada');
+const {
+  getWalksAction,
+  sendWalkRequest,
+  walkResponse,
+  walkNotifications,
+} = require('./controller/SprehodController');
 
 const app = express();
 app.set('trust proxy', 1);
@@ -109,6 +116,9 @@ app.post(
 app.post('/api/dogs/delete', validateUser, (req, res) =>
   deleteDogAction(req, res)
 );
+app.get('/api/dogs/list', validateUser, (req, res) =>
+  getDogsAction(req, res)
+);
 
 // Oglas routes
 app.get('/api/oglas/getOglasi', validateUser, (req, res) =>
@@ -116,8 +126,9 @@ app.get('/api/oglas/getOglasi', validateUser, (req, res) =>
 );
 
 app.get('/api/oglas/me', validateUser, (req, res) => myAdsAction(req, res));
-app.post('/api/oglas/delete', validateUser, (req, res) =>
-  deleteAdAction(req, res)
+app.post('/api/oglas/delete', validateUser, (req, res) => {
+  deleteAdAction(req, res);
+}
 );
 app.put('/api/oglas/edit', validateUser, (req, res) =>
   updateAdAction(req, res)
@@ -126,14 +137,25 @@ app.put('/api/oglas/edit', validateUser, (req, res) =>
 app.post('/api/addAdd', validateUser, (req, res) => addAdd(req, res));
 
 // Pasme routes
-app.get('/api/pasme/getPasme', validateUser, (req, res) =>
-  getPasme(req, res)
+app.get('/api/pasme/getPasme', validateUser, (req, res) => getPasme(req, res));
+
+//sprehod routes
+app.get('/api/walks', validateUser, (req, res) => getWalksAction(req, res));
+app.post('/api/sendWalkRequest', validateUser, (req, res) =>
+  sendWalkRequest(req, res)
+);
+app.post('/api/walkResponse', validateUser, (req, res) =>
+  walkResponse(req, res)
+);
+app.post('/api/walkNotifications', validateUser, (req, res) =>
+  walkNotifications(req, res)
 );
 
 // Calendar routes
 app.post('/api/calendar/addEvent', validateUser, (req, res) => calendarList(req, res));
 app.post('/api/calendar/confirm', validateUser, (req, res) => confirmToken(req, res));
 
+//Delete Ad
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server is listening at ${PORT}`);

@@ -140,7 +140,6 @@ const getOwnerDogs = async (userId) => {
     .select('PES.ID_pes', 'PES.Ime_pes', 'PES.Spol', 'PES.Opis_pes', 'PES.ID_pasma')
     .where('PES.ID_uporabnik', userId)
     .andWhere('PES.JeIzbrisan', 0); // Only get not deleted dogs
-
   const dogPasme = await addPasmaToDog(dogs);
   return dogPasme;
 };
@@ -186,7 +185,7 @@ const checkIfRightOwner = async (userID, dogID) => {
       ID_uporabnik: userID,
     })
     .select('ID_pes');
-  return dog.length ?? false;
+  return dog.length != 0;
 };
 
 const getDogById = async (dogID) => {
@@ -294,6 +293,100 @@ const updatePasswordAction = async (req, res) => {
   }
 };
 
+const updateProfileAfterWalkRequestResposne = async (idSprehajalec, countBoolean) => {
+  const newResponseTime = await calculateResponseTime(idSprehajalec);
+  const user = await dbInstance('SPREHAJALEC')
+    .where('ID_uporabnik', idSprehajalec)
+
+  var index = user[0].Index;
+  if(user[0].PovprecnaOcena != 0)
+    index = await calculateIndex(user[0].PovprecnaOcena, newResponseTime);
+  
+  var countWalks = user[0].StSprehodov;
+  if(countBoolean){
+    countWalks++;
+  }
+
+  const updatedUser = {
+    ...user[0],
+    OdzivniCas: newResponseTime,
+    Index: index,
+    StSprehodov: countWalks
+  };
+
+  try {
+    await dbInstance('SPREHAJALEC')
+      .where('ID_uporabnik', idSprehajalec)
+      .update(updatedUser);
+    return true
+  } catch (e) {
+    console.log(e);
+    return false
+  }
+}
+
+const calculateIndex = async (ocena, odzivniCas) => {
+  return ocena * odzivniCas;
+}
+
+const convertToDaysDifference = async (times) => {
+  var diffArr = 0;
+  var count = 0;
+  for (i in times) {
+    var date1 = new Date(times[i].DatumKreiranja);
+    var date2 = new Date(times[i].CasOdziva);
+    var diff = date2.getTime() - date1.getTime();
+    diff = diff / (1000 * 60 * 60 * 24);
+    diffArr += diff;
+    count++;
+  }
+  diffArr = diffArr / count;
+
+  if (diffArr < 1) {
+    diffArr = 7;
+  } else if (diffArr < 3) {
+    diffArr = 5;
+  } else if (diffArr < 7) {
+    diffArr = 3;
+  } else {
+    diffArr = 1;
+  }
+  return diffArr;
+}
+
+const calculateResponseTime = async (ID_sprehajalec) => {
+  if (!ID_sprehajalec) {
+    return false;
+  }
+  const times = await dbInstance
+    .select('SPREHOD.DatumKreiranja', 'SPREHOD.CasOdziva')
+    .from('SPREHOD')
+    .whereRaw('SPREHOD.ID_sprehajalec = ?', ID_sprehajalec)
+    .havingNotNull('SPREHOD.CasOdziva');
+
+  if (!times) {
+    return false;
+  }
+  const ret = await convertToDaysDifference(times);
+  return ret ? ret : false;
+}
+
+const getUserType = async (userId) => {
+  const user = await dbInstance
+    .select('UPORABNIK.Tip')
+    .from('UPORABNIK')
+    .where('ID_uporabnik', userId);
+  return user.length ? user[0] : false;
+};
+
+const getDogsAction = async (req, res) => {
+  var idLastnika = res.locals.userId;
+  const dogs = await dbInstance('PES')
+    .where('ID_uporabnik', idLastnika);
+
+    return res.status(200).json(dogs);
+}
+
 module.exports = {
   checkPassword,
   hashPassword,
@@ -308,4 +401,8 @@ module.exports = {
   deleteDogAction,
   updateProfileAction,
   updatePasswordAction,
+  calculateResponseTime,
+  getUserType,
+  updateProfileAfterWalkRequestResposne,
+  getDogsAction
 };
