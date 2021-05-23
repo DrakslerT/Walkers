@@ -3,9 +3,7 @@ const { dbInstance } = require('../DB/BazaTransakcij');
 const getOglasi = async (req, res) => {
   try {
     const filters = { ...req.query };
-    //console.log(filters);
     const userId = res.locals.userId;
-    //console.log(userId);
     const AdsQuery = dbInstance
       .select(
         'Ad.ID_oglas',
@@ -23,6 +21,7 @@ const getOglasi = async (req, res) => {
       .innerJoin('SPREHAJALEC as spr', 'spr.ID_uporabnik', 'Ad.ID_uporabnik')
       .innerJoin('OGLAS_PASME as Ad_PASME', 'Ad_PASME.ID_oglas', 'Ad.ID_oglas')
       .where('Ad.CasZacetka', '>=', new Date())
+      .where('Ad.JeAktiven', 1)
       .orderBy([
         { column: 'spr.Index', order: 'desc' },
         { column: 'Ad.CasZacetka' },

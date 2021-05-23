@@ -49,7 +49,7 @@ const addAdd = async (req, res) => {
       trx.rollback();
     }
   });
-  
+
   if (!addId) return res.status(400).json({ message: 'error' });
   else return res.status(200).json({ message: 'add added', nasid: addId });
 };
@@ -85,8 +85,7 @@ const checkIfUsersAd = async (AdId, userId) => {
   const ad = await dbInstance('OGLAS')
     .where({ ID_uporabnik: userId, ID_oglas: AdId })
     .select('ID_oglas');
-  //console.log(ad.length);
-  return (ad.length > 0);
+  return ad.length > 0;
 };
 
 const getUserAds = async (userId) => {
@@ -112,28 +111,28 @@ const myAdsAction = async (req, res) => {
   }
 };
 
-const deleteAd = async (AdId) => {
-  await dbInstance('OGLAS_PASME').where('ID_oglas', AdId).del();
-  const delRows = await dbInstance('OGLAS').where('ID_oglas', AdId).del();
-  return delRows;
-};
 
 const deleteAdAction = async (req, res) => {
-  //console.log("VLEZE za delete");
   const userId = res.locals.userId;
   const { AdId } = req.body;
-  //console.log(userId);
-  //console.log(AdId);
   try {
     const isRightOwner = await checkIfUsersAd(AdId, userId);
-    //console.log(isRightOwner);
     if (!isRightOwner) {
-      //console.log("VLEZEEEE");
-      return res.status(400).json({ message: 'You can only delete Ads you own!' });
+      return res
+        .status(400)
+        .json({ message: 'You can only delete Ads you own!' });
     }
 
-    const delRows = await deleteAd(AdId);
-    if (delRows > 0) {
+    const Ad = await getAdById(AdId);
+
+    const updatedAd = {
+      ...Ad,
+      JeAktiven: false,
+    };
+
+    const deleted = await updateAd(updatedAd);
+
+    if (deleted) {
       return res.status(200).json({ message: 'Succesfully deleted Ad' });
     }
 
@@ -147,6 +146,7 @@ const deleteAdAction = async (req, res) => {
 const updateAd = async (ad) => {
   try {
     await dbInstance('OGLAS').where('ID_oglas', ad.ID_oglas).update(ad);
+    return true;
   } catch (e) {
     console.log(e);
     throw new Error();
