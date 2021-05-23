@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Header, Icon, Item, Label, Segment } from 'semantic-ui-react';
 import { MoreDogInfo } from './MoreDogInfo';
 import { MoreWalkerInfo } from './MoreWalkerInfo';
@@ -17,6 +17,30 @@ interface WalkProps {
 export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
   const user = getUser();
   const authRequest = getAuthRequest();
+  const [favourite, setFavourite] = useState(walk.Priljubljen === 1);
+  const [disableFavBtn, setDisable] = useState(false);
+
+  const handleSetFav = async () => {
+    try {
+      if (!favourite) {
+        const response = await authRequest.post('setFav');
+        if (response.status === 200) {
+          successToast();
+        }
+      } else {
+        const response = await authRequest.post('clearFav');
+        if (response.status === 200) {
+          successToast();
+        }
+      }
+      // toggle it after and disable it to prevent spamming
+      setFavourite(!favourite);
+      setDisable(true);
+    } catch (e) {
+      console.error(e)
+      errorToast()
+    }
+  };
   /** Can rate if walk is over, is accepted, user is owner and walk has not been rated */
   const canRate =
     new Date() > new Date(walk.CasKonca) && // Comment this out for testing
@@ -122,6 +146,21 @@ export const Walk: React.FC<WalkProps> = ({ walk, refetch }) => {
             </Header>
           )}
           {canRate && <AddRatingModal refetch={refetch} walk={walk} />}
+          {walk.rated && (
+            <Button
+              color="red"
+              labelPosition="right"
+              label={
+                favourite
+                  ? 'This walker is one of my favourites'
+                  : 'Set walker as favourite'
+              }
+              icon={favourite ? 'heart' : 'heart outline'}
+              floated="right"
+              onClick={handleSetFav}
+              disabled={disableFavBtn}
+            ></Button>
+          )}
         </Item.Extra>
       </Item.Content>
     </Item>
@@ -150,7 +189,7 @@ const ContactInfo: React.FC<ContactInfoProps> = ({ walk, userType }) => {
           <Label
             basic
             icon="phone"
-            content="041221333"
+            content={walk.last_GSM}
             color="blue"
             size="huge"
           />
