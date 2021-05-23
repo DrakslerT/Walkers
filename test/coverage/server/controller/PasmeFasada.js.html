@@ -23,30 +23,42 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
+<<<<<<< HEAD
                 <span class="strong">69.35% </span>
                 <span class="quiet">Statements</span>
                 <span class='fraction'>43/62</span>
+=======
+                <span class="strong">43.55% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>27/62</span>
+>>>>>>> b1065943596306f88b7fe922e9d5ad0ff6ee57b8
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.86% </span>
+                <span class="strong">35.71% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/14</span>
+                <span class='fraction'>5/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">40% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/5</span>
+                <span class='fraction'>2/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
+<<<<<<< HEAD
                 <span class="strong">70.49% </span>
                 <span class="quiet">Lines</span>
                 <span class='fraction'>43/61</span>
+=======
+                <span class="strong">44.26% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>27/61</span>
+>>>>>>> b1065943596306f88b7fe922e9d5ad0ff6ee57b8
             </div>
         
             
@@ -55,7 +67,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -162,25 +174,32 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">172x</span>
-<span class="cline-any cline-yes">172x</span>
-<span class="cline-any cline-yes">172x</span>
-<span class="cline-any cline-yes">172x</span>
-<span class="cline-any cline-yes">172x</span>
-<span class="cline-any cline-yes">172x</span>
-<span class="cline-any cline-yes">172x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<<<<<<< HEAD
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+=======
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+>>>>>>> b1065943596306f88b7fe922e9d5ad0ff6ee57b8
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -205,7 +224,11 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<<<<<<< HEAD
 <span class="cline-any cline-yes">1x</span>
+=======
+<span class="cline-any cline-no">&nbsp;</span>
+>>>>>>> b1065943596306f88b7fe922e9d5ad0ff6ee57b8
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -259,26 +282,26 @@ require('dotenv').config();
 &nbsp;
 const Url = `https://api.thedogapi.com/v1/breeds?api_key=${process.env.DogsAPIKEY}`;
 &nbsp;
-const formatPasme = async (breeds) =&gt; {
-  var retBreeds = new Array();
-  var breeds = breeds.data;
-  for (i in breeds) {
-    var breed = {};
-    breed.ID_pasma = breeds[i].id;
-    breed.Pasma_ime = breeds[i].name;
-    breed.Temperament = breeds[i].temperament;
-    breed.Visina = breeds[i].height.metric;
-    breed.Teza = breeds[i].weight.metric;
-    retBreeds.push(breed);
+const formatPasme = <span class="fstat-no" title="function not covered" >as</span>ync (breeds) =&gt; {
+  var retBreeds = <span class="cstat-no" title="statement not covered" >new Array();</span>
+  var breeds = <span class="cstat-no" title="statement not covered" >breeds.data;</span>
+<span class="cstat-no" title="statement not covered" >  for (i in breeds) {</span>
+    var breed = <span class="cstat-no" title="statement not covered" >{};</span>
+<span class="cstat-no" title="statement not covered" >    breed.ID_pasma = breeds[i].id;</span>
+<span class="cstat-no" title="statement not covered" >    breed.Pasma_ime = breeds[i].name;</span>
+<span class="cstat-no" title="statement not covered" >    breed.Temperament = breeds[i].temperament;</span>
+<span class="cstat-no" title="statement not covered" >    breed.Visina = breeds[i].height.metric;</span>
+<span class="cstat-no" title="statement not covered" >    breed.Teza = breeds[i].weight.metric;</span>
+<span class="cstat-no" title="statement not covered" >    retBreeds.push(breed);</span>
   }
-  return retBreeds;
+<span class="cstat-no" title="statement not covered" >  return retBreeds;</span>
 };
 &nbsp;
-const getPasmeFromAPI = async () =&gt; {
-  const breeds = await axios.get(Url);
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (!breeds) <span class="cstat-no" title="statement not covered" >return false;</span>
-  const ret = await formatPasme(breeds);
-  return ret;
+const getPasmeFromAPI = <span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {
+  const breeds = <span class="cstat-no" title="statement not covered" >await axios.get(Url);</span>
+<span class="cstat-no" title="statement not covered" >  if (!breeds) <span class="cstat-no" title="statement not covered" >return false;</span></span>
+  const ret = <span class="cstat-no" title="statement not covered" >await formatPasme(breeds);</span>
+<span class="cstat-no" title="statement not covered" >  return ret;</span>
 };
 &nbsp;
 const getPasme = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
@@ -302,8 +325,8 @@ const getPasme = <span class="fstat-no" title="function not covered" >as</span>y
 const getPasmaByID = async (ID_pasma) =&gt; {
   try {
     var breeds = await getPasmeCache();
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (!breeds) {
-      breeds = await getPasmeFromAPI();
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!breeds) {
+<span class="cstat-no" title="statement not covered" >      breeds = await getPasmeFromAPI();</span>
     }
 &nbsp;
     <span class="missing-if-branch" title="if path not taken" >I</span>if (!breeds) {
@@ -358,7 +381,11 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
+<<<<<<< HEAD
                 at Sun May 23 2021 10:47:07 GMT+0200 (Central European Summer Time)
+=======
+                at Sun May 23 2021 10:35:04 GMT+0200 (Central European Summer Time)
+>>>>>>> b1065943596306f88b7fe922e9d5ad0ff6ee57b8
             </div>
         </div>
         <script src="../../prettify.js"></script>
