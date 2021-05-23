@@ -123,6 +123,7 @@ const validateUser = (req, res, next) => {
 };
 
 const refreshToken = (req, res) => {
+  //console.log(req);
   try {
     const refresh_token = req.cookies.jid;
     const verified = jwt.verify(refresh_token, process.env.JWT_REFRESH_SECRET);

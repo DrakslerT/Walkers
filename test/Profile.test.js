@@ -163,7 +163,7 @@ it(`get profile 5`, (done) => {
   supertestRequest(app)
   .put('/api/dogs/list')
   .set("Authorization", `Bearer ${user.token}`)
-  .expect(200)
+  .expect(404)
   .end(function (err, res) {
     if (err) {
       console.error(err);

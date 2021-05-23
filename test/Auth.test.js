@@ -316,6 +316,21 @@ describe("#AuthTest - other role eg. admin", () => {
 
 describe("Create add test", () => {
 
+  it(`User login 3`, (done) => {
+    supertestRequest(app)
+      .post("/api/refresh_token")
+      .expect(401)
+      .end(function(err, res) {
+        if (err) {
+          console.log("SOME ERROR");
+          return done(err);
+        }
+        return done();
+      }
+
+      );
+  });
+
   let add1 = {
     lokacija: "Ljubljana",
     startDate: "2021-05-09T17:35:36.123",
@@ -347,11 +362,45 @@ describe("Create add test", () => {
           console.log("SOME ERROR");
           return done(err);
         }
+        token = res.body.accessToken;
+        user = {...user, token};
         return done();
       }
 
       );
   });
+
+  
+  it(`User login 2 ${user.email}`, (done) => {
+    supertestRequest(app)
+      .post("/api/refresh_token")
+      .send(user)
+      .expect(401)
+      .end(function(err, res) {
+        if (err) {
+          console.log("SOME ERROR");
+          return done(err);
+        }
+        return done();
+      }
+
+      );
+  });
+
+  it(`Logout `,(done) => {
+    supertestRequest(app)
+    .post("/api/logout")
+    .expect(200)
+    .end(function(err, res) {
+      if (err) {
+        console.error(err);
+        return done(err);
+      }
+      return done();
+    });
+  });
+  
+  
 
   
 });

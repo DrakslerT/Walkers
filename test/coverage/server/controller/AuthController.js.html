@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.63% </span>
+                <span class="strong">80.22% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>67/91</span>
+                <span class='fraction'>73/91</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70% </span>
+                <span class="strong">90% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>7/10</span>
+                <span class='fraction'>9/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.63% </span>
+                <span class="strong">80.22% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>67/91</span>
+                <span class='fraction'>73/91</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -262,7 +262,8 @@
 <a name='L203'></a><a href='#L203'>203</a>
 <a name='L204'></a><a href='#L204'>204</a>
 <a name='L205'></a><a href='#L205'>205</a>
-<a name='L206'></a><a href='#L206'>206</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L206'></a><a href='#L206'>206</a>
+<a name='L207'></a><a href='#L207'>207</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -387,9 +388,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -397,7 +399,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -453,8 +455,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -591,10 +593,11 @@ const validateUser = (req, res, next) =&gt; {
   }
 };
 &nbsp;
-const refreshToken = <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const refresh_token = <span class="cstat-no" title="statement not covered" >req.cookies.jid;</span>
-    const verified = <span class="cstat-no" title="statement not covered" >jwt.verify(refresh_token, process.env.JWT_REFRESH_SECRET);</span>
+const refreshToken = (req, res) =&gt; {
+  //console.log(req);
+  try {
+    const refresh_token = req.cookies.jid;
+    const verified = jwt.verify(refresh_token, process.env.JWT_REFRESH_SECRET);
 <span class="cstat-no" title="statement not covered" >    if (verified) {</span>
       const userId = <span class="cstat-no" title="statement not covered" >verified.userId;</span>
 <span class="cstat-no" title="statement not covered" >      return AuthResponse(res, userId);</span>
@@ -602,7 +605,7 @@ const refreshToken = <span class="fstat-no" title="function not covered" >(r</sp
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return res.status(401).send({ message: 'Access denied' });</span>
   } catch (e) {
-<span class="cstat-no" title="statement not covered" >    return res.status(401).send({ message: 'Access denied' });</span>
+    return res.status(401).send({ message: 'Access denied' });
   }
 };
 &nbsp;
@@ -657,9 +660,9 @@ const activateUser = async (req, res) =&gt; {
 <span class="cstat-no" title="statement not covered" >  return res.status(400).json({ message: 'Wrong activaction code' });</span>
 };
 &nbsp;
-const logout = <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >  res.clearCookie('jid');</span>
-<span class="cstat-no" title="statement not covered" >  return res.status(200).json({ message: 'Cookie cleared!' });</span>
+const logout = (req, res) =&gt; {
+  res.clearCookie('jid');
+  return res.status(200).json({ message: 'Cookie cleared!' });
 };
 &nbsp;
 module.exports = {
@@ -679,7 +682,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sun May 23 2021 10:56:26 GMT+0200 (Central European Summer Time)
+                at Sun May 23 2021 14:20:22 GMT+0200 (Central European Summer Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>
