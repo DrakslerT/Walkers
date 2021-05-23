@@ -132,6 +132,24 @@ const {
         });
     });
 
+    it(`Try to Add Ad`, (done) => {
+      supertestRequest(app)
+      .post('/api/addAdd')
+      .set("Authorization", `Bearer ${userWalkerWithoutMaxAd.token}`)
+      .send(add)
+      .expect(200)
+      .end(function (err, res) {
+        if (err) {
+          console.error(err);
+          return done(err);
+        } 
+        idoglas1 = res.body.nasid;
+        //console.log(idoglas);
+        add = {...add, idoglas1};
+        return done();
+      });
+  });
+
     it(`Login anothe user`,(done) => {
       supertestRequest(app)
       .post('/api/login')
@@ -161,6 +179,27 @@ const {
           console.error(res.body);
           return done(err);
         }
+        sprehodid = res.body.sprehodid;
+        sprehajalecid = res.body.sprehajalecid;
+        add = {...add, sprehodid, sprehajalecid};
+        return done();
+      });
+    });
+
+    it(`Send walk request`,(done) => {
+      supertestRequest(app)
+      .post('/api/sendWalkRequest')
+      .set("Authorization", `Bearer ${user.token}`)
+      .send({ IDoglasa: add.idoglas1, dogId: 25 })
+      .expect(200)
+      .end(function(err, res) {
+        if (err) {
+          console.error(res.body);
+          return done(err);
+        }
+        sprehodid1 = res.body.sprehodid;
+        
+        add = {...add, sprehodid1};
         return done();
       });
     });
@@ -180,6 +219,7 @@ const {
   });
   */
     //console.log("ID->"+add.idoglas);
+
     it(`Login old user`, (done) => {
       supertestRequest(app)
       .post('/api/login')
@@ -195,7 +235,35 @@ const {
         return done();
       });
     });
-    it(`Try to Delete Ad`, (done) => {
+
+    it(`Acc Response`, (done) => {
+      supertestRequest(app)
+      .post('/api/walkResponse')
+      .send({idSprehoda: add.sprehodid, response: 'true'})
+      .set("Authorization", `Bearer ${userWalkerWithoutMaxAd.token1}`)
+      .end(function(err, res) {
+        if (err) {
+          console.error(err);
+          return done(err);
+        }
+        return done();
+      });
+    });
+
+    it(`Dec Response`, (done) => {
+      supertestRequest(app)
+      .post('/api/walkResponse')
+      .send({idSprehoda: add.sprehodid1, response: 'false'})
+      .set("Authorization", `Bearer ${userWalkerWithoutMaxAd.token1}`)
+      .end(function(err, res) {
+        if (err) {
+          console.error(err);
+          return done(err);
+        }
+        return done();
+      });
+    });
+    it(`Try to Delete Ad 1`, (done) => {
      // console.log("ID->"+add.idoglas);
       supertestRequest(app)
       .post('/api/oglas/delete')
@@ -210,6 +278,70 @@ const {
         return done();
       });
   });
+  it(`Try to Delete Ad 2`, (done) => {
+    // console.log("ID->"+add.idoglas);
+     supertestRequest(app)
+     .post('/api/oglas/delete')
+     .set("Authorization", `Bearer ${userWalkerWithoutMaxAd.token1}`)
+     .send({AdId: add.idoglas1})
+     .expect(200)
+     .end(function (err, res) {
+       if (err) {
+         console.error(err);
+         return done(err);
+       } 
+       return done();
+     });
+ });
+
+ it(`Login anothe user`,(done) => {
+  supertestRequest(app)
+  .post('/api/login')
+  .send(user)
+  .expect(200)
+  .end(function (err, res) {
+      if (err) {
+        console.error(res.body);
+        return done(err);
+      }
+      token2 = res.body.accessToken;
+     // console.log("TOKEN1->"+token);
+      user = {...user,  token2};
+      //console.log("TOKEN2->"+userWalkerWithoutMaxAd.token);
+      return done();
+  });
+});
+
+    it(`Set Rating 1`, (done) => {
+      supertestRequest(app)
+      .post('/api/setRating')
+      .send({ walkerId: add.sprehajalecid, rating: '5', walkId: add.sprehodid})
+      .set("Authorization", `Bearer ${user.token2}`)
+      .expect(200)
+      .end(function(err, res) {
+        if (err) {
+          console.error(res.body);
+          return done(err);
+        }
+        return done();
+      });
+    });
+
+    it(`Set Rating 2`, (done) => {
+      supertestRequest(app)
+      .post('/api/setRating')
+      .send({ walkerId: add.sprehajalecid, rating: '5', walkId: add.sprehodid})
+      .set("Authorization", `Bearer ${user.token2}`)
+      .expect(400)
+      .end(function(err, res) {
+        if (err) {
+          console.error(res.body);
+          return done(err);
+        }
+        return done();
+      });
+    });
+
   
   });
   
