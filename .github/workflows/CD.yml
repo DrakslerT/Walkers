@@ -46,6 +46,12 @@ jobs:
           DB_PASS: ${{ secrets.DB_PASS }}
           DB_NAME: ${{ secrets.DB_NAME }}
 
+          # DB credentials for stage environment
+          MEMCACHIER_SERVERS: ${{ secrets.MEMCACHIER_SERVERS }}
+          MEMCACHIER_USERNAME: ${{ secrets.MEMCACHIER_USERNAME }}
+          MEMCACHIER_PASSWORD: ${{ secrets.MEMCACHIER_PASSWORD }}
+          DogsAPIKEY: ${{ secrets.DogsAPIKEY }}
+
       - name: Deploy Server to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
