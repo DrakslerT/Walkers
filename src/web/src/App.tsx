@@ -4,11 +4,13 @@ import { setAccessToken } from './shared/AccessToken';
 import { request } from './shared/http';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { setUser } from './shared/UserInformation';
+import { getUser, setUser } from './shared/UserInformation';
 import { Loader } from './components/Loader';
 
 export const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
+
+  const user = getUser();
 
   useEffect(() => {
     request
@@ -27,6 +29,16 @@ export const App: React.FC = () => {
 
   if (loading) {
     return <Loader />;
+  }
+
+  // Guard for deactivated accounts
+  if (!loading && user.userType && user.activated === null) {
+    return (
+      <div>
+        You have been deactivated from DogWalkers. Please contact us at
+        dog.walkers.mail@gmail.com for more info
+      </div>
+    );
   }
 
   return (

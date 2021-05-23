@@ -43,9 +43,13 @@ const {
   sendWalkRequest,
   walkResponse,
   walkNotifications,
-  addFavourite
+  addFavourite,
 } = require('./controller/SprehodController');
-const { setGrade } = require('./controller/OceneController')
+const { setGrade } = require('./controller/OceneController');
+const {
+  AdminUsersListAction,
+  AdminDeactivateAction,
+} = require('./controller/AdminController');
 
 const app = express();
 app.set('trust proxy', 1);
@@ -114,9 +118,7 @@ app.post(
 app.post('/api/dogs/delete', validateUser, (req, res) =>
   deleteDogAction(req, res)
 );
-app.get('/api/dogs/list', validateUser, (req, res) =>
-  getDogsAction(req, res)
-);
+app.get('/api/dogs/list', validateUser, (req, res) => getDogsAction(req, res));
 
 // Oglas routes
 app.get('/api/oglas/getOglasi', validateUser, (req, res) =>
@@ -126,8 +128,7 @@ app.get('/api/oglas/getOglasi', validateUser, (req, res) =>
 app.get('/api/oglas/me', validateUser, (req, res) => myAdsAction(req, res));
 app.post('/api/oglas/delete', validateUser, (req, res) => {
   deleteAdAction(req, res);
-}
-);
+});
 app.put('/api/oglas/edit', validateUser, (req, res) =>
   updateAdAction(req, res)
 );
@@ -148,15 +149,18 @@ app.post('/api/walkResponse', validateUser, (req, res) =>
 app.post('/api/walkNotifications', validateUser, (req, res) =>
   walkNotifications(req, res)
 );
-app.post('/api/addFavourite', (req, res) =>
-  addFavourite(req, res)
-);
+app.post('/api/addFavourite', (req, res) => addFavourite(req, res));
 
 //ocene routes
-app.post('/api/setRating', validateUser, (req, res) =>
-  setGrade(req, res)
-);
+app.post('/api/setRating', validateUser, (req, res) => setGrade(req, res));
 
+// AdminPage
+app.get('/api/admin/users', validateUser, (req, res) =>
+  AdminUsersListAction(req, res)
+);
+app.post('/api/admin/users/deactivate', validateUser, (req, res) =>
+  AdminDeactivateAction(req, res)
+);
 //Delete Ad
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
